@@ -1,0 +1,890 @@
+{
+	"info": {
+		"_postman_id": "1ba3f2ce-603a-4daa-b0af-506927d3d61c",
+		"name": "Asis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21056865",
+		"_collection_link": "https://blue-capsule-292856.postman.co/workspace/Asis~a7dc5be1-1e21-4957-998c-73072c4b84bf/collection/21056865-1ba3f2ce-603a-4daa-b0af-506927d3d61c?action=share&creator=21056865&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Customer Auth",
+			"item": [
+				{
+					"name": "Customer SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"johnDoe@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"1234567890\",\r\n    \"address\": \"123 Main St\",\r\n    \"city\": \"Ikorodu\",\r\n    \"state\": \"Lagos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/auth/customer/signup",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"customer",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"johnDoe@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/auth/customer/login",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"customer",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/auth/customer/logout",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"customer",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Auth",
+			"item": [
+				{
+					"name": "Admin Auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"johnDoe@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"1234567890\",\r\n    \"address\": \"123 Main St\",\r\n    \"city\": \"Ikorodu\",\r\n    \"state\": \"Lagos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/auth/admin/signup",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"admin",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"johnDoe@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/auth/admin/login",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/auth/admin/logout",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"admin",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/products/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "asis",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Pants",
+									"disabled": true
+								},
+								{
+									"key": "specialCategories",
+									"value": "64c457aff11767b84e4f92dd",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "collaborations",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Asis JABAKA 3",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "50000",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "A very nice slide",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "collaborations",
+									"value": "nike",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "collaborations",
+									"value": "yezzy",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Shoes",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[0][size]",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[0][quantity]",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[1][size]",
+									"value": "44",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[1][quantity]",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[2][size]",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[2][quantity]",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[3][size]",
+									"value": "42",
+									"type": "text"
+								},
+								{
+									"key": "countInStock[3][quantity]",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "specialCategories",
+									"value": "64c30a1d151afeb3893ee6cc",
+									"type": "text"
+								},
+								{
+									"key": "specialCategories",
+									"value": "64c457aff11767b84e4f92dd",
+									"type": "text"
+								},
+								{
+									"key": "specialCategory",
+									"value": "64c30a1d151afeb3893ee6cb",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/C:/Users/owopr/Pictures/Screenshots/Screenshot 2023-04-24 123028.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/products/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a single product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/products/64c46b511b624fe080dff05d",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"64c46b511b624fe080dff05d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"64c467a5d2b0654966a9ed00\",\r\n    \"name\": \"Nike Slim toppy\",\r\n    \"price\": 25000,\r\n    \"description\": \"A very very nice shirt\",\r\n    \"gender\": \"unisex\",\r\n    \"collaborations\": [\r\n        \"nike\",\r\n        \"adidas\"\r\n    ],\r\n    \"category\": \"Shirts\",\r\n    \"specialCategories\": [\r\n        \"64c30a1d151afeb3893ee6cc\",\r\n        \"64c457aff11767b84e4f92dd\"\r\n    ],\r\n    \"countInStock\": [\r\n        {\r\n            \"size\": \"2xl\",\r\n            \"quantity\": 3\r\n        },\r\n        {\r\n            \"size\": \"xl\",\r\n            \"quantity\": 10\r\n        },\r\n        {\r\n            \"size\": \"lg\",\r\n            \"quantity\": 11\r\n        },\r\n        {\r\n            \"size\": \"md\",\r\n            \"quantity\": 5\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/products/64c467a5d2b0654966a9ed00",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"64c467a5d2b0654966a9ed00"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/products/64c469d11b624fe080dff036",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"64c469d11b624fe080dff036"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create special Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Stock 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/products/specialCategory",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"specialCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create superSpecialCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Stock 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/products/superSpecialCategory",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"superSpecialCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Images",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imageNames\": [\r\n        \"1690594127133-ufzz4i.png\",\r\n        \"1690594127134-aipso7.png\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/products/64c46b511b624fe080dff05d/image",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"64c46b511b624fe080dff05d",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product Images",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"/C:/Users/owopr/Pictures/Screenshots/Screenshot 2023-05-08 183619.png",
+										"/C:/Users/owopr/Pictures/Screenshots/Screenshot 2023-05-08 183654.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/products/64c46b511b624fe080dff05d/image",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"64c46b511b624fe080dff05d",
+								"image"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carts",
+			"item": [
+				{
+					"name": "Get Cart Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/carts",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Item to Cart",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"64c467a5d2b0654966a9ed00\",\r\n    \"size\": \"lg\",\r\n    \"quantity\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/carts",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/carts",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"64c467a5d2b0654966a9ed00\",\r\n    \"size\": \"xl\"\r\n    // \"quantity\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/carts/removeItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"removeItem"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shipping",
+			"item": [
+				{
+					"name": "Get all shipping info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/shippings",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"shippings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new Shipping ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"standard naira\",\r\n    \"fee\": 5000,\r\n    \"currency\": \"NGN\",\r\n    \"description\": \"Standard shipping fee in Nigeria\",\r\n    \"durationInDays\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/shippings",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"shippings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Shipping info by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"standard Naira\",\r\n    \"fee\": 5000,\r\n    \"currency\": \"NGN\",\r\n    \"description\": \"Standard shipping fee in Nigeria\",\r\n    \"durationInDays\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/shippings/64c5ac4f160704254dc7f21b",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"shippings",
+								"64c5ac4f160704254dc7f21b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Shipping Info by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/shippings/64c5ac4f160704254dc7f21b",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"shippings",
+								"64c5ac4f160704254dc7f21b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create an Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"johnDoe@gmail.com\",\r\n    \"phone\": \"1234567890\",\r\n    \"address\": \"123 Main St\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"New York\",\r\n    \"zip\": \"12345\",\r\n    \"country\": \"United States\",\r\n    \"shipping\": \"64c5acdc7693bc8e4f19703e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/orders/stripe",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"stripe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all order [Customer ]",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/orders/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an order by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/orders/64c5b3cb0c13c172aa3956a0",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"64c5b3cb0c13c172aa3956a0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all orders [Admin ]",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/orders/admin",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"admin"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "delivered",
+									"disabled": true
+								},
+								{
+									"key": "paymentStatus",
+									"value": "paid",
+									"disabled": true
+								},
+								{
+									"key": "orderId",
+									"value": "64c5b31acdff776e57a100d3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"delivered\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/orders/64c5b3cb0c13c172aa3956a0",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"64c5b3cb0c13c172aa3956a0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
