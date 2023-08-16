@@ -28,6 +28,9 @@ const Page = () => {
                 );
               })}
             </div>
+
+      <section className="flex items-start justify-between">
+        <article className="basis-[58%] ">
           <div className=" text-[16px]/[16px] font-[500] italic">
            
           </div>
