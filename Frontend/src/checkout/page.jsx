@@ -19,10 +19,7 @@ const Page = () => {
   console.log(checkoutPage);
   return (
     <div className=" h-full p-0 uppercase">
-      <section className="flex items-start justify-between">
-        <article className="basis-[58%] ">
-          <div className=" text-[16px]/[16px] font-[500] italic">
-            <div className="flex w-full items-center justify-between text-[#0b0b0b77]">
+       <div className="flex w-full items-center justify-between text-[#0b0b0b77]">
               {checkoutName.map((data, index) => {
                 return (
                   <div key={index}>
@@ -31,6 +28,8 @@ const Page = () => {
                 );
               })}
             </div>
+          <div className=" text-[16px]/[16px] font-[500] italic">
+           
           </div>
         <p className="font-[500] text-[24px]/[24px] my-9">/{checkOutTitle[checkoutPage]}  </p>
 
@@ -72,7 +71,7 @@ const Page = () => {
             </div>
           </div>
         </article>
-        <article className="basis-[35%] bg-green-600">your cart</article>
+        <article className="basis-[35%] bg-green-600 mt-9">your cart</article>
       </section>
     </div>
   );
