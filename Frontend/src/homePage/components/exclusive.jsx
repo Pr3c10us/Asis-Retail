@@ -8,7 +8,7 @@ import exclusive_1_icon from "../../assets/icons/exclusive_3.svg";
 const Exclusive = () => {
   return (
     <section className="mt-[70px] flex items-center justify-center gap-4 max-md:block">
-      <article className="relative h-[692px] w-[435px] max-md:w-full max-md:h-full ">
+      <article className="relative h-[692px] w-[435px] max-md:h-full max-md:w-full ">
         <div className="relative h-[648] w-[100%]">
           <img
             src={exclusive_1}
@@ -26,12 +26,12 @@ const Exclusive = () => {
             m<em className="font-[400]">e</em>mber sh
             <em className="font-[400]">o</em>p
           </p>
-          <p className="text-[12px]/[12px] font-[600] text-[#0B0B0B]">
+          <p className="text-[12px]/[12px] font-[600] text-asisDark">
             shop member exclusive styles
           </p>
         </div>
       </article>
-      <article className="relative h-[692px] w-[435px] max-md:w-full max-md:h-full ">
+      <article className="relative h-[692px] w-[435px] max-md:h-full max-md:w-full ">
         <div className="relative h-[648] w-[100%]">
           <img
             src={exclusive_2}
@@ -51,12 +51,12 @@ const Exclusive = () => {
             <em className="font-[400]">o</em>uld b
             <em className="font-[400]">e</em>
           </p>
-          <p className="text-[12px]/[12px] font-[600] text-[#0B0B0B]">
+          <p className="text-[12px]/[12px] font-[600] text-asisDark">
             free shipping on orders above 50,000 NGN
           </p>
         </div>
       </article>
-      <article className="relative h-[692px] w-[435px] max-md:w-full max-md:h-full ">
+      <article className="relative h-[692px] w-[435px] max-md:h-full max-md:w-full ">
         <div className="relative h-[648] w-[100%]">
           <img
             src={exclusive_3}
@@ -74,7 +74,7 @@ const Exclusive = () => {
             asis by y<em className="font-[400]">o</em>urs tr
             <em className="font-[400]">u</em>ly
           </p>
-          <p className="text-[12px]/[12px] font-[600] text-[#0B0B0B]">
+          <p className="text-[12px]/[12px] font-[600] text-asisDark">
             choose your own style{" "}
           </p>
         </div>

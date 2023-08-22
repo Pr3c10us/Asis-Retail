@@ -22,9 +22,9 @@ const Collection = ({ product_data, id }) => {
 
   return (
     <div>
-      <section className="mt-12 text-[#0B0B0B]">
+      <section className="mt-12 text-asisDark">
         <p className="mb-5 w-[35vw] text-[48px]/[48px] font-[400]">/{id}</p>
-        <article className="flex w-full items-start justify-between border-t-[1.5px] border-[#0B0B0B] pb-14 pt-7 ">
+        <article className="flex w-full items-start justify-between border-t-[1.5px] border-asisDark pb-14 pt-7 ">
           <div className="flex gap-6">
             <Products
               name={product_data.name}
@@ -48,7 +48,7 @@ const Collection = ({ product_data, id }) => {
                     <div
                       className={`flex w-full cursor-pointer items-center justify-between border-t-[1px] border-[#5C5C5C] py-2 ${
                         index === superSpecialCategoryData.length - 1
-                          ? "border-y-[1px] border-[#0b0b0b] pl-14 text-center font-[500] italic text-[#0b0b0b]"
+                          ? "border-y-[1px] border-asisDark pl-14 text-center font-[500] italic text-asisDark"
                           : ""
                       }`}
                     >

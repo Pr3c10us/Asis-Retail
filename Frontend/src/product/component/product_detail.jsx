@@ -1,97 +1,243 @@
 import React, { useState, useEffect } from "react";
 import down from "../../assets/icons/down.svg";
-import frame from "../../assets/icons/frame_border.svg";
-const Product_detail = ({ data }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setCart } from "../../../redux/asis";
+import CartLoading from "../../components/cartLoader";
+import AddToCartLoading from "./addToCartLoading";
+import VowelItalicizer from "../../components/vowelItalicizer";
 
+const Product_detail = ({ data }) => {
+  // States
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showDescription, setShowDescription] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+
+  const dispatch = useDispatch();
+
+  function getFormattedTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
+
+    return `${hours}:${minutes}:${seconds}:${milliseconds}`;
+  }
+  const [currentTime, setCurrentTime] = useState(getFormattedTime());
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(getFormattedTime());
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  // Effect to set initial selected image
   useEffect(() => {
     if (data.images && data.images.length > 0) {
       setSelectedImage(data.images[0]);
     }
   }, [data]);
-  const handleThumbnailClick = (img) => {
-    setSelectedImage(img);
+
+  // Handle adding to cart
+  const handleAddToCart = async () => {
+    setIsAddingToCart(true);
+    if (selectedSize) {
+      try {
+        axios.defaults.withCredentials = true;
+        let item = {
+          productId: data._id,
+          size: selectedSize,
+          quantity: 1,
+        };
+        const response = await axios.put(
+          `${import.meta.env.VITE_API_URL}carts`,
+          item,
+        );
+        dispatch(setCart(response.data.cart));
+        toast.success("Item added to cart", {
+          style: {
+            border: "1px solid green",
+            padding: "8px 16px",
+            color: "green",
+            borderRadius: "4px",
+          },
+          iconTheme: {
+            primary: "green",
+            secondary: "#FFFAEE",
+          },
+        });
+        setIsAddingToCart(false);
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to add item to cart", {
+          style: {
+            border: "1px solid red",
+            padding: "8px 16px",
+            color: "red",
+            borderRadius: "4px",
+          },
+        });
+        setIsAddingToCart(false);
+      }
+    } else {
+      toast.error("Select a size to add to cart", {
+        style: {
+          border: "1px solid red",
+          padding: "8px 16px",
+          color: "red",
+          borderRadius: "4px",
+        },
+      });
+      setIsAddingToCart(false);
+    }
   };
-  console.log(data);
+
   return (
-    <div className="mt-9 uppercase">
-      <section className="flex items-start justify-center gap-[10%] ">
-        <article className="basis-[40%]  ">
-          <div className="h-[80vh] w-[511px] border-[2px] border-[#130c0c]">
-            <img
-              src={`https://asisretail.blob.core.windows.net/asisretailimages/${selectedImage}`}
-              alt="img"
-              className="h-full w-full object-cover object-top"
-            />
-          </div>
+    <section className="product_container mb-20 mt-10 h-full border-y border-asisDark">
+      {/* Product details */}
+      {data ? (
+        <section className="flex items-start gap-5">
+          {/* Thumbnail images */}
+          <section className="gap flex basis-7 flex-col items-center justify-center py-5">
+            {data.images?.map((img, index) => (
+              <div
+                key={index}
+                onClick={() => setSelectedImage(img)}
+                className={` mb-5 flex h-20 w-24 cursor-pointer items-center justify-center bg-contain bg-center bg-no-repeat ${
+                  img === selectedImage
+                    ? `bg-[url('./assets/images/frames.png')]`
+                    : ""
+                }`}
+              >
+                <img
+                  src={`${import.meta.env.VITE_BLOB_URL}${img}`}
+                  alt="collection_img"
+                  className="h-16 w-14 object-cover object-center "
+                />
+              </div>
+            ))}
+          </section>
 
-          <article className="mt-8 flex w-full items-center flex-wrap gap-x-7 gap-y-4 px-4">
-            {data.images.map((img, index) => {
-              return (
-                <div key={index} className="">
-                  <div
-                    className={`relative flex h-[107px] w-[100px] cursor-pointer  items-center justify-center transition duration-300 ${
-                      img === selectedImage
-                        ? "mb-6 bg-[url('./assets/images/frame.png')] transition-all duration-300"
-                        : "bg-transparent transition-all duration-300"
-                    } `}
-                  >
-                    <div
-                      className={`h-[84.96px] w-[82px] border-[1px] border-[ x ] transition duration-300  ${
-                        img === selectedImage
-                          ? ""
-                          : "absolute inset-0 bg-black opacity-50"
-                      } `}
-                      onClick={() => handleThumbnailClick(img)}
-                    >
-                      <img
-                        src={`https://asisretail.blob.core.windows.net/asisretailimages/${img}`}
-                        alt="img"
-                        className="h-full w-full object-cover object-top"
-                      />
-                    </div>
-                  </div>
+          {/* Selected image */}
+          <section className="items-cente flex h-[47rem] w-[32rem] flex-1  justify-center  overflow-hidden border-x border-asisDark px-3 py-5">
+            {selectedImage && (
+              <img
+                src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                className="overflow-hidden object-contain object-top"
+              />
+            )}
+          </section>
+
+          {/* Product information */}
+
+          <section className="w-full flex-1 py-5">
+            <p className="mb-9 text-3xl font-medium uppercase text-asisDark">
+              / <VowelItalicizer text={data.name} />
+            </p>
+            {/* Sizes */}
+            <section className="mb-5 flex flex-wrap gap-x-5 gap-y-3">
+              {data.countInStock?.map((sizeData, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedSize(sizeData.size)}
+                  className={`flex h-10 w-24 cursor-pointer items-center justify-center border text-xs font-medium uppercase ${
+                    selectedSize === sizeData.size
+                      ? " border-asisDark text-asisDark"
+                      : " border-[#C4C4C4] text-[#C4C4C4]"
+                  }`}
+                >
+                  {sizeData.size}
                 </div>
-              );
-            })}
-          </article>
-        </article>
+              ))}
+            </section>
 
-        <article className="basis-[40%]  px-1">
-          <div className="mb-8 text-[32px]/[32px] font-[500] text-[#17A500]">
-            {data.name}
-          </div>
-          <div className="mb-8 flex flex-wrap gap-4">
-            <div className="flex h-[32px] w-[43px] cursor-pointer items-center justify-center border-[1.5px] border-[#0B0B0B] text-[12px]/[16px] font-[600] text-[#0B0B0B]">
-              3.5
-            </div>
-          </div>
-          <div className="mb-10 text-[14px]/[19.5px] font-[600] text-[#0B0B0B]">
-            {data.description}
-          </div>
-          <div className="mb-12 flex cursor-pointer items-center justify-between border-b-[1px] border-b-[#0B0B0B]  pb-2  text-[16px]/[24px] font-[400] text-[#0B0B0B]">
-            <p className="">colors</p>
-            <img src={down} alt="down" className="w-[20px]" />
-          </div>
-          <div className="mb-3 flex h-[45px] w-full cursor-pointer items-center justify-center rounded-[7px] bg-[#0B0B0B] text-[12px]/[12px] font-[600] text-[#FFFFFF]">
-            add to cart- {data.price?.toLocaleString()} ngn
-          </div>
-          <div className="mb-11 flex h-[45px] w-full cursor-pointer items-center justify-center rounded-[7px] border-[1px] border-[#0B0B0B] bg-[transparent] text-[12px]/[12px] font-[600] text-[#0B0B0B]">
-            add to wishlist
-          </div>
-          <article className="border-t-[1px] border-[#0B0B0B] text-[14px]/[24px] font-[400] text-[#0B0B0B]">
-            <div className="flex w-full cursor-pointer items-center justify-between border-b-[1px] border-[#0B0B0B] py-3">
-              <p>product details</p>
-              <img src={down} alt="down" className="w-[20px]" />
-            </div>
-            <div className="flex w-full cursor-pointer items-center justify-between border-b-[1px] border-[#0B0B0B] py-3">
-              <p>size guide</p>
-              <img src={down} alt="down" className="w-[20px]" />
-            </div>
-          </article>
-        </article>
-      </section>
-    </div>
+            {/* Additional details */}
+            <section className="">
+              {/* Time */}
+              <article className="flex items-center justify-between text-base font-semibold">
+                <p className="uppercase text-asisDark">time</p>
+                <p className="text-[#17A500]">{currentTime}</p>
+              </article>
+
+              {/* Description */}
+              <p className="my-9 text-sm font-medium text-asisDark">
+                {data.brief}
+              </p>
+
+              {/* Add to cart */}
+
+              <button
+                className={`relative my-3 flex max-h-12  w-full justify-center  py-4 text-center text-xs font-semibold uppercase ${
+                  selectedSize
+                    ? "bg-asisDark text-[#FFFFFF]"
+                    : "bg-asisDark/70 text-[#C4C4C4]"
+                }`}
+                disabled={isAddingToCart}
+                onClick={() => {
+                  handleAddToCart();
+                }}
+              >
+                {isAddingToCart ? (
+                  <AddToCartLoading />
+                ) : (
+                  <p>
+                    Add to cart-{" "}
+                    {Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    }).format(data.price)}{" "}
+                    USD
+                  </p>
+                )}
+              </button>
+
+              {/* Add to wishlist */}
+              {/* <button className="relative mb-3 w-full cursor-pointer border border-asisDark py-4 text-center text-xs font-semibold uppercase text-asisDark">
+                add to wishlist
+              </button> */}
+
+              {/* Accordion */}
+              <section
+                onClick={() => setShowDescription((prev) => !prev)}
+                className="border-y border-asisDark text-sm uppercase text-asisDark "
+              >
+                <article className="border-b1 flex cursor-pointer items-center justify-between border-asisDark py-2 font-semibold">
+                  <p>product details</p>
+                  <img
+                    className={`transition-all duration-300 ${
+                      showDescription ? "rotate-180 transform" : ""
+                    }`}
+                    src={down}
+                    alt="down"
+                  />
+                </article>
+
+                {/* <article className="flex cursor-pointer items-center justify-between py-2">
+                  <p>size guild</p>
+                  <img src={down} alt="down" />
+                </article> */}
+              </section>
+              <div
+                className={`grid border-b border-asisDark  text-sm text-asisDark/80 transition-all duration-300 ${
+                  showDescription ? "grid-rows-[1fr] py-2" : "grid-rows-[0fr]"
+                } `}
+              >
+                <p className="overflow-hidden">{data.description}</p>
+              </div>
+            </section>
+          </section>
+        </section>
+      ) : (
+        <section>product not found</section>
+      )}
+    </section>
   );
 };
 

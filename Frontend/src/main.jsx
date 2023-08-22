@@ -11,6 +11,9 @@ import Product from "./product/page.jsx";
 import Checkout from "./checkout/page.jsx";
 import Receipt from "./receipt/page.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import store from "../redux/store";
+import { Provider } from "react-redux";
+import OrderComplete from "./completed/page.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +45,10 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
+        path: "/complete",
+        element: <OrderComplete />,
+      },
+      {
         path: "/receipt/:id",
         element: <Receipt />,
       },
@@ -51,6 +58,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>,
 );

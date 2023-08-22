@@ -8,7 +8,7 @@ import up_arrow from "../../assets/icons/up_arrow.svg";
 
 const New_Arrival = () => {
   return (
-    <section className="relative mt-7 flex items-start justify-between border-t-[1.5px] border-[#000000] pt-16 max-md:block">
+    <section className="relative mt-7 flex items-start justify-between border-t-[1.5px] border-black pt-16 max-md:block">
       <article className=" h-[100%]">
         <div className="w-[194px] uppercase ">
           <p className="text-right text-[40px]/[40px] font-[500]">
@@ -32,7 +32,7 @@ const New_Arrival = () => {
             />
           </div>
         </div>
-        <div className="absolute bottom-0 left-[80px] flex h-[32px] w-[104px] items-center justify-center gap-2 border-[1.5px] border-[#000000] uppercase">
+        <div className="absolute bottom-0 left-[80px] flex h-[32px] w-[104px] items-center justify-center gap-2 border-[1.5px] border-black uppercase">
           <p className="text-[12px]/[16px] font-[500]">view all</p>
           <img src={up_arrow} alt="up_arrow" />
         </div>
@@ -41,13 +41,13 @@ const New_Arrival = () => {
         <div className="h-[541px] w-[336px] uppercase">
           <img src={new1} alt="new1" />
           <div className="mt-2">
-            <p className="text-[16px]/[20px] font-[600] text-[#0B0B0B]">
+            <p className="text-[16px]/[20px] font-[600] text-asisDark">
               mvif denim jean
             </p>
             <p className="text-[12px]/[16px] font-[600] text-[#17A500]">
-              AISI X CARHARRT
+              asis X CARHARRT
             </p>
-            <p className="text-[12px]/16px] font-[600] text-[#0B0B0B]">
+            <p className="text-[12px]/16px] font-[600] text-asisDark">
               172,000 NGN
             </p>
           </div>
@@ -55,13 +55,13 @@ const New_Arrival = () => {
         <div className="h-[541px] w-[336px] uppercase">
           <img src={new2} alt="new2" />
           <div className="mt-2">
-            <p className="text-[16px]/[20px] font-[600] text-[#0B0B0B]">
+            <p className="text-[16px]/[20px] font-[600] text-asisDark">
               mvif denim jean
             </p>
             <p className="text-[12px]/[16px] font-[600] text-[#17A500]">
-              AISI X CARHARRT
+              asis X CARHARRT
             </p>
-            <p className="text-[12px]/16px] font-[600] text-[#0B0B0B]">
+            <p className="text-[12px]/16px] font-[600] text-asisDark">
               172,000 NGN
             </p>
           </div>
@@ -69,13 +69,13 @@ const New_Arrival = () => {
         <div className="h-[541px] w-[336px] uppercase">
           <img src={new3} alt="new3" />
           <div className="mt-2">
-            <p className="text-[16px]/[20px] font-[600] text-[#0B0B0B]">
+            <p className="text-[16px]/[20px] font-[600] text-asisDark">
               mvif denim jean
             </p>
             <p className="text-[12px]/[16px] font-[600] text-[#17A500]">
-              AISI X CARHARRT
+              asis X CARHARRT
             </p>
-            <p className="text-[12px]/16px] font-[600] text-[#0B0B0B]">
+            <p className="text-[12px]/16px] font-[600] text-asisDark">
               172,000 NGN
             </p>
           </div>

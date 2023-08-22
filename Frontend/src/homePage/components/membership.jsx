@@ -2,10 +2,10 @@ import React from "react";
 import logo_white from "../../assets/icons/logo_white.svg";
 const Membership = () => {
   return (
-    <section className=" mt-[100px] flex justify-between border-t-[1.5px] border-[#0B0B0B] pt-14 max-md:block">
+    <section className=" mt-[100px] flex justify-between border-t-[1.5px] border-asisDark pt-14 max-md:block">
       <div className="w-[264px] text-[40px]/[40px] font-[500] uppercase">
         <p>
-          <span className="font-[400]">/</span>aisi m
+          <span className="font-[400]">/</span>asis m
           <em className="font-[400]">e</em>mb<em className="font-[400]">e</em>
           rship
         </p>
@@ -21,12 +21,12 @@ const Membership = () => {
           </div>
           <div
             className="absolute bottom-10
-flex gap-5 text-[16px]/[24px] font-[500] uppercase text-[#0B0B0B]"
+flex gap-5 text-[16px]/[24px] font-[500] uppercase text-asisDark"
           >
-            <p className="flex h-[48px] w-[190px] cursor-pointer items-center justify-center bg-[#FFFEF5] max-md:w-full max-md:h-full">
+            <p className="flex h-[48px] w-[190px] cursor-pointer items-center justify-center bg-[#FFFEF5] max-md:h-full max-md:w-full">
               Join us
             </p>
-            <p className="flex h-[48px] w-[190px] cursor-pointer items-center justify-center bg-[#FFFEF5]  max-md:w-full max-md:h-full">
+            <p className="flex h-[48px] w-[190px] cursor-pointer items-center justify-center bg-[#FFFEF5]  max-md:h-full max-md:w-full">
               sign in
             </p>
           </div>

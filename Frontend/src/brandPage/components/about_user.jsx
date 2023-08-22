@@ -11,12 +11,12 @@ const About_user = () => {
     <section>
       <section className="mt-[40px] flex items-start justify-between">
         <section className="basis-[40%]">
-          <article className="w-[360px]  text-[96px]/[96px] font-[500] uppercase text-[#0B0B0B]">
+          <article className="w-[360px]  text-[96px]/[96px] font-[500] uppercase text-asisDark">
             <p>/Judith</p>
             <p className="text-right">Bisi</p>
           </article>
           <article>
-            <p className="text-[28px]/[32px] font-[600] text-[#0B0B0B] mt-14 mb-3">
+            <p className="mb-3 mt-14 text-[28px]/[32px] font-[600] text-asisDark">
               FOUNDER. DESIGNER. ARTIST
             </p>
             <p className="text-[14px]/[24px]">
@@ -26,36 +26,36 @@ const About_user = () => {
               an innate talent for visual art since my earliest days, as well as
               a newfound passion for fashion that ignited during my formative
               years at the age of 17, ASIS came to life as a manifestation of my
-              creative vision..<br></br>  Unbeknownst to formal training or a background in
-              design education, I embarked on the ambitious endeavor of
-              establishing ASIS. With audacity and determination, I sought to
-              redefine the boundaries of traditional fashion, unshackled by the
-              constraints of convention. Lacking the resources to assemble a
-              dedicated team, I became a tenacious one-person army, bearing the
-              weight of all creative and business responsibilities. .<br></br> <br></br>While many
-              of my contemporaries pursued fashion exclusively, my divergence
-              from the norm lay in my status as a visual artist at heart. With
-              one hand immersed in crafting ethereal worlds, I painted vivid
-              characters, landscapes, and cultural tapestries, allowing my
-              imagination to roam unhindered. Simultaneously, I delved into the
-              meticulous artistry of fashion design, acquainting myself
-              intimately with fabrics, silhouettes, and the guiding principles
-              that breathed life into sartorial creations. It was the seamless
-              integration of these two realms that transformed ASIS into an
-              unrivaled paradigm-shifter. Merging my visual artistry with
-              fashion design, I broke new ground, transcending the boundaries
-              imposed by the industry. Art became the very fabric woven into
-              every garment, enlivening each design and captivating wearers,
-              offering them an immersive experience beyond the constraints of
-              mere clothing. ASIS's resounding impact reverberates through the
-              industry, and I take immense pride in having charted this
-              uncharted course. My voyage remains unending—a relentless pursuit
-              to design for the creative pioneers of the modern world. AISI
-              exists as a testament to the potency of artistic expression,
-              transcending norms, and empowering individuals to inscribe their
-              narratives upon the world's canvas. Step into the realm of ASIS,
-              where creativity finds its voice, and self-expression assumes its
-              rightful throne.
+              creative vision..<br></br> Unbeknownst to formal training or a
+              background in design education, I embarked on the ambitious
+              endeavor of establishing ASIS. With audacity and determination, I
+              sought to redefine the boundaries of traditional fashion,
+              unshackled by the constraints of convention. Lacking the resources
+              to assemble a dedicated team, I became a tenacious one-person
+              army, bearing the weight of all creative and business
+              responsibilities. .<br></br> <br></br>While many of my
+              contemporaries pursued fashion exclusively, my divergence from the
+              norm lay in my status as a visual artist at heart. With one hand
+              immersed in crafting ethereal worlds, I painted vivid characters,
+              landscapes, and cultural tapestries, allowing my imagination to
+              roam unhindered. Simultaneously, I delved into the meticulous
+              artistry of fashion design, acquainting myself intimately with
+              fabrics, silhouettes, and the guiding principles that breathed
+              life into sartorial creations. It was the seamless integration of
+              these two realms that transformed ASIS into an unrivaled
+              paradigm-shifter. Merging my visual artistry with fashion design,
+              I broke new ground, transcending the boundaries imposed by the
+              industry. Art became the very fabric woven into every garment,
+              enlivening each design and captivating wearers, offering them an
+              immersive experience beyond the constraints of mere clothing.
+              ASIS's resounding impact reverberates through the industry, and I
+              take immense pride in having charted this uncharted course. My
+              voyage remains unending—a relentless pursuit to design for the
+              creative pioneers of the modern world. asis exists as a testament
+              to the potency of artistic expression, transcending norms, and
+              empowering individuals to inscribe their narratives upon the
+              world's canvas. Step into the realm of ASIS, where creativity
+              finds its voice, and self-expression assumes its rightful throne.
             </p>
           </article>
         </section>
@@ -90,7 +90,7 @@ const About_user = () => {
         </article>
       </section>
       <article className="mt-10 flex items-center justify-between">
-        <p className="text-[24px]/[32px] font-[600] uppercase text-[#0B0B0B]">
+        <p className="text-[24px]/[32px] font-[600] uppercase text-asisDark">
           -asis
         </p>
         <img src={about_logo} alt="about_logo" />{" "}
