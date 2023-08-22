@@ -1,7 +1,5 @@
 import React from "react";
 import Collection from "./components/collection";
-import Banner from "../components/banner";
-import New_Arrival from "./components/new_arrival";
 import Limited_collection from "./components/limited_collection";
 import Shop from "./components/shop";
 import Discover from "./components/discover";
@@ -14,8 +12,7 @@ const Page = () => {
   return (
     <div className=" h-full p-0 ">
       <Collection />
-      <Banner />
-      <SpecialCategory name={name}/>
+      {/* <SpecialCategory name={name}/> */}
       <Limited_collection />
       <Shop />
       <Discover />

@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.animate-spin-slow {
+  animation: spin 15s linear infinite; /* Adjust the duration (10s) as needed */
+}
 
-
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 .filter_component {
     overflow-y: scroll;
 }

@@ -7,7 +7,7 @@ import right_button from "../assets/icons/right_button.svg";
 import up_arrow from "../assets/icons/up_arrow.svg";
 
 const SpecialCategory = ({ name }) => {
-  const { data } = useFetch("http://localhost:5000/api/products/");
+  const { data } = useFetch("http://localhost:5000/api/products/?limit=10");
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = (increment) => {

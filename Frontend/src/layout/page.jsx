@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/header";
 import Cart from "../components/cart";
 import Wishlist from "../components/wishlist";
+import Footer from "../components/footer"
 import collection_img_2 from "../assets/images/collection_img_2.png";
 
 
@@ -69,7 +70,7 @@ const Page = () => {
 
   ];
   return (
-    <div className=" bg-[#ffff] px-7  max-md:px-3 ">
+    <div className=" px-7  max-md:px-3 bg-[#ffff]">
       <section className="w-full">
       <div className="max-w-7xl">
         <Header setHideCart={setHideCart} setHideWish={setHideWish} cartData={cartData} wishlistData={wishData}/>

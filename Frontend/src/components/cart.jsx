@@ -43,9 +43,9 @@ const Cart = ({ setHideCart, cartData }) => {
                       />
                     </div>
                     <div className="w-[70%]">
-                      <div className="flex items-start justify-between  border-b-[0.5px] border-b-[#0B0B0B] pb-2">
+                      <div className="flex items-start justify-between  border-b border-b-[#0B0B0B] pb-2">
                         <div className="">
-                          <p className="w-[212px] text-[14px]/[20px] font-[700] text-[#0B0B0B]">{data.name}</p>
+                          <p className="w-[212px] text-sm font-bold text-[#17A500]">{data.name}</p>
                           <p className="mt-2 text-[11px]/[20px] font-[600] text-[#000000]">
                             {data.price} NGN
                           </p>

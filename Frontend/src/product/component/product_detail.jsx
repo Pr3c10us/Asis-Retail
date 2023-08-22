@@ -12,43 +12,44 @@ const Product_detail = ({ data }) => {
   const handleThumbnailClick = (img) => {
     setSelectedImage(img);
   };
-console.log(data)
+  console.log(data);
   return (
-    <div className="mt-2 uppercase">
+    <div className="mt-9 uppercase">
       <section className="flex items-start justify-center gap-[10%] ">
         <article className="basis-[40%]  ">
           <div className="h-[80vh] w-[511px] border-[2px] border-[#130c0c]">
-            <img src={`https://asisretail.blob.core.windows.net/asisretailimages/${selectedImage}`} alt="img" className="w-full h-full object-cover object-top"/>
+            <img
+              src={`https://asisretail.blob.core.windows.net/asisretailimages/${selectedImage}`}
+              alt="img"
+              className="h-full w-full object-cover object-top"
+            />
           </div>
 
-          <article className="mt-8 flex w-full flex-wrap gap-x-7 gap-y-4 px-4">
+          <article className="mt-8 flex w-full items-center flex-wrap gap-x-7 gap-y-4 px-4">
             {data.images.map((img, index) => {
               return (
-                <div key={index}>
-                  <div className="relative flex h-[107px]  w-[100px] cursor-pointer items-center justify-center">
-                    <div className="h-[84.96px] w-[82px] border-[1px] border-[black]"  onClick={() => handleThumbnailClick(img)}>
-                      <img src={`https://asisretail.blob.core.windows.net/asisretailimages/${img}`} alt="img" className="w-full h-full object-cover object-top"/>
+                <div key={index} className="">
+                  <div
+                    className={`relative flex h-[107px] w-[100px] cursor-pointer  items-center justify-center transition duration-300 ${
+                      img === selectedImage
+                        ? "mb-6 bg-[url('./assets/images/frame.png')] transition-all duration-300"
+                        : "bg-transparent transition-all duration-300"
+                    } `}
+                  >
+                    <div
+                      className={`h-[84.96px] w-[82px] border-[1px] border-[ x ] transition duration-300  ${
+                        img === selectedImage
+                          ? ""
+                          : "absolute inset-0 bg-black opacity-50"
+                      } `}
+                      onClick={() => handleThumbnailClick(img)}
+                    >
+                      <img
+                        src={`https://asisretail.blob.core.windows.net/asisretailimages/${img}`}
+                        alt="img"
+                        className="h-full w-full object-cover object-top"
+                      />
                     </div>
-                    <img
-                      src={frame}
-                      alt="frame"
-                      className="absolute bottom-0 right-0 rotate-[270deg]"
-                    />
-                    <img
-                      src={frame}
-                      alt="frame"
-                      className="absolute bottom-0 left-0 rotate-[360deg]"
-                    />
-                    <img
-                      src={frame}
-                      alt="frame"
-                      className="absolute left-0 top-0 rotate-[90deg]"
-                    />
-                    <img
-                      src={frame}
-                      alt="frame"
-                      className="absolute right-0 top-0 rotate-[180deg]"
-                    />
                   </div>
                 </div>
               );
