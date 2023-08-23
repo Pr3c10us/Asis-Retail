@@ -69,6 +69,10 @@ input[type="checkbox"]:checked::before {
   transition: transform 0.3s ease-in-out;
 }
 
+.slow-spin {
+  animation-duration: 30s; /* Adjust the duration as needed */
+}
+
 @media (min-height: 1000px) {
   .filter_component {
     height: 700px;

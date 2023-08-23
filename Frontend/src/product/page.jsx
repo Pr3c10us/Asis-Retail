@@ -4,7 +4,7 @@ import Product_detail from "./component/product_detail";
 // import SpecialCategory from "../components/specialCategory";
 import Loading from "../components/loading";
 import axios from "axios";
-import SpecialCategory from "../components/specialcategory";
+// import SpecialCategory from "../components/specialcategory";
 
 const Page = () => {
   const { id } = useParams();
@@ -41,18 +41,18 @@ const Page = () => {
   }
 
   return (
-    <div className=" h-full px-8">
+    <div className=" h-full px-20">
       <div>
         {/* {hideCart && <Cart data={data} hideCart={hideCart} ShowCart={ShowCart} />} */}
 
         {data && (
           <div className="">
             <Product_detail id={id} data={data} ShowCart={ShowCart} />
-            <SpecialCategory
+            {/* <SpecialCategory
               category={data.category}
               name={name}
               except={data._id}
-            />
+            /> */}
           </div>
         )}
       </div>

@@ -100,17 +100,29 @@ const Product_detail = ({ data }) => {
   };
 
   return (
-    <section className="product_container mb-20 mt-10 h-full border-y border-asisDark">
+    <section className="product_container mb-20 mt-10 h-full ">
       {/* Product details */}
       {data ? (
-        <section className="flex items-start gap-5">
+        <section className="flex items-start gap-20">
           {/* Thumbnail images */}
-          <section className="gap flex basis-7 flex-col items-center justify-center py-5">
+       
+
+          {/* Selected image */}
+          <div className="flex flex-col">
+          <section className="items-center flex h-[47rem] w-[32rem] flex-1  justify-center  overflow-hidden px-3 py-5">
+            {selectedImage && (
+              <img
+                src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                className="overflow-hidden object-cover w-[511px] object-top max-h-[80vh] border-asisDark border-2"
+              />
+            )}
+          </section>
+          <section className="gap flex  items-center py-5">
             {data.images?.map((img, index) => (
               <div
                 key={index}
                 onClick={() => setSelectedImage(img)}
-                className={` mb-5 flex h-20 w-24 cursor-pointer items-center justify-center bg-contain bg-center bg-no-repeat ${
+                className={` mb-5 flex h-20 w-[100px] cursor-pointer px-5 py-2 items-center justify-center bg-contain bg-center bg-no-repeat ${
                   img === selectedImage
                     ? `bg-[url('./assets/images/frames.png')]`
                     : ""
@@ -119,30 +131,24 @@ const Product_detail = ({ data }) => {
                 <img
                   src={`${import.meta.env.VITE_BLOB_URL}${img}`}
                   alt="collection_img"
-                  className="h-16 w-14 object-cover object-center "
+                  className="w-full h-full object-cover object-center "
                 />
               </div>
             ))}
           </section>
-
-          {/* Selected image */}
-          <section className="items-cente flex h-[47rem] w-[32rem] flex-1  justify-center  overflow-hidden border-x border-asisDark px-3 py-5">
-            {selectedImage && (
-              <img
-                src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
-                className="overflow-hidden object-contain object-top"
-              />
-            )}
-          </section>
+          </div>
+      
 
           {/* Product information */}
 
-          <section className="w-full flex-1 py-5">
-            <p className="mb-9 text-3xl font-medium uppercase text-asisDark">
-              / <VowelItalicizer text={data.name} />
+          <section className="w-full  py-5">
+            <p className="mb-9 text-3xl font-medium uppercase text-asisGreen">
+              {/* <VowelItalicizer text={data.name} /> */}
+              {data.name}
+
             </p>
             {/* Sizes */}
-            <section className="mb-5 flex flex-wrap gap-x-5 gap-y-3">
+            <section className="mb-5 flex flex-wrap gap-x-5 gap-y-3 ">
               {data.countInStock?.map((sizeData, index) => (
                 <div
                   key={index}
@@ -161,10 +167,10 @@ const Product_detail = ({ data }) => {
             {/* Additional details */}
             <section className="">
               {/* Time */}
-              <article className="flex items-center justify-between text-base font-semibold">
+              {/* <article className="flex items-center justify-between text-base font-semibold">
                 <p className="uppercase text-asisDark">time</p>
-                <p className="text-[#17A500]">{currentTime}</p>
-              </article>
+                <p className="text-asisGreen">{currentTime}</p>
+              </article> */}
 
               {/* Description */}
               <p className="my-9 text-sm font-medium text-asisDark">

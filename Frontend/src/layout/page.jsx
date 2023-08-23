@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/header";
-import Footer from "../components/footer";
-import Cart from "../components/cart";
-import Wishlist from "../components/wishlist";
-import collection_img_2 from "../assets/images/collection_img_2.png";
-import Banner from "../components/banner";
+import Cart from "../components/cart";;
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart } from "../../redux/asis";
-
+import Rotational from "../components/rotational";
 const Page = () => {
   // State to control the visibility of the cart and wishlist
   const [hideCart, setHideCart] = useState(false);
@@ -39,35 +35,15 @@ const Page = () => {
 
   useEffect(() => {}, []);
 
-  // // Sample cart data
-  // const cartData = [
-  //   {
-  //     name: "OVERGROWTH CONVERTIBLE PANTS",
-  //     price: 135000,
-  //     size: 1,
-  //     color: "greenish brown",
-  //     qty: 1,
-  //     img: collection_img_2,
-  //   },
-  //   {
-  //     name: "ANOTHER ITEM",
-  //     price: 90000,
-  //     size: 2,
-  //     color: "blue",
-  //     qty: 2,
-  //     img: collection_img_2,
-  //   },
-  // ];
 
   return (
-    <main className="h-full bg-[url('./assets/images/bg_img.png')] bg-cover bg-no-repeat">
+    <main className="h-full bg-[url('./assets/images/bg_img.png')] bg-cover bg-no-repeat ">
       {/* <section className="flex w-full flex-col items-start justify-center"> */}
-        <div className="px-8 pb-8">
+        <div className="px-8 pb-8 ">
           <Toaster position="top-right" />
           {/* Render the header component and pass cart and wishlist data */}
           <Header
             setHideCart={setHideCart}
-            // setHideWish={setHideWish}
             cartLength={cartData?.products?.length}
             // wishlistData={wishData}
           />
@@ -83,9 +59,13 @@ const Page = () => {
           {/* {hideWish && (
             <Wishlist setHideWish={setHideWish} wishlistData={wishData} />
           )} */}
-
+<Rotational />
           {/* Render the nested route components */}
+          <div className="relative">
+
           <Outlet />
+          </div>
+
 
           {/* Render the footer component */}
           {/* <Footer /> */}
