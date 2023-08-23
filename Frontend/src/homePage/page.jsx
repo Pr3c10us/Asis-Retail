@@ -21,7 +21,7 @@ const Page = () => {
     });
   };
   const { data } = useFetch(
-    `${import.meta.env.VITE_API_URL}products/?limit=10`,
+    `${import.meta.env.VITE_API_URL}products/=10`,
   );
   const name = "new arrival";
   return (
