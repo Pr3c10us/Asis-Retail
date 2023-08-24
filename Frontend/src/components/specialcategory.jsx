@@ -57,14 +57,14 @@ const SpecialCategory = ({ name, category, except }) => {
   }
   return (
     <section>
-      <section className="relative flex w-full items-stretch justify-between gap-x-4 border-t border-asisDark py-14 pt-12 uppercase">
-        <div className=" flex flex-col items-end text-left text-4xl font-semibold">
-          <div className="flex flex-col items-end">
+      <section className="relative flex flex-col w-full  justify-between gap-4 border-t border-asisDark pt-12 uppercase max-md:px-3">
+        <div className=" flex justify-between   text-left text-4xl font-semibold max-md:text-2xl">
             <p>
-              {" "}
-              / <VowelItalicizer text={name} />{" "}
+          
+              {/* / <VowelItalicizer text={name} /> */}
+              {name}
             </p>
-            <div className="mt-5 w-56 ">
+            <div className="mt-5 w-56 max-md:hidden ">
               <div className="ml-auto flex w-24  items-center justify-between">
                 <img
                   src={left_button}
@@ -81,18 +81,11 @@ const SpecialCategory = ({ name, category, except }) => {
               </div>
             </div>
           </div>
-          <div className="mt-auto w-56">
-            <Link to={`/shop`}>
-              <div className=" ml-auto flex h-8 w-32 cursor-pointer items-center justify-center gap-2 border border-black px-5 uppercase">
-                <p className="text-xs font-medium">view all</p>
-                <img src={up_arrow} alt="up_arrow" />
-              </div>
-            </Link>
-          </div>
-        </div>
-        <article className="scroll-container scroll-snap-x mandatory scrollbar-width-thin scrollbar-thumb-gray-500 w-[70%] flex-1 overflow-x-auto scroll-smooth pb-5 transition-all duration-300">
+     
+        
+        <article className="scroll-container scroll-snap-x mandatory scrollbar-width-thin scrollbar-thumb-gray-500 w-full flex-1 overflow-x-auto scroll-smooth pb-5 transition-all duration-300">
           {products.length > 0 && (
-            <div className="flex gap-10 pr-4">
+            <div className="flex gap-10 max-md:gap-5 px-3">
               {products.map((data) => {
                 if (data._id === except) return null;
                 return (

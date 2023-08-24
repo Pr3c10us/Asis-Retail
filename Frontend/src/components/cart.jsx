@@ -137,8 +137,8 @@ const Cart = ({ setHideCart }) => {
   };
 
   return (
-    <div ref={ref} className="sticky  right-7 top-12 z-20 ml-auto mt-4">
-      <div className="absolute right-0 min-w-[29rem] overflow-hidden bg-[url('./assets/images/bg_img.png')] uppercase shadow-[-7px_8px_30px_0px_#00000033]">
+    <div ref={ref} className="sticky  right-7 top-10 z-20 ml-auto mt-4">
+      <div className="absolute right-0  overflow-hidden bg-[url('./assets/images/bg_img.png')] uppercase shadow-[-7px_8px_30px_0px_#00000033] max-md:w-screen max-md:h-screen max-md:right-0 max-md:shadow-transparent max-md:top-0 max-md:fixed">
         {isLoading && <CartLoading />}
         {!isLoading && cartData?.products?.length >= 1 ? (
           // Cart with items
@@ -269,11 +269,11 @@ const Cart = ({ setHideCart }) => {
           </section>
         ) : (
           // Empty cart
-          <section className="relative w-full px-3 py-6">
+          <section className="relative w-full px-3 pt-14">
             <div className="flex flex-col items-center">
               <div className="item-center relative flex w-full justify-between border-b border-asisDark pb-8">
                 <div>
-                  <p className="text-4xl font-medium uppercase">/your cart</p>
+                  <p className="text-4xl font-medium uppercase max-md:text-2xl">your cart</p>
                   <p className="absolute -top-1 left-52 text-base font-medium text-black">
                     {/* ({cartData?.products?.length}) */}
                   </p>

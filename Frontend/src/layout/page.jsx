@@ -39,7 +39,7 @@ const Page = () => {
   return (
     <main className="h-full bg-[url('./assets/images/bg_img.png')] bg-cover bg-no-repeat ">
       {/* <section className="flex w-full flex-col items-start justify-center"> */}
-        <div className="px-8 pb-8 ">
+        <div className=" pb-8 max-xl:px-0">
           <Toaster position="top-right" />
           {/* Render the header component and pass cart and wishlist data */}
           <Header

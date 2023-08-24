@@ -7,7 +7,7 @@ import { setCart } from "../../../redux/asis";
 import CartLoading from "../../components/cartLoader";
 import AddToCartLoading from "./addToCartLoading";
 import VowelItalicizer from "../../components/vowelItalicizer";
-
+import DisplayImage from "../../components/displayImage";
 const Product_detail = ({ data }) => {
   // States
   const [selectedImage, setSelectedImage] = useState(null);
@@ -15,6 +15,7 @@ const Product_detail = ({ data }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [displayImage, setDisplayImage] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -99,25 +100,58 @@ const Product_detail = ({ data }) => {
     }
   };
 
+  useEffect(() => {
+    // Apply or remove the no-scroll class based on the displayImage value
+    if (displayImage) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    // Clean up by removing the class when the component unmounts
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [displayImage]);
+
+
+  const changeSelectedImage = (direction) => {
+    const currentIndex = data.images.indexOf(selectedImage);
+    let newIndex;
+
+    if (direction === 'left') {
+      newIndex = (currentIndex - 1 + data.images.length) % data.images.length;
+    } else if (direction === 'right') {
+      newIndex = (currentIndex + 1) % data.images.length;
+    }
+
+    setSelectedImage(data.images[newIndex]);
+  };
+
   return (
-    <section className="product_container mb-20 mt-10 h-full ">
+    <section className="product_container mb-20 mt-5 h-full px-20 max-xl:px-0 max-md:mt-2">
       {/* Product details */}
       {data ? (
-        <section className="flex items-start gap-20">
+        <section className="flex justify-center gap-10 items-start max-lg:flex-col max-md:gap-0"> 
           {/* Thumbnail images */}
        
 
           {/* Selected image */}
-          <div className="flex flex-col">
-          <section className="items-center flex h-[47rem] w-[32rem] flex-1  justify-center  overflow-hidden px-3 py-5">
+          <div className="flex flex-col" >
+            <div className="max-md:w-screen ">
             {selectedImage && (
               <img
+              onClick={()=> {
+                setDisplayImage(true)
+              }}
                 src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
-                className="overflow-hidden object-cover w-[511px] object-top max-h-[80vh] border-asisDark border-2"
+                className=" object-cover h-[500px] w-[32rem] max-sm:w-[303px] max-sm:h-[341px] cursor-pointer  object-top border-asisDark border-2 max-lg:place-self-center max-md:mx-auto"
               />
             )}
-          </section>
-          <section className="gap flex  items-center py-5">
+            {displayImage && <DisplayImage img={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`} setDisplayImage={setDisplayImage} changeSelectedImage={changeSelectedImage}/>}
+            </div>
+            
+          <section className="gap flex  items-center py-5 flex-wrap px-0">
             {data.images?.map((img, index) => (
               <div
                 key={index}
@@ -133,6 +167,7 @@ const Product_detail = ({ data }) => {
                   alt="collection_img"
                   className="w-full h-full object-cover object-center "
                 />
+                
               </div>
             ))}
           </section>
@@ -141,8 +176,8 @@ const Product_detail = ({ data }) => {
 
           {/* Product information */}
 
-          <section className="w-full  py-5">
-            <p className="mb-9 text-3xl font-medium uppercase text-asisGreen">
+          <section className="py-5 basis-[50%] w-full max-lg:px-5 max-sm:px-3">
+            <p className="mb-9 text-3xl font-medium uppercase text-asisGreen max-sm:text-2xl">
               {/* <VowelItalicizer text={data.name} /> */}
               {data.name}
 
