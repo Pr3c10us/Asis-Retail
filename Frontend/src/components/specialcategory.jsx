@@ -57,7 +57,7 @@ const SpecialCategory = ({ name, category, except }) => {
   }
   return (
     <section>
-      <section className="relative flex flex-col w-full  justify-between gap-4 border-t border-asisDark pt-12 uppercase max-md:px-3">
+      <section className="relative backdrop-blur-sm flex flex-col w-full  justify-between gap-4 border-t border-asisDark pt-12 uppercase max-md:px-3">
         <div className=" flex justify-between   text-left text-4xl font-semibold max-md:text-2xl">
             <p>
           

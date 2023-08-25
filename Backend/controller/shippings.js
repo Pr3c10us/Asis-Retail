@@ -56,9 +56,22 @@ const deleteShippingDetails = async (req, res) => {
     });
 };
 
+const getShippingDetailsById = async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        throw new BadRequestError("Shipping Id is not valid");
+    }
+    const shipping = await Shipping.findById(req.params.id);
+    if (!shipping) {
+        throw new BadRequestError("Shipping details not found");
+    }
+
+    res.status(200).json(shipping);
+};
+
 module.exports = {
     createShippingDetails,
     getShippingDetails,
     updateShippingDetails,
     deleteShippingDetails,
+    getShippingDetailsById,
 };

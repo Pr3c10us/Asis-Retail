@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/header";
-import Cart from "../components/cart";;
+import Cart from "../components/cart";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
@@ -35,41 +35,38 @@ const Page = () => {
 
   useEffect(() => {}, []);
 
-
   return (
-    <main className="h-full bg-[url('./assets/images/bg_img.png')] bg-cover bg-no-repeat ">
+    <main className="h-full ">
       {/* <section className="flex w-full flex-col items-start justify-center"> */}
-        <div className=" pb-8 max-xl:px-0">
-          <Toaster position="top-right" />
-          {/* Render the header component and pass cart and wishlist data */}
-          <Header
-            setHideCart={setHideCart}
-            cartLength={cartData?.products?.length}
-            // wishlistData={wishData}
-          />
+      <div className=" pb-8 max-xl:px-0">
+        <Toaster position="top-right" />
+        {/* Render the header component and pass cart and wishlist data */}
+        <Header
+          setHideCart={setHideCart}
+          cartLength={cartData?.products?.length}
+          // wishlistData={wishData}
+        />
 
-          {/* Render the Cart component if hideCart is true */}
-          {hideCart && (
-            <Cart setHideCart={setHideCart} cartData={cartData.products} />
-          )}
-          {/* Render banner component */}
-          {/* <Banner /> */}
+        {/* Render the Cart component if hideCart is true */}
+        {hideCart && (
+          <Cart setHideCart={setHideCart} cartData={cartData.products} />
+        )}
+        {/* Render banner component */}
+        {/* <Banner /> */}
 
-          {/* Render the Wishlist component if hideWish is true */}
-          {/* {hideWish && (
+        {/* Render the Wishlist component if hideWish is true */}
+        {/* {hideWish && (
             <Wishlist setHideWish={setHideWish} wishlistData={wishData} />
           )} */}
-<Rotational />
-          {/* Render the nested route components */}
-          <div className="relative">
-
+        <Rotational />
+        {/* Render the nested route components */}
+        <div className="relative">
           <Outlet />
-          </div>
-
-
-          {/* Render the footer component */}
-          {/* <Footer /> */}
         </div>
+
+        {/* Render the footer component */}
+        {/* <Footer /> */}
+      </div>
       {/* </section> */}
     </main>
   );

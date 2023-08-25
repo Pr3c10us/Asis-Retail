@@ -54,7 +54,7 @@ const Product_detail = ({ data }) => {
         axios.defaults.withCredentials = true;
         let item = {
           productId: data._id,
-          size: selectedSize,
+          option: selectedSize,
           quantity: 1,
         };
         const response = await axios.put(
@@ -88,7 +88,7 @@ const Product_detail = ({ data }) => {
         setIsAddingToCart(false);
       }
     } else {
-      toast.error("Select a size to add to cart", {
+      toast.error("Select a option to add to cart", {
         style: {
           border: "1px solid red",
           padding: "8px 16px",
@@ -132,69 +132,71 @@ const Product_detail = ({ data }) => {
     <section className="product_container mb-20 mt-5 h-full px-20 max-xl:px-0 max-md:mt-2">
       {/* Product details */}
       {data ? (
-        <section className="flex justify-center gap-10 items-start max-lg:flex-col max-md:gap-0"> 
+        <section className="flex items-start justify-center gap-10 max-lg:flex-col max-md:gap-0">
           {/* Thumbnail images */}
-       
 
           {/* Selected image */}
-          <div className="flex flex-col" >
+          <div className="flex items-center w-full flex-col">
             <div className="max-md:w-screen ">
-            {selectedImage && (
-              <img
-              onClick={()=> {
-                setDisplayImage(true)
-              }}
-                src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
-                className=" object-cover h-[500px] w-[32rem] max-sm:w-[303px] max-sm:h-[341px] cursor-pointer  object-top border-asisDark border-2 max-lg:place-self-center max-md:mx-auto"
-              />
-            )}
-            {displayImage && <DisplayImage img={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`} setDisplayImage={setDisplayImage} changeSelectedImage={changeSelectedImage}/>}
-            </div>
-            
-          <section className="gap flex  items-center py-5 flex-wrap px-0">
-            {data.images?.map((img, index) => (
-              <div
-                key={index}
-                onClick={() => setSelectedImage(img)}
-                className={` mb-5 flex h-20 w-[100px] cursor-pointer px-5 py-2 items-center justify-center bg-contain bg-center bg-no-repeat ${
-                  img === selectedImage
-                    ? `bg-[url('./assets/images/frames.png')]`
-                    : ""
-                }`}
-              >
+              {selectedImage && (
                 <img
-                  src={`${import.meta.env.VITE_BLOB_URL}${img}`}
-                  alt="collection_img"
-                  className="w-full h-full object-cover object-center "
+                  onClick={() => {
+                    setDisplayImage(true);
+                  }}
+                  src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                  className=" h-[500px] w-[32rem] cursor-pointer border-2 border-asisDark object-cover  object-top max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]"
                 />
-                
-              </div>
-            ))}
-          </section>
+              )}
+              {displayImage && (
+                <DisplayImage
+                  img={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                  setDisplayImage={setDisplayImage}
+                  changeSelectedImage={changeSelectedImage}
+                />
+              )}
+            </div>
+
+            <section className="gap flex flex-wrap items-center justify-center px-0 py-5 backdrop-blur-sm">
+              {data.images?.map((img, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedImage(img)}
+                  className={`mb-5 flex h-20 w-[100px] cursor-pointer items-center justify-center bg-contain bg-center bg-no-repeat px-5 py-2 ${
+                    img === selectedImage
+                      ? `bg-[url('./assets/images/frames.png')]`
+                      : ""
+                  }`}
+                >
+                  <img
+                    src={`${import.meta.env.VITE_BLOB_URL}${img}`}
+                    alt="collection_img"
+                    className="h-full w-full object-cover object-center "
+                  />
+                </div>
+              ))}
+            </section>
           </div>
-      
 
           {/* Product information */}
 
-          <section className="py-5 basis-[50%] w-full max-lg:px-5 max-sm:px-3">
+          <section className="w-full py-5 max-lg:px-5 max-sm:px-3">
             <p className="mb-9 text-3xl font-medium uppercase text-asisGreen max-sm:text-2xl">
               {/* <VowelItalicizer text={data.name} /> */}
               {data.name}
-
             </p>
             {/* Sizes */}
-            <section className="mb-5 flex flex-wrap gap-x-5 gap-y-3 ">
-              {data.countInStock?.map((sizeData, index) => (
+            <section className="flex  flex-wrap gap-x-5 gap-y-3 p-4 backdrop-blur-sm ">
+              {data.countInStock?.map((optData, index) => (
                 <div
                   key={index}
-                  onClick={() => setSelectedSize(sizeData.size)}
+                  onClick={() => setSelectedSize(optData.option)}
                   className={`flex h-10 w-24 cursor-pointer items-center justify-center border text-xs font-medium uppercase ${
-                    selectedSize === sizeData.size
+                    selectedSize === optData.option
                       ? " border-asisDark text-asisDark"
                       : " border-[#C4C4C4] text-[#C4C4C4]"
                   }`}
                 >
-                  {sizeData.size}
+                  {optData.option}
                 </div>
               ))}
             </section>
@@ -247,7 +249,7 @@ const Product_detail = ({ data }) => {
               {/* Accordion */}
               <section
                 onClick={() => setShowDescription((prev) => !prev)}
-                className="border-y border-asisDark text-sm uppercase text-asisDark "
+                className="border-y border-asisDark text-sm uppercase text-asisDark backdrop-blur-sm "
               >
                 <article className="border-b1 flex cursor-pointer items-center justify-between border-asisDark py-2 font-semibold">
                   <p>product details</p>
@@ -261,7 +263,7 @@ const Product_detail = ({ data }) => {
                 </article>
 
                 {/* <article className="flex cursor-pointer items-center justify-between py-2">
-                  <p>size guild</p>
+                  <p>option guild</p>
                   <img src={down} alt="down" />
                 </article> */}
               </section>

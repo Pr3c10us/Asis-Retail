@@ -6,6 +6,8 @@ const {
     getOrder,
     updateOrder,
     getOrdersAdmin,
+    deleteOrder,
+    getOrderByClientSecrete,
 } = require("../controller/orders");
 const {
     customerAuthorization,
@@ -18,6 +20,15 @@ router.route("/admin").get(adminAuthorization, getOrdersAdmin);
 router
     .route("/stripe")
     .post(customerAuthorization, getCartFromCookie, createOrderStripe);
-router.route("/:id").get(getOrder).put(adminAuthorization, updateOrder);
+
+router.route("/clientSecret").post(getOrderByClientSecrete);
+
+router
+    .route("/:id")
+    .get(getOrder)
+    .put(adminAuthorization, updateOrder)
+    .delete(adminAuthorization, deleteOrder);
+
+router.route("/:id/customer").put(customerAuthorization, updateOrder);
 
 module.exports = router;
