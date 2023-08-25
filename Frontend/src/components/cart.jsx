@@ -1,6 +1,7 @@
 import React from "react";
 import cancel_cart from "../assets/icons/cancel_cart.svg";
 import cartIcon from "../assets/icons/cart-icon.svg";
+import Logo from "../assets/icons/logo.svg";
 import down from "../assets/icons/down.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -8,8 +9,10 @@ import toast from "react-hot-toast";
 import CartLoading from "./cartLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart } from "../../redux/asis";
+import removeCart from "../assets/icons/cartIcon.svg"
 import SpecialChar from "./specialChar";
 import VowelItalicizer from "./vowelItalicizer";
+ 
 
 const Cart = ({ setHideCart }) => {
   const ref = React.useRef(null);
@@ -63,13 +66,13 @@ const Cart = ({ setHideCart }) => {
     console.log(cartData);
   }, []);
 
-  const removeItemFromCart = async (id, size) => {
+  const removeItemFromCart = async (id, option) => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
       const item = {
         productId: id,
-        size: size,
+        option: option,
       };
       await axios.delete(`${import.meta.env.VITE_API_URL}carts/removeItem`, {
         data: item,
@@ -137,12 +140,28 @@ const Cart = ({ setHideCart }) => {
   };
 
   return (
-    <div ref={ref} className="sticky right-7 top-10 z-20 ml-auto mt-4">
-      <div className="absolute right-0  overflow-hidden bg-[url('./assets/images/bg_img.png')] uppercase shadow-[-7px_8px_30px_0px_#00000033] max-md:w-screen max-md:h-screen max-md:right-0 max-md:shadow-transparent max-md:top-0 max-md:fixed">
+    <div ref={ref} className="sticky right-7 top-12 z-40 ml-auto mt-4 ">
+      <div className="absolute right-7  
+      overflow-y-auto bg-[url('./assets/images/bg_img.png')] 
+      uppercase shadow-[-7px_8px_30px_0px_#00000033] max-md:w-screen max-md:h-screen max-md:right-0
+       max-md:shadow-transparent max-md:top-0 max-md:fixed  max-md:px-5 max-sm:px-1">
+            <div className="hidden max-md:flex justify-end items-end w-full mb-4  p-5">
+              <div className="flex gap-2 items-center w-1/2 justify-between">
+                <Link to='/homepage'>
+              <img src={Logo} alt="Logo" className="pointer"/>
+
+                </Link>
+              <img src={removeCart} alt="removeCart" className="cursor-pointer"  onClick={() => setHideCart(false)}/>
+              </div>
+              
+            </div>
+
         {isLoading && <CartLoading />}
         {!isLoading && cartData?.products?.length >= 1 ? (
           // Cart with items
+
           <section className="p-5">
+        
             <div className="item-center relative flex justify-between border-b-2 border-asisDark pb-10">
               <div>
                 <p className="text-4xl font-medium uppercase">
@@ -151,9 +170,10 @@ const Cart = ({ setHideCart }) => {
                     ur c
                     <SpecialChar char={`a`} />
                     rt */}
-                  / <VowelItalicizer text="your cart" />
+                  {/* / <VowelItalicizer text="" /> */}
+                  your cart
                 </p>
-                <p className="absolute -top-2 left-[13.5rem] text-base font-medium text-black">
+                <p className="absolute -top-2 left-[12.5rem] text-base font-medium text-black">
                   ({cartData?.products?.length})
                 </p>
               </div>
@@ -161,11 +181,11 @@ const Cart = ({ setHideCart }) => {
               <img
                 src={cancel_cart}
                 alt="cancel_cart"
-                className="cursor-pointer"
+                className="cursor-pointer max-md:hidden"
                 onClick={() => setHideCart(false)}
               />
             </div>
-            <div className="max-h-[40vh] overflow-y-scroll">
+            <div className="max-h-[40vh] overflow-y-scroll ">
               {cartData.products.map((data, index) => {
                 return (
                   <section key={index}>
@@ -184,7 +204,7 @@ const Cart = ({ setHideCart }) => {
                         <div className="flex items-start justify-between border-b-2 border-b-asisDark/30 pb-2">
                           <div>
                             <Link to={`/product/${data.product._id}`}>
-                              <p className="w-[212px] text-sm font-bold text-asisDark">
+                              <p className="w-[212px] text-sm font-bold text-asisGreen">
                                 {data.product.name}
                               </p>
                             </Link>
@@ -199,7 +219,7 @@ const Cart = ({ setHideCart }) => {
                           {/* remove item from cart */}
                           <button
                             onClick={() =>
-                              removeItemFromCart(data.product._id, data.size)
+                              removeItemFromCart(data.product._id, data.option)
                             }
                           >
                             <img
@@ -213,9 +233,9 @@ const Cart = ({ setHideCart }) => {
                           <div>
                             {/* <p>{data.color}</p> */}
                             <p>
-                              size:{" "}
+                              type:{" "}
                               <span className="text-sm font-bold">
-                                {data.size}
+                                {data.option}
                               </span>
                             </p>
                           </div>
@@ -250,7 +270,7 @@ const Cart = ({ setHideCart }) => {
             {/* Link to checkout */}
             <Link to="/checkout">
               <button
-                className="mt-5 flex w-full cursor-pointer items-center justify-center bg-asisDark py-3 text-sm font-semibold uppercase text-[#FFFFFF]"
+                className="mt-5 flex w-full cursor-pointer items-center justify-center bg-asisDark py-3 text-sm font-semibold uppercase text-[#FFFFFF] rounded-md"
                 onClick={() => {
                   setHideCart(false);
                 }}
@@ -269,7 +289,7 @@ const Cart = ({ setHideCart }) => {
           </section>
         ) : (
           // Empty cart
-          <section className="relative w-full px-3 pt-14">
+          <section className="relative w-full px-5 py-9 max-md:py-0">
             <div className="flex flex-col items-center">
               <div className="item-center relative flex w-full justify-between border-b border-asisDark pb-8">
                 <div>
@@ -281,12 +301,12 @@ const Cart = ({ setHideCart }) => {
                 <img
                   src={cancel_cart}
                   alt="cancel_cart"
-                  className="cursor-pointer"
+                  className="cursor-pointer max-md:hidden"
                   onClick={() => setHideCart(false)}
                 />
               </div>
               <img src={cartIcon} alt="cartIcon" className="opacity-30 " />
-              <div className="mt-4 flex w-full items-center justify-center bg-[#525050] py-2 text-sm font-semibold text-[#FFFEF5]">
+              <div className="mt-4 flex w-full items-center justify-center rounded-md bg-[#525050] py-2 text-sm font-semibold text-[#FFFEF5]">
                 cart is empty
               </div>
             </div>

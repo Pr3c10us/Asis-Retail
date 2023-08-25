@@ -5,7 +5,7 @@ import down from "../../assets/icons/down.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import CartLoading from "../../components/cartLoader";
+import CartLoading from "./checkoutLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart } from "../../../redux/asis";
 import SpecialChar from "../../components/specialChar";
@@ -52,13 +52,13 @@ const CheckoutCart = () => {
     console.log(cartData);
   }, []);
 
-  const removeItemFromCart = async (id, size) => {
+  const removeItemFromCart = async (id, option) => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
       const item = {
         productId: id,
-        size: size,
+        option: option,
       };
       await axios.delete(`${import.meta.env.VITE_API_URL}carts/removeItem`, {
         data: item,
@@ -126,11 +126,12 @@ const CheckoutCart = () => {
   };
 
   return (
-    <div className="relative min-w-[29rem] overflow-hidden uppercase ">
+    <div className="relative min-w-[29rem] max-lg:hidden overflow-hidden uppercase ">
       {isLoading && <CartLoading />}
+     
       {!isLoading && (
         // Cart with items
-        <section className="h-full p-5">
+        <section className="h-full p-5 backdrop-blur-md">
           <div className="item-center relative flex justify-between border-b-2 border-asisDark pb-10">
             <div>
               <p className="text-4xl font-medium uppercase">
@@ -139,9 +140,10 @@ const CheckoutCart = () => {
                     ur c
                     <SpecialChar char={`a`} />
                     rt */}
-                / <VowelItalicizer text="your cart" />
+                {/* / <VowelItalicizer text="your cart" /> */}
+                your cart
               </p>
-              <p className="absolute -top-2 left-[13.5rem] text-base font-medium text-black">
+              <p className="absolute -top-2 left-[12.3rem] text-base font-medium text-black">
                 ({cartData?.products?.length})
               </p>
             </div>
@@ -166,7 +168,7 @@ const CheckoutCart = () => {
                       <div className="flex items-start justify-between border-b-2 border-b-asisDark/30 pb-2">
                         <div>
                           <Link to={`/product/${data.product._id}`}>
-                            <p className="w-[212px] text-sm font-bold text-asisDark">
+                            <p className="w-[212px] text-sm font-bold text-asisGreen">
                               {data.product.name}
                             </p>
                           </Link>
@@ -181,7 +183,7 @@ const CheckoutCart = () => {
                         {/* remove item from cart */}
                         <button
                           onClick={() =>
-                            removeItemFromCart(data.product._id, data.size)
+                            removeItemFromCart(data.product._id, data.option)
                           }
                         >
                           <img
@@ -195,9 +197,9 @@ const CheckoutCart = () => {
                         <div>
                           {/* <p>{data.color}</p> */}
                           <p>
-                            size:{" "}
+                            type:{" "}
                             <span className="text-sm font-bold">
-                              {data.size}
+                              {data.option}
                             </span>
                           </p>
                         </div>

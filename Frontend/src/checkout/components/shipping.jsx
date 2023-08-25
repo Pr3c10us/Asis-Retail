@@ -37,7 +37,7 @@ const Shipping = ({ setActiveStep }) => {
           borderRadius: "4px",
         },
       });
-      
+
       setIsLoading(false);
       return;
     }
@@ -82,15 +82,16 @@ const Shipping = ({ setActiveStep }) => {
   }
 
   return (
-    <div className="flex flex-col gap-12 py-8">
+    <div className="flex w-full  flex-col gap-y-12  py-8">
       <h2 className="text-2xl font-semibold uppercase">
-        / <VowelItalicizer text={"Shipping method"} />
+        {/* / <VowelItalicizer text={"Shipping method"} /> */}
+        Shipping method
       </h2>
-      <section className="flex flex-col gap-8">
+      <section className="flex flex-col gap-8 backdrop-blur-md">
         {data.map((shippingDetail) => (
           <div
             key={shippingDetail._id}
-            className="flex cursor-pointer items-center gap-x-6 px-4 font-semibold text-asisDark/40"
+            className="flex cursor-pointer items-center gap-x-6 px-4 font-semibold text-asisDark/40 max-sm:px-0"
             onClick={() => setSelectedShipping(shippingDetail._id)}
           >
             <div className=" flex h-5 w-5 items-center justify-center rounded-full border-2 border-asisDark">
@@ -131,33 +132,35 @@ const Shipping = ({ setActiveStep }) => {
           </div>
         ))}
       </section>
-      <section className="border-2 border-asisDark/60 px-8 py-4">
-        <div className="flex gap-x-2">
+      <section className="border-2 border-asisDark px-8 py-4 text-xs backdrop-blur-md max-sm:px-2">
+        <div className="mb-2 flex items-start justify-between">
           <h2 className="">Contact Information: </h2>
-          <p className=" font-semibold">
+          <p className=" font-semibold text-right ">
             {` `}
-            {firstName},{lastName},{email},{phone}
+            {firstName},{lastName},{email},
+            <br className="hidden max-sm:block"></br>
+            {phone}
           </p>
         </div>
-        <div className="flex gap-x-2">
+        <div className="mb-2 flex items-start justify-between">
           <h2 className="">Shipping Address: </h2>
-          <p className=" font-semibold">
+          <p className=" font-semibold text-right">
             {` `}
-            {address},{city},{state},{country},{zip}
+            {address},{city},<br></br>{state},{country},{zip}
           </p>
         </div>
       </section>
-      <section className="flex items-end justify-end gap-4 pl-4">
+      <section className="flex items-end justify-start gap-1 pl-4 max-sm:justify-between ">
         <button
           onClick={() => setActiveStep(1)}
-          className="h-min border-b-2 border-asisDark px-4 pb-1.5 text-sm font-bold"
+          className="h-min border-b-2 border-asisDark px-4 pb-1.5 text-sm font-bold max-sm:mt-3 max-sm:text-xs "
         >
           Go back
         </button>
         <button
           disabled={isLoading}
           onClick={handleAddShippingDetails}
-          className={`font-bold" w-1/2 bg-asisDark  py-3 text-white ${
+          className={`w-9/12 rounded-md bg-asisDark py-3 font-bold  text-white max-sm:w-8/12 max-sm:text-xs ${
             selectedShipping ? "" : "opacity-50 "
           }`}
         >
