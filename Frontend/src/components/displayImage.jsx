@@ -1,9 +1,9 @@
 import React from "react";
 import X_cancel from "../assets/icons/X_cancel.svg";
-import changeImageIcon from "../assets/icons/changeImage_icon.svg";
+import changeImageIcon from "../assets/icons/changeDisplayImg.svg";
 const DisplayImage = ({ img, setDisplayImage, changeSelectedImage }) => {
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-[#000000d3] p-10">
+    <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-[#000000d3] p-10 ">
       <img
         onClick={() => {
           setDisplayImage(false);
