@@ -53,9 +53,10 @@ const Contact = ({ setActiveStep }) => {
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-8 py-8">
       <h2 className="text-2xl font-semibold uppercase">
-        / <VowelItalicizer text={"Contact Information"} />
+        {/* / <VowelItalicizer text={"Contact Information"} /> */}
+        Contact Information
       </h2>
-      <section className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <section className="flex flex-col gap-2">
         <ContactInput
           touched={formik.touched.firstName}
           errors={formik.errors.firstName}
@@ -86,9 +87,10 @@ const Contact = ({ setActiveStep }) => {
         />
       </section>
       <h2 className="text-2xl font-semibold uppercase">
-        / <VowelItalicizer text={"Shipping Address"} />
+        {/* / <VowelItalicizer text={"Shipping Address"} /> */}
+        Shipping Address
       </h2>
-      <section className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <section className="flex flex-col gap-2">
         <ContactInput
           touched={formik.touched.address}
           errors={formik.errors.address}
@@ -125,7 +127,7 @@ const Contact = ({ setActiveStep }) => {
           placeholder="ZIP CODE *"
         />
       </section>
-      <section className="flex justify-end gap-4 pl-4">
+      <section className="flex justify-start gap-4 ">
         {/* <button
           onClick={setActiveStep(1)}
           className="border-b-2 border-asisDark px-2 py-1 text-sm font-bold"
@@ -135,7 +137,7 @@ const Contact = ({ setActiveStep }) => {
         <button
           type="submit"
           onClick={() => setActiveStep(1)}
-          className=" w-1/2 bg-asisDark py-3  font-bold text-white"
+          className=" w-full bg-asisDark py-3  font-bold text-white rounded-md"
         >
           Go to Shipping
         </button>

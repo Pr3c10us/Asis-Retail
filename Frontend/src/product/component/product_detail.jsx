@@ -190,7 +190,7 @@ const Product_detail = ({ data }) => {
                 <div
                   key={index}
                   onClick={() => setSelectedSize(optData.option)}
-                  className={`flex h-10 w-24 cursor-pointer items-center justify-center border text-xs font-medium uppercase ${
+                  className={`flex h-10 w-24 cursor-pointer items-center justify-center border text-xs font-medium uppercase rounded-md${
                     selectedSize === optData.option
                       ? " border-asisDark text-asisDark"
                       : " border-[#C4C4C4] text-[#C4C4C4]"
@@ -217,7 +217,7 @@ const Product_detail = ({ data }) => {
               {/* Add to cart */}
 
               <button
-                className={`relative my-3 flex max-h-12  w-full justify-center  py-4 text-center text-xs font-semibold uppercase ${
+                className={`relative my-3 flex max-h-12 rounded-md w-full justify-center  py-4 text-center text-xs font-semibold uppercase ${
                   selectedSize
                     ? "bg-asisDark text-[#FFFFFF]"
                     : "bg-asisDark/70 text-[#C4C4C4]"
@@ -268,11 +268,11 @@ const Product_detail = ({ data }) => {
                 </article> */}
               </section>
               <div
-                className={`grid border-b border-asisDark  text-sm text-asisDark/80 transition-all duration-300 ${
-                  showDescription ? "grid-rows-[1fr] py-2" : "grid-rows-[0fr]"
+                className={`grid   text-sm text-asisDark/80 transition-all duration-300 ${
+                  showDescription ? "grid-rows-[1fr] py-2 border-b border-asisDark" : "grid-rows-[0fr]"
                 } `}
               >
-                <p className="overflow-hidden">{data.description}</p>
+                <p className="overflow-hidden">{data.description}  </p>
               </div>
             </section>
           </section>

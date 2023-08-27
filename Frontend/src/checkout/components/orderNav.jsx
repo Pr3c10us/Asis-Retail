@@ -7,7 +7,7 @@ const OrderNav = ({ activeStep, setActiveStep }) => {
     { id: "payment", name: "Payment", status: 3 },
   ];
   return (
-    <nav className="relative flex w-full py-8">
+    <nav className="relative flex w-full pt-2 mt-6 pb-6 backdrop-blur-md">
       {steps.map((step) => (
         <div
           key={step.id}

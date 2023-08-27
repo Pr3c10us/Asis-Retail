@@ -57,8 +57,8 @@ const SpecialCategory = ({ name, category, except }) => {
   }
   return (
     <section>
-      <section className="relative backdrop-blur-sm flex flex-col w-full  justify-between gap-4 border-t border-asisDark pt-12 uppercase max-md:px-3">
-        <div className=" flex justify-between   text-left text-4xl font-semibold max-md:text-2xl">
+      <section className="relative backdrop-blur-sm flex flex-col w-full  justify-between gap-4  uppercase max-lg:px-5 max-sm:px-3">
+        <div className=" flex justify-between  border-t border-asisDark pt-10  text-left text-4xl font-semibold max-md:text-2xl">
             <p>
           
               {/* / <VowelItalicizer text={name} /> */}

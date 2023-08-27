@@ -199,22 +199,22 @@ export default function CheckoutForm({
         onChange={(e) => setEmail(e.target.value)}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <section className="border-2 border-asisDark/60 px-8 py-4">
-        <div className="flex gap-x-2">
+      <section className="border-2 border-asisDark px-8 py-4 max-sm:px-3 backdrop-blur-md">
+        <div className="flex justify-between max-sm:text-right my-2">
           <h2 className="">Contact Information: </h2>
           <p className=" font-semibold">
             {` `}
-            {firstName},{lastName},{email2},{phone}
+            {firstName},{lastName},<br className="hidden max-sm:block"></br>{email2},<br className="max-sm:block hidden"></br>{phone}
           </p>
         </div>
-        <div className="flex gap-x-2">
+        <div className="flex gap-x-2 items-start justify-between my-2">
           <h2 className="">Shipping Address: </h2>
-          <p className=" font-semibold">
+          <p className=" font-semibold text-right">
             {` `}
-            {address},{city},{state},{country},{zip}
+            {address},{city},<br className="hidden max-sm:block"></br>{state},{country},{zip}
           </p>
         </div>
-        <div className="flex gap-x-2">
+        <div className="flex justify-between">
           <h2 className="">Shipping Method: </h2>
           <p className=" font-semibold">
             {` `}
@@ -222,7 +222,7 @@ export default function CheckoutForm({
           </p>
         </div>
       </section>
-      <section className="flex items-end justify-end gap-4 pl-4">
+      <section className="flex items-end justify-end gap-4 pl-4 max-sm:justify-between">
         <button
           type="button"
           onClick={cancelOrder}
@@ -233,7 +233,7 @@ export default function CheckoutForm({
         <button
           disabled={isLoading || !stripe || !elements}
           id="submit"
-          className="h-11 w-1/2 bg-black text-white"
+          className="h-11 w-1/2 bg-black text-white rounded-md"
         >
           <span id="button-text">
             {isLoading ? <ButtonLoader /> : "Pay now"}

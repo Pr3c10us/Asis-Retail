@@ -72,6 +72,9 @@ input[type="checkbox"]:checked::before {
 .slow-spin {
   animation-duration: 30s; 
 }
+.slow-ping {
+  animation-duration: 2s;
+}
 
 .no-scroll {
   overflow: hidden;
