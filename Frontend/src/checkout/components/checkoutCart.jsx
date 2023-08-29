@@ -28,7 +28,7 @@ const CheckoutCart = () => {
       // console.log(response.data);
       // setCartData(response.data);
       if (response.data.products.length === 0) {
-        navigate("/shop", { replace: true });
+        navigate("/homepage", { replace: true });
       }
       dispatch(setCart(response.data));
       setIsLoading(false);
@@ -47,7 +47,7 @@ const CheckoutCart = () => {
     }
   };
   React.useEffect(() => {
-    cartData?.products?.length === 0 && navigate("/shop", { replace: true });
+    cartData?.products?.length === 0 && navigate("/homepage", { replace: true });
     handleGetCartContent();
     console.log(cartData);
   }, []);

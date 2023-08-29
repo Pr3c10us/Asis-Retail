@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import SpecialCategory from "../components/specialCategory";
+import { motion } from "framer-motion"
 import back_to_top from "../assets/icons/back_to_top.svg";
 import useFetch from "../components/useFetch";
 import StackingSection from "../components/StackingSection ";
@@ -21,6 +22,7 @@ const Page = () => {
     <div className=" h-full p-0 ">
       
         <section>
+          
         <StackingSection />
           {/* <SpecialCategory name={name} /> */}
        
