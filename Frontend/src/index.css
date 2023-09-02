@@ -111,7 +111,12 @@ input[type="checkbox"]:checked::before {
 .no-scroll {
   overflow: hidden;
 }
-
+@media (max-width: 640px) {
+  .mainContainer {
+    width: 165px;
+    height: 235px;
+  }
+}
 @media (min-height: 1000px) {
   .filter_component {
     height: 700px;
