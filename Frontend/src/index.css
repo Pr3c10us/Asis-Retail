@@ -3,7 +3,40 @@
 @tailwind utilities;
 
 
+.mainContainer {
+  position: relative;
+  width: 239px;
+  height: 312px;
+}
+.theCard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
 
+}
+.theCard:hover {
+  transform: rotateY(180deg);
+}
+.theFront {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  color: black;
+
+}
+.theBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+background-color: white;
+transform: rotateY(180deg);
+color: black;
+
+}
 
 
 ::-webkit-scrollbar {
@@ -79,7 +112,12 @@ input[type="checkbox"]:checked::before {
 .no-scroll {
   overflow: hidden;
 }
-
+@media (max-width: 640px) {
+  .mainContainer {
+    width: 165px;
+    height: 235px;
+  }
+}
 @media (min-height: 1000px) {
   .filter_component {
     height: 700px;

@@ -13,7 +13,7 @@ const Products = ({ name, price, collaborations, images }) => {
   };
 
   return (
-      <div className="aspect-[9/16] h-[312px] w-[239px] max-md:w-[172px] max-md:h-[235px] relative">
+      <div className="aspect-[9/16] h-[312px] w-[239px] max-md:w-[172px] max-md:h-[235px] relative cursor-pointer">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-asisDark opacity-50 rounded-3xl"></div>
         <img
           src={`${import.meta.env.VITE_BLOB_URL}${images[0]}`}
