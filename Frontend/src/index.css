@@ -16,7 +16,7 @@
   transition: all 0.5s ease;
 
 }
-.theCard:hover {
+.mainContainer:hover > .theCard {
   transform: rotateY(180deg);
 }
 .theFront {
