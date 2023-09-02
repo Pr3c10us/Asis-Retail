@@ -11,7 +11,7 @@ const OrderNav = ({ activeStep, setActiveStep }) => {
       {steps.map((step) => (
         <div
           key={step.id}
-          className={`flex w-full flex-1 ${
+          className={`flex w-full text-xs sm:text-base flex-1 ${
             step.status == 2 && "justify-center"
           } ${step.status == 3 && "justify-end"}`}
         >
