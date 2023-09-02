@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .mainContainer {
   position: relative;
   width: 239px;

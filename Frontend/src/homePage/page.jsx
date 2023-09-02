@@ -77,6 +77,7 @@ console.log(dynamicUrl)
     <div className=" h-full px-5 ">
       <section>
         <StackingSection />
+
         {/* <SpecialCategory name={name} /> */}
         <section
           className={`flex gap-x-5 max-sm:gap-2  ${align} flex-wrap transition-all duration-100`}
