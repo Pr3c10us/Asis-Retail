@@ -3,7 +3,7 @@ import Order from "./components/order";
 import CheckoutCart from "./components/checkoutCart";
 const Page = () => {
   return (
-    <main className="flex justify-center px-5">
+    <main className="flex justify-center sm:px-5">
       <Order />
 
       {/* <CheckoutCart /> */}

@@ -82,16 +82,16 @@ const Shipping = ({ setActiveStep }) => {
   }
 
   return (
-    <div className="flex w-full  flex-col gap-y-12  py-8">
+    <div className="flex w-full  flex-col gap-y-12 py-8">
       <h2 className="text-2xl font-semibold uppercase">
         {/* / <VowelItalicizer text={"Shipping method"} /> */}
         Shipping method
       </h2>
-      <section className="flex flex-col gap-8 backdrop-blur-md">
+      <section className="flex flex-col gap-8">
         {data.map((shippingDetail) => (
           <div
             key={shippingDetail._id}
-            className="flex cursor-pointer items-center gap-x-6 px-4 font-semibold text-asisDark/40 max-sm:px-0"
+            className="flex cursor-pointer items-center gap-x-6 text-sm sm:text-base py-2 font-semibold text-asisDark/40 backdrop-blur-md px-2"
             onClick={() => setSelectedShipping(shippingDetail._id)}
           >
             <div className=" flex h-5 w-5 items-center justify-center rounded-full border-2 border-asisDark">
@@ -135,7 +135,7 @@ const Shipping = ({ setActiveStep }) => {
       <section className="border-2 border-asisDark px-8 py-4 text-xs backdrop-blur-md max-sm:px-2">
         <div className="mb-2 flex items-start justify-between">
           <h2 className="">Contact Information: </h2>
-          <p className=" font-semibold text-right ">
+          <p className=" text-right font-semibold ">
             {` `}
             {firstName},{lastName},{email},
             <br className="hidden max-sm:block"></br>
@@ -144,9 +144,10 @@ const Shipping = ({ setActiveStep }) => {
         </div>
         <div className="mb-2 flex items-start justify-between">
           <h2 className="">Shipping Address: </h2>
-          <p className=" font-semibold text-right">
+          <p className=" text-right font-semibold">
             {` `}
-            {address},{city},<br></br>{state},{country},{zip}
+            {address},{city},<br></br>
+            {state},{country},{zip}
           </p>
         </div>
       </section>
