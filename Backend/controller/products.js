@@ -341,61 +341,265 @@ const updateProduct = async (req, res) => {
 };
 
 const createSpecialCategory = async (req, res) => {
-    if (!req.body.name) {
-        throw new BadRequestError("Name is required");
-    }
-    const nameExist = await Category.findOne({
-        name: req.body.name,
-    });
+    // if (!req.body.name) {
+    //     throw new BadRequestError("Name is required");
+    // }
 
+    // return res.json({a:req.body,b:req.files});
+
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: "No images uploaded." });
+    }
+
+    const nameExist = await Category.findOne({ name: req.body.name });
     if (nameExist) {
-        throw new BadRequestError("Name already exists");
+        throw new BadRequestError("Category name already exist");
     }
-    if (req.body.specialCategory) {
-        const validSpecialCategoryId = mongoose.isValidObjectId(
-            req.body.specialCategory
-        );
 
-        if (!validSpecialCategoryId) {
-            throw new BadRequestError("Invalid Special Category Id");
-        }
+    // Push Images to Azure Blob Storage
+    const imagePromises = req.files.map(async (image) => {
+        // Get the file extension (assuming image files)
+        const fileExtension = image.originalname.split(".").pop();
+        const blobName = `${Date.now()}-${Math.random()
+            .toString(36)
+            .substring(7)}.${fileExtension}`;
 
-        const specialCategory = await SpecialCategory.findById(
-            req.body.specialCategory
-        );
-
-        if (!specialCategory) {
-            throw new BadRequestError("Special Category does not exist");
-        }
-
-        req.body.specialCategory = specialCategory._id;
-    }
+        const containerName = process.env.ASIS_IMAGE_CONTAINER_NAME;
+        const containerClient =
+            blobServiceClient.getContainerClient(containerName);
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        await blockBlobClient.upload(image.buffer, image.buffer.length);
+        // return `${process.env.AZURE_IMAGE_URL}${blobName}`;
+        return blobName;
+    });
+    const images = await Promise.all(imagePromises);
+    req.body.images = images;
 
     const category = await Category.create(req.body);
 
     res.status(201).json({
-        message: "Special category created successfully",
+        message: "Category created successfully",
         category,
     });
 };
-const createSuperSpecialCategory = async (req, res) => {
-    if (!req.body.name) {
-        throw new BadRequestError("Name is required");
+
+const getCategories = async (req, res) => {
+    // get name query from request
+    const { name } = req.query;
+
+    // create a query object to filter result and for search attribute add admin to it
+    const queryObject = {};
+
+    // if name is provided in request query add to query object
+    if (name) {
+        queryObject.name = { $regex: name, $options: "i" };
     }
-    const nameExist = await SpecialCategory.findOne({
-        name: req.body.name,
+
+    // get categories for admin
+    let result = Category.find(queryObject).select(
+        "-admin -createdAt -updatedAt -__v"
+    );
+
+    // #################################################################
+    // Set up Pagination
+
+    // set limit and page(from query) variable
+    const limit = Number(req.query.limit) || 30;
+    const page = Number(req.query.page) || 1;
+    const skip = (page - 1) * limit;
+
+    // edit categories based on limit and page
+    result = result.skip(skip).limit(limit);
+
+    // #################################################################
+    // Send final categories
+
+    const categories = await result;
+
+    res.json({ nbHits: categories.length, categories });
+};
+
+const deleteCategory = async (req, res) => {
+    // get category id from request params
+    const { id } = req.params;
+
+    // check if id is valid
+    if (!mongoose.isValidObjectId(id)) {
+        throw new BadRequestError("Invalid category id");
+    }
+
+    // find category by id and delete
+    const category = await Category.findById(id);
+
+    // if category not found throw error
+    if (!category) {
+        throw new NotFoundError("Category not found");
+    }
+
+    // Delete images from azure blob storage
+    const containerName = process.env.ASIS_IMAGE_CONTAINER_NAME;
+    const imagePromises = category.images.map(async (imageName) => {
+        const containerClient =
+            blobServiceClient.getContainerClient(containerName);
+        const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+        await blockBlobClient.deleteIfExists();
+        // return;
     });
 
-    if (nameExist) {
-        throw new BadRequestError("Name already exists");
+    await Promise.all(imagePromises);
+
+    await Category.findByIdAndDelete(id);
+    // send success message
+    res.json({ message: "Category deleted successfully" });
+};
+
+const updateCategory = async (req, res) => {
+    // get category id from request params
+    const { id } = req.params;
+
+    if (req.body.images) {
+        throw new BadRequestError("Images cannot be updated from this route");
     }
 
-    const specialCategory = await SpecialCategory.create(req.body);
+    // check if id is valid
+    if (!mongoose.isValidObjectId(id)) {
+        throw new BadRequestError("Invalid category id");
+    }
 
-    res.status(201).json({
-        message: "Special category created successfully",
-        specialCategory,
+    // find category by id and delete
+    const category = await Category.findById(id);
+
+    // if category not found throw error
+    if (!category) {
+        throw new NotFoundError("Category not found");
+    }
+
+    if (req.body.name) {
+        const nameExist = await Category.findOne({
+            name: req.body.name,
+        });
+
+        if (nameExist) {
+            throw new BadRequestError("Name already exists");
+        }
+    }
+
+    const newProductInfo = await Category.findByIdAndUpdate(id, req.body, {
+        new: true,
+        runValidators: true,
     });
+
+    res.status(200).json({
+        message: "Category updated successfully",
+        category: newProductInfo,
+    });
+};
+
+const deleteCategoryImage = async (req, res) => {
+    // get category id and image id from request params
+    const { categoryId } = req.params;
+
+    // get image name from request body
+    const { imageNames } = req.body;
+
+    // check if category id is valid
+    if (!mongoose.isValidObjectId(categoryId)) {
+        throw new BadRequestError("Invalid category id");
+    }
+
+    // get category by id
+    const category = await Category.findById(categoryId);
+
+    // if category not found throw error
+    if (!category) {
+        throw new NotFoundError("Category not found");
+    }
+
+    const imagePromises = imageNames.map(async (imageName) => {
+        // check if image exists in category images
+        if (!category.images.includes(imageName)) {
+            throw new NotFoundError("Image not found in category images");
+        }
+        try {
+            // Delete image from azure blob storage
+            const containerName = process.env.ASIS_IMAGE_CONTAINER_NAME;
+            const containerClient =
+                blobServiceClient.getContainerClient(containerName);
+            const blockBlobClient =
+                containerClient.getBlockBlobClient(imageName);
+
+            await blockBlobClient.deleteIfExists();
+            const images = category.images.filter(
+                (image) => image !== imageName
+            );
+            category.images = images;
+            // return imageName;
+        } catch (error) {
+            console.log(error.details);
+            // if (error.details.code === "BlobNotFound") {
+            //     throw new NotFoundError("Image not found");
+            // }
+            throw new BadRequestError("Error deleting image");
+        }
+    });
+
+    await Promise.all(imagePromises);
+    console.log(category.images);
+    // imagesToDelete.forEach((imageName) => {
+    //     const images = category.images.filter((image) => image !== imageName);
+    //     category.images = images;
+    // });
+    // save category
+    await category.save();
+
+    // send success message
+    res.json({ message: "Image deleted successfully" });
+};
+
+const addCategoryImage = async (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: "No images uploaded." });
+    }
+    // get category id and image id from request params
+    const { categoryId, imageName } = req.params;
+
+    // check if category id is valid
+    if (!mongoose.isValidObjectId(categoryId)) {
+        throw new BadRequestError("Invalid category id");
+    }
+
+    // get category by id
+    const category = await Category.findById(categoryId);
+
+    // if category not found throw error
+    if (!category) {
+        throw new NotFoundError("Category not found");
+    }
+
+    // Push Images to Azure Blob Storage
+    const imagePromises = req.files.map(async (image) => {
+        // Get the file extension (assuming image files)
+        const fileExtension = image.originalname.split(".").pop();
+        const blobName = `${Date.now()}-${Math.random()
+            .toString(36)
+            .substring(7)}.${fileExtension}`;
+
+        const containerName = process.env.ASIS_IMAGE_CONTAINER_NAME;
+        const containerClient =
+            blobServiceClient.getContainerClient(containerName);
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        await blockBlobClient.upload(image.buffer, image.buffer.length);
+        // return `${process.env.AZURE_IMAGE_URL}${blobName}`;
+        return blobName;
+    });
+    const images = await Promise.all(imagePromises);
+    category.images = [...category.images, ...images];
+
+    // save category
+    await category.save();
+
+    // send success message
+    res.json({ message: "Image added successfully", images });
 };
 
 module.exports = {
@@ -407,5 +611,9 @@ module.exports = {
     deleteProductImage,
     addProductImage,
     createSpecialCategory,
-    createSuperSpecialCategory,
+    getCategories,
+    deleteCategory,
+    updateCategory,
+    deleteCategoryImage,
+    addCategoryImage,
 };

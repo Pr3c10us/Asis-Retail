@@ -8,10 +8,9 @@ const categorySchema = new mongoose.Schema(
         description: {
             type: String,
         },
-        specialCategory: [
+        images: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "SpecialCategory",
+                type: String,
             },
         ],
     },
@@ -20,9 +19,6 @@ const categorySchema = new mongoose.Schema(
     }
 );
 
-const Category = mongoose.model(
-    "Category",
-    categorySchema
-);
+const Category = mongoose.model("Category", categorySchema);
 
 module.exports = Category;
