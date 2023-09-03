@@ -3,18 +3,17 @@ import SpecialCategory from "../components/specialCategory";
 import { motion } from "framer-motion";
 import back_to_top from "../assets/icons/back_to_top.svg";
 import down from "../assets/icons/down.svg";
-
 import useFetch from "../components/useFetch";
 import StackingSection from "../components/StackingSection ";
 import CategoryProduct from "../components/categoryProduct";
 import cartImg from "../assets/images/thankyou.png";
 import cartImg1 from "../assets/images/discover_img.png";
-
 import displayCart from "../assets/icons/displayCart.svg";
 import Products from "../components/products";
 import { Link } from "react-router-dom";
 
 const Page = () => {
+  
   const [hideCategory, showCategory] = useState(false);
   const align = hideCategory ? "justify-center" : "justify-center";
   const [dynamicUrl, setDynamicUrl] = useState("products");
@@ -93,9 +92,9 @@ console.log(dynamicUrl)
           />
 
           {hideCategory &&
-            products.map((data) => {
+            products.map((data, index) => {
               return (
-                <div key={data.name}>
+                <div key={index}>
                   <CategoryProduct
                   id={data.id}
                     name={data.name}
