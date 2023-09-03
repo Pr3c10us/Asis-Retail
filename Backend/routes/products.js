@@ -12,7 +12,11 @@ const {
     deleteProductImage,
     addProductImage,
     createSpecialCategory,
-    createSuperSpecialCategory,
+    getCategories,
+    deleteCategory,
+    updateCategory,
+    addCategoryImage,
+    deleteCategoryImage,
 } = require("../controller/products");
 const convertToArray = require("../middleware/convertTOArray");
 
@@ -28,20 +32,29 @@ router
     );
 
 router
-    .route("/:id")
-    .get(getProductById)
-    .put(adminAuthorization, updateProduct)
-    .delete(adminAuthorization, deleteProduct);
-
-router
     .route("/:productId/image")
     .put(adminAuthorization, upload.array("images"), addProductImage)
     .delete(adminAuthorization, deleteProductImage);
 
-router.route("/category").post(adminAuthorization, createSpecialCategory);
+router
+    .route("/category")
+    .get(getCategories)
+    .post(adminAuthorization, upload.array("images"), createSpecialCategory);
 
 router
-    .route("/specialCategory")
-    .post(adminAuthorization, createSuperSpecialCategory);
+    .route("/category/:categoryId/image")
+    .put(adminAuthorization, upload.array("images"), addCategoryImage)
+    .delete(adminAuthorization, deleteCategoryImage);
+
+router
+    .route("/category/:id")
+    .put(adminAuthorization, updateCategory)
+    .delete(adminAuthorization, deleteCategory);
+
+router
+    .route("/:id")
+    .get(getProductById)
+    .put(adminAuthorization, updateProduct)
+    .delete(adminAuthorization, deleteProduct);
 
 module.exports = router;

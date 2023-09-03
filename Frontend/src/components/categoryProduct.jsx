@@ -14,6 +14,7 @@ const CategoryProduct = ({
   activeItem,
   id,
   index,
+  setProduct,
 }) => {
   useEffect(() => {
     if (activeItem) {
@@ -21,6 +22,15 @@ const CategoryProduct = ({
       setDynamicUrl(`products/?${query}`);
     }
   }, [activeItem, setDynamicUrl]);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  useEffect(() => {
+    if (image && image.length > 0) {
+      setSelectedImage(image[0]);
+    }
+  }, [image]);
+
+
   return (
     <motion.div
       initial={{ x: index * -300, opacity: 0 }}
@@ -37,41 +47,32 @@ const CategoryProduct = ({
           </p>
 
           <img
-            src={image}
+            src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
             alt="products_img"
             className="h-full w-full rounded-3xl border-2 border-asisGreen  object-cover object-top"
           />
           <img src={A} alt="A" className="absolute left-5 top-5 rotate-180" />
           <img src={A} alt="A" className="absolute bottom-5 right-5 " />
         </div>
-        <div className="theBack flex items-center justify-center rounded-3xl border-2 border-asisGreen px-3 text-center ">
+        <div className="theBack flex flex-col items-center justify-between rounded-3xl border-2 border-asisGreen px-3 text-center py-10">
           <img src={A} alt="A" className="absolute left-5 top-3 rotate-180" />
           <img src={A} alt="A" className="absolute bottom-3 right-5 " />
-          <div>
-            <p className="mb-3 text-sm font-semibold">{name}</p>
-            <p className="mb-4 px-4 text-xs">{text}</p>
-            {/* big screen */}
-            <div
-              className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
-              onClick={() => {
-                setActiveItem(name);
-              }}
-            >
-              View Products
-              <img src={down} alt="down" />
-            </div>
-            {/* small screen  */}
-            <Link to={`/category/${id}`}>
-              <div
-                className="mx-auto hidden w-[60%] cursor-pointer   items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:flex"
-                onClick={() => {
-                  setActiveItem(name);
-                }}
-              >
-                View Products
-                <img src={down} alt="down" />
-              </div>
-            </Link>
+
+          <p className="mb-3 text-sm font-semibold">{name}</p>
+          <p className="mb-4 px-4 text-xs">{text}</p>
+          <div
+            className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
+            onClick={() => {
+              setActiveItem(name);
+              setProduct(false);
+              setTimeout(() => {
+                setProduct(true);
+              }, 1000);
+
+            }}
+          >
+            View Products
+            <img src={down} alt="down" />
           </div>
         </div>
       </div>
