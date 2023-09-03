@@ -1,131 +1,69 @@
 import React, { useEffect, useState } from "react";
-import SpecialCategory from "../components/specialCategory";
-import { motion, AnimatePresence, stagger } from "framer-motion";
-import back_to_top from "../assets/icons/back_to_top.svg";
-import down from "../assets/icons/down.svg";
-
-import useFetch from "../components/useFetch";
-import StackingSection from "../components/StackingSection ";
-import CategoryProduct from "../components/categoryProduct";
-import cartImg from "../assets/images/thankyou.png";
-import cartImg1 from "../assets/images/discover_img.png";
-
-import displayCart from "../assets/icons/displayCart.svg";
-import Products from "../components/products";
+import { motion, AnimatePresence } from "framer-motion";
+import Axios from 'axios';
 import { Link } from "react-router-dom";
+import down from "../assets/icons/down.svg";
+import displayCart from "../assets/icons/displayCart.svg";
+import useFetch from "../components/useFetch";
+import CategoryProduct from "../components/categoryProduct";
+import Products from "../components/products";
 
 const Page = () => {
-  const [hideCategory, showCategory] = useState(false);
-  const align = hideCategory ? "justify-center" : "justify-center";
-  const [dynamicUrl, setDynamicUrl] = useState("products");
+  const [hideCategory, setHideCategory] = useState(false);
+  const [dynamicUrl, setDynamicUrl] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
-  console.log(dynamicUrl);
+  const [productData, setProductData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-  const apiUrl = `${import.meta.env.VITE_API_URL}${dynamicUrl}`;
-  const { data } = useFetch(apiUrl);
 
-  console.log(data?.products);
-  const products = [
-    {
-      id: 1,
-      name: "School Supplies",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime vero sit doloribus quod omnis minus
-    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime `,
-      img: cartImg,
-    },
-    {
-      id: 2,
-      name: "Home Supplies",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-      architecto fuga. Maxime vero sit doloribus quod omnis minus
-      repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-      architecto fuga. Maxime `,
-      img: cartImg1,
-    },
-    {
-      id: 3,
-      name: "Interiors",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime vero sit doloribus quod omnis minus
-    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime `,
-      img: cartImg,
-    },
-    {
-      id: 4,
-      name: "Necessities",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime vero sit doloribus quod omnis minus
-    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime`,
-      img: cartImg,
-    },
-    {
-      id: 1,
-      name: "School Supplies",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime vero sit doloribus quod omnis minus
-    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime `,
-      img: cartImg,
-    },
-    {
-      id: 2,
-      name: "Home Supplies",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-      architecto fuga. Maxime vero sit doloribus quod omnis minus
-      repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-      architecto fuga. Maxime `,
-      img: cartImg1,
-    },
-    {
-      id: 3,
-      name: "Interiors",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime vero sit doloribus quod omnis minus
-    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime `,
-      img: cartImg,
-    },
-    {
-      id: 4,
-      name: "Necessities",
-      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime vero sit doloribus quod omnis minus
-    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-    architecto fuga. Maxime`,
-      img: cartImg,
-    },
-  ];
+  const categoryData = `${import.meta.env.VITE_API_URL}products/category`;
+  const { data: categoryDataResponse } = useFetch(categoryData);
+
+  const url = `${import.meta.env.VITE_API_URL}${dynamicUrl}`;
+
+  useEffect(() => {
+    if (categoryDataResponse) {
+      // Ensure categoryDataResponse is not null before logging
+      console.log(categoryDataResponse);
+    }
+
+    async function fetchData() {
+      try {
+        const response = await Axios.get(url);
+        setProductData(response.data);
+        setError(null);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        setError(error);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      // Cleanup if needed
+    };
+  }, [url, categoryDataResponse]); // Include categoryDataResponse as a dependency
 
   return (
-    <div className=" h-full px-5 ">
-      <section className="flex flex-col">
-        <StackingSection />
-
-        {/* <SpecialCategory name={name} /> */}
-        <section
-          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100`}
-        >
+    <div className="h-full px-5">
+      <section className="mt-10 flex flex-col">
+        {/* <StackingSection /> */}
+        <section className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100`}>
           <img
             src={displayCart}
             alt="displayCart"
             className={`absolute z-20 w-[239px] cursor-pointer pb-3 transition-all duration-200 ${
-              !hideCategory ? " left-1/2 -translate-x-1/2" : "left-0"
+              !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0"
             }`}
             onClick={() => {
-              showCategory((prev) => !prev);
-              setActiveItem(false);
+              setHideCategory((prev) => !prev);
+              setActiveItem(null);
             }}
           />
 
@@ -140,48 +78,49 @@ const Page = () => {
                   transition: { type: "tween", duration: 0.5 },
                 }}
                 transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
-                className={`gap-4 pb-2  ${
-                  !hideCategory
-                    ? "hidden overflow-hidden"
-                    : "flex overflow-auto "
+                className={`gap-5 pb-2 ${
+                  !hideCategory ? "hidden overflow-hidden" : "flex overflow-auto"
                 }`}
               >
-                {products.map((data, index) => {
-                  return (
-                    <div key={data.name + index}>
-                      <CategoryProduct
-                        id={data.id}
-                        name={data.name}
-                        text={data.text}
-                        image={data.img}
-                        setDynamicUrl={setDynamicUrl}
-                        activeItem={activeItem}
-                        setActiveItem={setActiveItem}
-                        index={index}
-                      />
-                    </div>
-                  );
-                })}
+                {categoryDataResponse?.categories.map((data, index) => (
+                  <div key={data.name + index}>
+                    <CategoryProduct
+                      id={data.id}
+                      name={data.name}
+                      text={data.description}
+                      image={data.images}
+                      setDynamicUrl={setDynamicUrl}
+                      activeItem={activeItem}
+                      setActiveItem={setActiveItem}
+                      index={index}
+                    />
+                  </div>
+                ))}
               </motion.section>
-            )}{" "}
+            )}
           </AnimatePresence>
         </section>
-        {activeItem && (
-          <div>
-            <div className="mx-14 mb-10 mt-14 flex border border-asisDark backdrop-blur-md">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full bg-transparent p-2 outline-0"
-              />
-              <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3  border-l border-asisDark text-xs uppercase">
-                sort by
-                <img src={down} alt="down" />
+
+        <AnimatePresence>
+          {productData && (
+            <motion.div
+              initial={{ y: -200, x: 100, opacity: 0 }}
+              animate={{ y: 0, x: 0, opacity: 1 }}
+              exit={{ y: -200, x: 100, opacity: 0 }}
+            >
+              <div className="mx-14 mb-10 mt-14 flex backdrop-blur-md">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full bg-transparent p-2 outline-0"
+                />
+                <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3 border border-asisDark text-xs uppercase">
+                  sort by
+                  <img src={down} alt="down" />
+                </div>
               </div>
-            </div>
-            <section className="mt-2 flex flex-wrap items-center justify-center gap-5">
-              {data?.products.map((product) => {
-                return (
+              <section className="mt-2 flex flex-wrap items-center justify-center gap-5">
+                {productData.products.map((product) => (
                   <div key={product._id}>
                     <Link to={`/product/${product._id}`}>
                       <Products
@@ -192,23 +131,11 @@ const Page = () => {
                       />
                     </Link>
                   </div>
-                );
-              })}
-            </section>
-          </div>
-        )}
-        {/* <section>
-          <div className="relative my-20  border-t  border-asisDark">
-            <img
-              src={back_to_top}
-              alt="back_to_top"
-              className="absolute -top-5 right-[10%] cursor-pointer"
-              onClick={() => {
-                handleScrollToTop();
-              }}
-            />
-          </div>
-        </section> */}
+                ))}
+              </section>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
     </div>
   );

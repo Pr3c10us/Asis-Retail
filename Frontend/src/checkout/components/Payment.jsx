@@ -143,7 +143,7 @@ const Payment = ({ setActiveStep }) => {
     return <Loading />;
   }
   return (
-    <div className="flex relative flex-col gap-12 py-8">
+    <div className="flex relative flex-col gap-12 py-8 ">
       <h2 className="text-2xl font-semibold uppercase">
         {/* / <VowelItalicizer text={"Payment method"} /> */}
         Payment method

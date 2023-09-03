@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import down from "../../assets/icons/down.svg";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { useDispatch } from "react-redux";
 import { setCart } from "../../../redux/asis";
 import CartLoading from "../../components/cartLoader";
@@ -15,7 +17,7 @@ const Product_detail = ({ data }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [displayImage, setDisplayImage] = useState(false)
+  const [displayImage, setDisplayImage] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -114,14 +116,13 @@ const Product_detail = ({ data }) => {
     };
   }, [displayImage]);
 
-
   const changeSelectedImage = (direction) => {
     const currentIndex = data.images.indexOf(selectedImage);
     let newIndex;
 
-    if (direction === 'left') {
+    if (direction === "left") {
       newIndex = (currentIndex - 1 + data.images.length) % data.images.length;
-    } else if (direction === 'right') {
+    } else if (direction === "right") {
       newIndex = (currentIndex + 1) % data.images.length;
     }
 
@@ -134,19 +135,29 @@ const Product_detail = ({ data }) => {
       {data ? (
         <section className="flex items-start justify-center gap-10 max-lg:flex-col max-md:gap-0">
           {/* Thumbnail images */}
+        
 
           {/* Selected image */}
-          <div className="flex items-center w-full flex-col">
+          <AnimatePresence>
+          <div className="flex w-full flex-col items-center">
             <div className="max-md:w-screen ">
               {selectedImage && (
-                <img
-                  onClick={() => {
-                    setDisplayImage(true);
-                  }}
-                  src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
-                  className=" h-[500px] w-[32rem] cursor-pointer border-2 border-asisDark object-cover  object-top max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]"
-                />
-              )}
+                    
+                <div className=" h-[500px] w-[32rem] z-20 cursor-pointer border-2 border-asisDark  max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]">
+               
+                  <motion.img
+                  key={selectedImage}
+                    src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -100, opacity: 0 }}
+                    className="w-full h-full object-cover  object-top z-10"
+                    onClick={() => {
+                      setDisplayImage(true);
+                    }}
+                  />
+                  </div>
+                                 )}
               {displayImage && (
                 <DisplayImage
                   img={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
@@ -176,6 +187,8 @@ const Product_detail = ({ data }) => {
               ))}
             </section>
           </div>
+          </AnimatePresence>
+
 
           {/* Product information */}
 
@@ -217,7 +230,7 @@ const Product_detail = ({ data }) => {
               {/* Add to cart */}
 
               <button
-                className={`relative my-3 flex max-h-12 rounded-md w-full justify-center  py-4 text-center text-xs font-semibold uppercase ${
+                className={`relative my-3 flex max-h-12 w-full justify-center rounded-md  py-4 text-center text-xs font-semibold uppercase ${
                   selectedSize
                     ? "bg-asisDark text-[#FFFFFF]"
                     : "bg-asisDark/70 text-[#C4C4C4]"
@@ -269,10 +282,12 @@ const Product_detail = ({ data }) => {
               </section>
               <div
                 className={`grid   text-sm text-asisDark/80 transition-all duration-300 ${
-                  showDescription ? "grid-rows-[1fr] py-2 border-b border-asisDark" : "grid-rows-[0fr]"
+                  showDescription
+                    ? "grid-rows-[1fr] border-b border-asisDark py-2"
+                    : "grid-rows-[0fr]"
                 } `}
               >
-                <p className="overflow-hidden">{data.description}  </p>
+                <p className="overflow-hidden">{data.description} </p>
               </div>
             </section>
           </section>

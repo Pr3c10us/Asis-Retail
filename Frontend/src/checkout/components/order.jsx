@@ -11,7 +11,7 @@ const Order = () => {
   const [activeStep, setActiveStep] = React.useState(1);
 
   return (
-    <div className="w-full px-28 max-lg:px-14 max-md:px-4 max-sm:px-1">
+    <div className="w-full px-28 max-lg:px-14 max-sm:px-4">
       <OrderNav activeStep={activeStep} setActiveStep={setActiveStep} />
    
         <div className="flex justify-between items-start w-full max-lg:flex-col">
