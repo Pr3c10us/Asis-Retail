@@ -129,9 +129,9 @@ const Page = () => {
           />
 
           {hideCategory &&
-            products.map((data) => {
+            products.map((data, index) => {
               return (
-                <div key={data.name}>
+                <div key={index}>
                   <CategoryProduct
                   id={data.id}
                     name={data.name}
@@ -145,6 +145,43 @@ const Page = () => {
               );
             })}
          
+
+          <AnimatePresence>
+            {hideCategory && (
+              <motion.section
+                initial={{ x: -300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{
+                  x: 500,
+                  opacity: 0,
+                  transition: { type: "tween", duration: 0.5 },
+                }}
+                transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
+                className={`gap-4 pb-2  ${
+                  !hideCategory
+                    ? "hidden overflow-hidden"
+                    : "flex overflow-auto "
+                }`}
+              >
+                {products.map((data, index) => {
+                  return (
+                    <div key={data.name + index}>
+                      <CategoryProduct
+                        id={data.id}
+                        name={data.name}
+                        text={data.text}
+                        image={data.img}
+                        setDynamicUrl={setDynamicUrl}
+                        activeItem={activeItem}
+                        setActiveItem={setActiveItem}
+                        index={index}
+                      />
+                    </div>
+                  );
+                })}
+              </motion.section>
+            )}{" "}
+          </AnimatePresence>
         </section>
         {activeItem && (
           <div>
