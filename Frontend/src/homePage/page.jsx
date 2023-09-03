@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SpecialCategory from "../components/specialCategory";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, stagger } from "framer-motion";
 import back_to_top from "../assets/icons/back_to_top.svg";
 import down from "../assets/icons/down.svg";
 
@@ -19,7 +19,7 @@ const Page = () => {
   const align = hideCategory ? "justify-center" : "justify-center";
   const [dynamicUrl, setDynamicUrl] = useState("products");
   const [activeItem, setActiveItem] = useState(null);
-console.log(dynamicUrl)
+  console.log(dynamicUrl);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -32,9 +32,44 @@ console.log(dynamicUrl)
   const apiUrl = `${import.meta.env.VITE_API_URL}${dynamicUrl}`;
   const { data } = useFetch(apiUrl);
 
-
   console.log(data?.products);
   const products = [
+    {
+      id: 1,
+      name: "School Supplies",
+      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+    architecto fuga. Maxime vero sit doloribus quod omnis minus
+    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+    architecto fuga. Maxime `,
+      img: cartImg,
+    },
+    {
+      id: 2,
+      name: "Home Supplies",
+      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+      architecto fuga. Maxime vero sit doloribus quod omnis minus
+      repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+      architecto fuga. Maxime `,
+      img: cartImg1,
+    },
+    {
+      id: 3,
+      name: "Interiors",
+      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+    architecto fuga. Maxime vero sit doloribus quod omnis minus
+    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+    architecto fuga. Maxime `,
+      img: cartImg,
+    },
+    {
+      id: 4,
+      name: "Necessities",
+      text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+    architecto fuga. Maxime vero sit doloribus quod omnis minus
+    repellendus soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+    architecto fuga. Maxime`,
+      img: cartImg,
+    },
     {
       id: 1,
       name: "School Supplies",
@@ -75,69 +110,94 @@ console.log(dynamicUrl)
 
   return (
     <div className=" h-full px-5 ">
-      <section>
+      <section className="flex flex-col">
         <StackingSection />
 
         {/* <SpecialCategory name={name} /> */}
         <section
-          className={`flex gap-x-5 max-sm:gap-2  ${align} flex-wrap transition-all duration-100`}
+          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100`}
         >
           <img
             src={displayCart}
             alt="displayCart"
-            className="cursor-pointer max-sm:mb-9 max-sm:w-[165px] max-sm:h-[235px] block"
+            className={`absolute z-20 w-[239px] cursor-pointer pb-3 transition-all duration-200 ${
+              !hideCategory ? " left-1/2 -translate-x-1/2" : "left-0"
+            }`}
             onClick={() => {
               showCategory((prev) => !prev);
-              setActiveItem((false))
+              setActiveItem(false);
             }}
           />
 
-          {hideCategory &&
-            products.map((data) => {
-              return (
-                <div key={data.name}>
-                  <CategoryProduct
-                  id={data.id}
-                    name={data.name}
-                    text={data.text}
-                    image={data.img}
-                  setDynamicUrl={setDynamicUrl}
-                  activeItem={activeItem}
-                  setActiveItem={setActiveItem}
-                  />
-                </div>
-              );
-            })}
-         
+          <AnimatePresence>
+            {hideCategory && (
+              <motion.section
+                initial={{ x: -300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{
+                  x: 500,
+                  opacity: 0,
+                  transition: { type: "tween", duration: 0.5 },
+                }}
+                transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
+                className={`gap-4 pb-2  ${
+                  !hideCategory
+                    ? "hidden overflow-hidden"
+                    : "flex overflow-auto "
+                }`}
+              >
+                {products.map((data, index) => {
+                  return (
+                    <div key={data.name + index}>
+                      <CategoryProduct
+                        id={data.id}
+                        name={data.name}
+                        text={data.text}
+                        image={data.img}
+                        setDynamicUrl={setDynamicUrl}
+                        activeItem={activeItem}
+                        setActiveItem={setActiveItem}
+                        index={index}
+                      />
+                    </div>
+                  );
+                })}
+              </motion.section>
+            )}{" "}
+          </AnimatePresence>
         </section>
-{activeItem &&<div>
-  
-  <div className="backdrop-blur-md flex mt-14 mb-10 mx-14 border border-asisDark">
-    <input type="text" placeholder="Search" className="w-full p-2 bg-transparent outline-0" />
-    <div className="flex border-l cursor-pointer border-asisDark uppercase items-center  justify-center text-xs gap-x-3 w-28">
-      sort by 
-      <img src={down} alt="down" />
-    </div>
-  </div>
-   <section className="flex flex-wrap justify-center gap-5 mt-2 items-center">
-{data?.products.map((product) => {
-            return (
-              <div key={product._id}>
-                <Link to={`/product/${product._id}`}>
-                <Products
-                  name={product.name}
-                  price={product.price}
-                  collaborations={product.collaborations}
-                  images={product.images}
-                />
-                </Link>
+        {activeItem && (
+          <div>
+            <div className="mx-14 mb-10 mt-14 flex border border-asisDark backdrop-blur-md">
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full bg-transparent p-2 outline-0"
+              />
+              <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3  border-l border-asisDark text-xs uppercase">
+                sort by
+                <img src={down} alt="down" />
               </div>
-            );
-          })}
-</section>
-</div>
-}
-        <section>
+            </div>
+            <section className="mt-2 flex flex-wrap items-center justify-center gap-5">
+              {data?.products.map((product) => {
+                return (
+                  <div key={product._id}>
+                    <Link to={`/product/${product._id}`}>
+                      <Products
+                        name={product.name}
+                        price={product.price}
+                        collaborations={product.collaborations}
+                        images={product.images}
+                      />
+                    </Link>
+                  </div>
+                );
+              })}
+            </section>
+          </div>
+        )}
+        {/* <section>
           <div className="relative my-20  border-t  border-asisDark">
             <img
               src={back_to_top}
@@ -148,7 +208,7 @@ console.log(dynamicUrl)
               }}
             />
           </div>
-        </section>
+        </section> */}
       </section>
     </div>
   );

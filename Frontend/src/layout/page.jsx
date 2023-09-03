@@ -39,7 +39,7 @@ const Page = () => {
     <main className="h-full">
       {/* <section className="flex w-full flex-col items-start justify-center"> */}
       <div className=" pb-8 max-xl:px-0">
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
         {/* Render the header component and pass cart and wishlist data */}
         <Header
           setHideCart={setHideCart}
