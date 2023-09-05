@@ -1,61 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Axios from 'axios';
+import Axios from "axios";
 import { Link } from "react-router-dom";
 import down from "../assets/icons/down.svg";
 import displayCart from "../assets/icons/displayCart.svg";
 import useFetch from "../components/useFetch";
 import CategoryProduct from "../components/categoryProduct";
-import Products from "../components/products";
+import Products from "./components/products";
+import Loading from "../components/loading";
 
 const Page = () => {
   const [hideCategory, setHideCategory] = useState(false);
-  const [dynamicUrl, setDynamicUrl] = useState(null);
+  const [showProducts, setShowProducts] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
-  const [productData, setProductData] = useState(null);
+  const [productData, setProductData] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const asisCardRef = React.useRef(null);
+  const [categories, setCategories] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const categoryData = `${import.meta.env.VITE_API_URL}products/category`;
-  const { data: categoryDataResponse } = useFetch(categoryData);
+  // const categoryData = `${import.meta.env.VITE_BACKEND_URL}products/categories`;
+  // const { data: categoryDataResponse } = useFetch(categoryData);
 
-  const url = `${import.meta.env.VITE_API_URL}${dynamicUrl}`;
+  const url = `${
+    import.meta.env.VITE_BACKEND_URL
+  }products/?categories=${categories}`;
 
   useEffect(() => {
-    if (categoryDataResponse) {
-      // Ensure categoryDataResponse is not null before logging
-      console.log(categoryDataResponse);
-    }
-
     async function fetchData() {
+      // setIsLoading(true);
       try {
         const response = await Axios.get(url);
-        setProductData(response.data);
-        setError(null);
-        setIsLoading(false);
+        setProductData(response.data.products);
+        // setIsLoading(false);
       } catch (error) {
-        setIsLoading(false);
-        setError(error);
+        // setIsLoading(false);
       }
     }
 
     fetchData();
+  }, [categories]);
 
-    return () => {
-      // Cleanup if needed
-    };
-  }, [url, categoryDataResponse]); // Include categoryDataResponse as a dependency
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const response = await Axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}products/category`,
+        );
+        setCategoriesData(response.data.categories);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="h-full px-5">
       <section className="mt-10 flex flex-col">
         {/* <StackingSection /> */}
-        <section className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100`}>
+        <section
+          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100`}
+        >
           <img
+            ref={asisCardRef}
             src={displayCart}
             alt="displayCart"
             className={`absolute z-20 w-[239px] cursor-pointer pb-3 transition-all duration-200 ${
@@ -79,19 +99,18 @@ const Page = () => {
                 }}
                 transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
                 className={`gap-5 pb-2 ${
-                  !hideCategory ? "hidden overflow-hidden" : "flex overflow-auto"
+                  !hideCategory
+                    ? "hidden overflow-hidden"
+                    : "flex overflow-auto"
                 }`}
               >
-                {categoryDataResponse?.categories.map((data, index) => (
+                {categoriesData?.map((data, index) => (
                   <div key={data.name + index}>
                     <CategoryProduct
-                      id={data.id}
-                      name={data.name}
-                      text={data.description}
-                      image={data.images}
-                      setDynamicUrl={setDynamicUrl}
-                      activeItem={activeItem}
-                      setActiveItem={setActiveItem}
+                      data={data}
+                      setCategories={setCategories}
+                      setShowProducts={setShowProducts}
+                      showProducts={showProducts}
                       index={index}
                     />
                   </div>
@@ -100,30 +119,47 @@ const Page = () => {
             )}
           </AnimatePresence>
         </section>
+        <AnimatePresence>
+          {showProducts && (
+            <motion.div
+              initial={{
+                y:
+                  // make y the height of the asisCardRef
+                  -50,
+                opacity: 0,
+              }}
+              animate={{ y: 0, x: 0, opacity: 1 }}
+              exit={{
+                y:
+                  // make y the
+                  -50,
+                opacity: 0,
+              }}
+              className="mx-14 mb-10 mt-14 flex backdrop-blur-md"
+            >
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full bg-transparent p-2 outline-0"
+              />
+              <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3 border border-asisDark text-xs uppercase">
+                sort by
+                <img src={down} alt="down" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
-          {productData && (
-            <motion.div
-              initial={{ y: -200, x: 100, opacity: 0 }}
-              animate={{ y: 0, x: 0, opacity: 1 }}
-              exit={{ y: -200, x: 100, opacity: 0 }}
-            >
-              <div className="mx-14 mb-10 mt-14 flex backdrop-blur-md">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-full bg-transparent p-2 outline-0"
-                />
-                <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3 border border-asisDark text-xs uppercase">
-                  sort by
-                  <img src={down} alt="down" />
-                </div>
-              </div>
-              <section className="mt-2 flex flex-wrap items-center justify-center gap-5">
-                {productData.products.map((product) => (
+          {showProducts && (
+            <div>
+              <section className="mt-2 flex items-center gap-5">
+                {productData.map((product) => (
                   <div key={product._id}>
                     <Link to={`/product/${product._id}`}>
                       <Products
+                        top={asisCardRef.current?.offsetTop}
+                        left={asisCardRef.current?.offsetLeft}
                         name={product.name}
                         price={product.price}
                         collaborations={product.collaborations}
@@ -133,7 +169,7 @@ const Page = () => {
                   </div>
                 ))}
               </section>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </section>

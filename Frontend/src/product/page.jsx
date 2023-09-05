@@ -11,7 +11,7 @@ const Page = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const apiUrl = `${import.meta.env.VITE_API_URL}products/${id}`;
+  const apiUrl = `${import.meta.env.VITE_BACKEND_URL}products/${id}`;
   // const { data } = useFetch(apiUrl);
 
   const name = "you may also like";
@@ -28,7 +28,7 @@ const Page = () => {
   };
   useEffect(() => {
     handleFetchProducts();
-     window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [id]);
   useEffect(() => {
     handleFetchProducts();

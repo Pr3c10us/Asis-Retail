@@ -11,12 +11,13 @@ const shippingSchema = new mongoose.Schema({
     currency: {
         type: String,
         default: "USD",
+        enum: ["USD", "EUR", "NGN"],
     },
     description: {
         type: String,
     },
     durationInDays: {
-        type: Number,
+        type: String,
     },
 });
 

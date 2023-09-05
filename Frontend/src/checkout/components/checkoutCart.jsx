@@ -24,7 +24,9 @@ const CheckoutCart = () => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}carts`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}carts`,
+      );
       // console.log(response.data);
       // setCartData(response.data);
       if (response.data.products.length === 0) {
@@ -47,7 +49,8 @@ const CheckoutCart = () => {
     }
   };
   React.useEffect(() => {
-    cartData?.products?.length === 0 && navigate("/homepage", { replace: true });
+    cartData?.products?.length === 0 &&
+      navigate("/homepage", { replace: true });
     handleGetCartContent();
     console.log(cartData);
   }, []);
@@ -60,9 +63,12 @@ const CheckoutCart = () => {
         productId: id,
         option: option,
       };
-      await axios.delete(`${import.meta.env.VITE_API_URL}carts/removeItem`, {
-        data: item,
-      });
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}carts/removeItem`,
+        {
+          data: item,
+        },
+      );
       console.log(item);
       toast.success("Item removed from cart", {
         style: {
@@ -96,7 +102,7 @@ const CheckoutCart = () => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
-      await axios.delete(`${import.meta.env.VITE_API_URL}carts/`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}carts/`);
       toast.success("Item removed from cart", {
         style: {
           border: "1px solid green",
@@ -126,9 +132,9 @@ const CheckoutCart = () => {
   };
 
   return (
-    <div className="relative min-w-[29rem] max-lg:hidden overflow-hidden uppercase ">
+    <div className="relative min-w-[29rem] overflow-hidden uppercase max-lg:hidden ">
       {isLoading && <CartLoading />}
-     
+
       {!isLoading && (
         // Cart with items
         <section className="h-full p-5 backdrop-blur-md">

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const page = () => {
   const { id } = useParams();
 
-  const apiUrl = `${import.meta.env.VITE_API_URL}products`;
+  const apiUrl = `${import.meta.env.VITE_BACKEND_URL}products`;
   const { data } = useFetch(apiUrl);
   const products = [
     {
@@ -51,7 +51,7 @@ const page = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center flex-col max-sm:px-4">
+    <div className="flex flex-col items-center justify-center max-sm:px-4">
       <CategoryProduct />
 
       <section className="mt-2 flex flex-wrap items-center justify-center gap-3">

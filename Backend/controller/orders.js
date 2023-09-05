@@ -17,15 +17,24 @@ const createOrderStripe = async (req, res) => {
         "products.product",
         "name price images"
     );
+
     const products = cart.products.map((item) => {
         return {
             product: item.product,
             name: item.product.name,
-            size: item.size,
+            option: item.option,
             quantity: item.quantity,
             price: item.price,
         };
     });
+
+    const orderExist = await Order.findOne({ cart });
+    if (orderExist) {
+        throw new BadRequestError("Order has been placed");
+    } else {
+        req.body.cart = cart;
+    }
+
     req.body.products = products;
     // req.body.totalPrice = cart.totalPrice;
 
@@ -50,7 +59,13 @@ const createOrderStripe = async (req, res) => {
             "Invalid Shipping details, use a dollar shipping info"
         );
     }
-    req.body.shipping = shippingDetails;
+    req.body.shipping = [
+        {
+            shipping: shippingDetails._id,
+            name: shippingDetails.name,
+            fee: shippingDetails.fee,
+        },
+    ];
     req.body.totalPrice = cart.totalPrice + shippingDetails.fee;
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -159,7 +174,10 @@ const getOrdersAdmin = async (req, res) => {
     // get orders for admin
     let result = Order.find(queryObject)
         .select("-createdAt -updatedAt -__v")
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .populate("products.product")
+        .populate("shipping.shipping");
+
 
     // #################################################################
     // Set up Pagination

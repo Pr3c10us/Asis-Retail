@@ -46,11 +46,11 @@ const router = createBrowserRouter([
         element: <Product />,
       },
       {
-        path: "/checkout",
+        path: "checkout",
         element: <Checkout />,
       },
       {
-        path: "/complete",
+        path: "complete",
         element: <OrderComplete />,
       },
       {

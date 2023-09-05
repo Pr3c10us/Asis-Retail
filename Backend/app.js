@@ -22,7 +22,7 @@ const connectToMongodb = require("./mongoDb");
 // CORS MIDDLEWARE
 // Set up cors options and middleware
 const corsOptions = {
-    origin: [process.env.CLIENT_ORIGIN_1],
+    origin: [process.env.CLIENT_ORIGIN_1, process.env.CLIENT_ORIGIN_2],
     credentials: true,
 };
 app.use(cors(corsOptions));
@@ -77,6 +77,10 @@ app.use("/api/shippings", shippingRoutes);
 // ORDER ROUTES
 const orderRoutes = require("./routes/orders");
 app.use("/api/orders", orderRoutes);
+
+// IS LOGGED IN ROUTES
+const isLoggedInRoutes = require("./routes/loggedIn");
+app.use("/api/isLoggedIn", isLoggedInRoutes);
 
 // WEBHOOK ROUTES
 const webhookRoutes = require("./routes/webhooks");

@@ -60,7 +60,7 @@ const Product_detail = ({ data }) => {
           quantity: 1,
         };
         const response = await axios.put(
-          `${import.meta.env.VITE_API_URL}carts`,
+          `${import.meta.env.VITE_BACKEND_URL}carts`,
           item,
         );
         dispatch(setCart(response.data.cart));
@@ -135,60 +135,56 @@ const Product_detail = ({ data }) => {
       {data ? (
         <section className="flex items-start justify-center gap-10 max-lg:flex-col max-md:gap-0">
           {/* Thumbnail images */}
-        
 
           {/* Selected image */}
           <AnimatePresence>
-          <div className="flex w-full flex-col items-center">
-            <div className="max-md:w-screen ">
-              {selectedImage && (
-                    
-                <div className=" h-[500px] w-[32rem] z-20 cursor-pointer border-2 border-asisDark  max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]">
-               
-                  <motion.img
-                  key={selectedImage}
-                    src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -100, opacity: 0 }}
-                    className="w-full h-full object-cover  object-top z-10"
-                    onClick={() => {
-                      setDisplayImage(true);
-                    }}
-                  />
+            <div className="flex w-full flex-col items-center">
+              <div className="max-md:w-screen ">
+                {selectedImage && (
+                  <div className=" z-20 h-[500px] w-[32rem] cursor-pointer border-2 border-asisDark  max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]">
+                    <motion.img
+                      key={selectedImage}
+                      src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                      initial={{ x: 100, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: -100, opacity: 0 }}
+                      className="z-10 h-full w-full  object-cover object-top"
+                      onClick={() => {
+                        setDisplayImage(true);
+                      }}
+                    />
                   </div>
-                                 )}
-              {displayImage && (
-                <DisplayImage
-                  img={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
-                  setDisplayImage={setDisplayImage}
-                  changeSelectedImage={changeSelectedImage}
-                />
-              )}
-            </div>
-
-            <section className="gap flex flex-wrap items-center justify-center px-0 py-5 backdrop-blur-sm">
-              {data.images?.map((img, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedImage(img)}
-                  className={`mb-5 flex h-20 w-[100px] cursor-pointer items-center justify-center bg-contain bg-center bg-no-repeat px-5 py-2 ${
-                    img === selectedImage
-                      ? `bg-[url('./assets/images/frames.png')]`
-                      : ""
-                  }`}
-                >
-                  <img
-                    src={`${import.meta.env.VITE_BLOB_URL}${img}`}
-                    alt="collection_img"
-                    className="h-full w-full object-cover object-center "
+                )}
+                {displayImage && (
+                  <DisplayImage
+                    img={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
+                    setDisplayImage={setDisplayImage}
+                    changeSelectedImage={changeSelectedImage}
                   />
-                </div>
-              ))}
-            </section>
-          </div>
-          </AnimatePresence>
+                )}
+              </div>
 
+              <section className="gap flex flex-wrap items-center justify-center px-0 py-5 backdrop-blur-sm">
+                {data.images?.map((img, index) => (
+                  <div
+                    key={index}
+                    onClick={() => setSelectedImage(img)}
+                    className={`mb-5 flex h-20 w-[100px] cursor-pointer items-center justify-center bg-contain bg-center bg-no-repeat px-5 py-2 ${
+                      img === selectedImage
+                        ? `bg-[url('./assets/images/frames.png')]`
+                        : ""
+                    }`}
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_BLOB_URL}${img}`}
+                      alt="collection_img"
+                      className="h-full w-full object-cover object-center "
+                    />
+                  </div>
+                ))}
+              </section>
+            </div>
+          </AnimatePresence>
 
           {/* Product information */}
 

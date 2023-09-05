@@ -159,7 +159,9 @@ export default function CheckoutForm({
   };
 
   const cancelOrder = async () => {
-    const apiUrl = `${import.meta.env.VITE_API_URL}orders/${orderId}/customer`;
+    const apiUrl = `${
+      import.meta.env.VITE_BACKEND_URL
+    }orders/${orderId}/customer`;
     try {
       await axios.put(apiUrl, { status: "cancelled" });
       toast.success("Order Canceled!", {
@@ -199,19 +201,22 @@ export default function CheckoutForm({
         onChange={(e) => setEmail(e.target.value)}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <section className="border-2 border-asisDark px-8 py-4 max-sm:px-3 backdrop-blur-md">
-        <div className="flex justify-between max-sm:text-right my-2">
+      <section className="border-2 border-asisDark px-8 py-4 backdrop-blur-md max-sm:px-3">
+        <div className="my-2 flex justify-between max-sm:text-right">
           <h2 className="">Contact Information: </h2>
           <p className=" font-semibold">
             {` `}
-            {firstName},{lastName},<br className="hidden max-sm:block"></br>{email2},<br className="max-sm:block hidden"></br>{phone}
+            {firstName},{lastName},<br className="hidden max-sm:block"></br>
+            {email2},<br className="hidden max-sm:block"></br>
+            {phone}
           </p>
         </div>
-        <div className="flex gap-x-2 items-start justify-between my-2">
+        <div className="my-2 flex items-start justify-between gap-x-2">
           <h2 className="">Shipping Address: </h2>
-          <p className=" font-semibold text-right">
+          <p className=" text-right font-semibold">
             {` `}
-            {address},{city},<br className="hidden max-sm:block"></br>{state},{country},{zip}
+            {address},{city},<br className="hidden max-sm:block"></br>
+            {state},{country},{zip}
           </p>
         </div>
         <div className="flex justify-between">
@@ -233,7 +238,7 @@ export default function CheckoutForm({
         <button
           disabled={isLoading || !stripe || !elements}
           id="submit"
-          className="h-11 w-1/2 bg-black text-white rounded-md"
+          className="h-11 w-1/2 rounded-md bg-black text-white"
         >
           <span id="button-text">
             {isLoading ? <ButtonLoader /> : "Pay now"}

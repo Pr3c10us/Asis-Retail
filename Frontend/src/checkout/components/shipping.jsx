@@ -48,7 +48,7 @@ const Shipping = ({ setActiveStep }) => {
 
   const handleFetchShippingDetails = async () => {
     setIsLoading(true);
-    const apiUrl = `${import.meta.env.VITE_API_URL}shippings`;
+    const apiUrl = `${import.meta.env.VITE_BACKEND_URL}shippings`;
 
     if (
       !firstName ||
@@ -91,7 +91,7 @@ const Shipping = ({ setActiveStep }) => {
         {data.map((shippingDetail) => (
           <div
             key={shippingDetail._id}
-            className="flex cursor-pointer items-center gap-x-6 text-sm sm:text-base py-2 font-semibold text-asisDark/40 backdrop-blur-md px-2"
+            className="flex cursor-pointer items-center gap-x-6 px-2 py-2 text-sm font-semibold text-asisDark/40 backdrop-blur-md sm:text-base"
             onClick={() => setSelectedShipping(shippingDetail._id)}
           >
             <div className=" flex h-5 w-5 items-center justify-center rounded-full border-2 border-asisDark">

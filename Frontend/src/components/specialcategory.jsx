@@ -16,13 +16,13 @@ const SpecialCategory = ({ name, category, except }) => {
     setIsLoading(true);
     try {
       let { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}products/?limit=10&category=${
+        `${import.meta.env.VITE_BACKEND_URL}products/?limit=10&category=${
           category || ""
         }`,
       );
       if (data.products.length == 1) {
         let { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}products/?limit=10`,
+          `${import.meta.env.VITE_BACKEND_URL}products/?limit=10`,
         );
         setProducts(data.products);
         return setIsLoading(false);
@@ -57,35 +57,33 @@ const SpecialCategory = ({ name, category, except }) => {
   }
   return (
     <section>
-      <section className="relative backdrop-blur-sm flex flex-col w-full  justify-between gap-4  uppercase max-lg:px-5 max-sm:px-3">
+      <section className="relative flex w-full flex-col justify-between  gap-4 uppercase  backdrop-blur-sm max-lg:px-5 max-sm:px-3">
         <div className=" flex justify-between  border-t border-asisDark pt-10  text-left text-4xl font-semibold max-md:text-2xl">
-            <p>
-          
-              {/* / <VowelItalicizer text={name} /> */}
-              {name}
-            </p>
-            <div className="mt-5 w-56 max-md:hidden ">
-              <div className="ml-auto flex w-24  items-center justify-between">
-                <img
-                  src={left_button}
-                  alt="left_button"
-                  className="w-8 cursor-pointer"
-                  onClick={() => handleScroll(-305)}
-                />
-                <img
-                  src={right_button}
-                  alt="right_button"
-                  className="w-8 cursor-pointer"
-                  onClick={() => handleScroll(305)}
-                />
-              </div>
+          <p>
+            {/* / <VowelItalicizer text={name} /> */}
+            {name}
+          </p>
+          <div className="mt-5 w-56 max-md:hidden ">
+            <div className="ml-auto flex w-24  items-center justify-between">
+              <img
+                src={left_button}
+                alt="left_button"
+                className="w-8 cursor-pointer"
+                onClick={() => handleScroll(-305)}
+              />
+              <img
+                src={right_button}
+                alt="right_button"
+                className="w-8 cursor-pointer"
+                onClick={() => handleScroll(305)}
+              />
             </div>
           </div>
-     
-        
+        </div>
+
         <article className="scroll-container scroll-snap-x mandatory scrollbar-width-thin scrollbar-thumb-gray-500 w-full flex-1 overflow-x-auto scroll-smooth pb-5 transition-all duration-300">
           {products.length > 0 && (
-            <div className="flex gap-10 max-md:gap-5 px-3">
+            <div className="flex gap-10 px-3 max-md:gap-5">
               {products.map((data) => {
                 if (data._id === except) return null;
                 return (

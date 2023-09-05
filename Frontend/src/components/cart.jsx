@@ -9,10 +9,9 @@ import toast from "react-hot-toast";
 import CartLoading from "./cartLoader";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart } from "../../redux/asis";
-import removeCart from "../assets/icons/cartIcon.svg"
+import removeCart from "../assets/icons/cartIcon.svg";
 import SpecialChar from "./specialChar";
 import VowelItalicizer from "./vowelItalicizer";
- 
 
 const Cart = ({ setHideCart }) => {
   const ref = React.useRef(null);
@@ -42,7 +41,9 @@ const Cart = ({ setHideCart }) => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}carts`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}carts`,
+      );
       // console.log(response.data);
       // setCartData(response.data);
       dispatch(setCart(response.data));
@@ -74,9 +75,12 @@ const Cart = ({ setHideCart }) => {
         productId: id,
         option: option,
       };
-      await axios.delete(`${import.meta.env.VITE_API_URL}carts/removeItem`, {
-        data: item,
-      });
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}carts/removeItem`,
+        {
+          data: item,
+        },
+      );
       console.log(item);
       toast.success("Item removed from cart", {
         style: {
@@ -110,7 +114,7 @@ const Cart = ({ setHideCart }) => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
-      await axios.delete(`${import.meta.env.VITE_API_URL}carts/`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}carts/`);
       toast.success("Item removed from cart", {
         style: {
           border: "1px solid green",
@@ -141,27 +145,31 @@ const Cart = ({ setHideCart }) => {
 
   return (
     <div ref={ref} className="sticky right-7 top-12 z-40 ml-auto ">
-      <div className="absolute right-7  
+      <div
+        className="absolute right-7  
       overflow-y-auto bg-[url('./assets/images/bg_img.png')] 
-      uppercase shadow-[-7px_8px_30px_0px_#00000033] max-md:w-screen max-md:h-screen max-md:right-0
-       max-md:shadow-transparent max-md:top-0 max-md:fixed  max-md:px-5 max-sm:px-1">
-            <div className="hidden max-md:flex justify-end items-end w-full mb-4  p-5">
-              <div className="flex gap-2 items-center w-1/2 justify-between">
-                <Link to='/homepage'>
-              <img src={Logo} alt="Logo" className="pointer"/>
-
-                </Link>
-              <img src={removeCart} alt="removeCart" className="cursor-pointer"  onClick={() => setHideCart(false)}/>
-              </div>
-              
-            </div>
+      uppercase shadow-[-7px_8px_30px_0px_#00000033] max-md:fixed max-md:right-0 max-md:top-0
+       max-md:h-screen max-md:w-screen max-md:px-5  max-md:shadow-transparent max-sm:px-1"
+      >
+        <div className="mb-4 hidden w-full items-end justify-end p-5  max-md:flex">
+          <div className="flex w-1/2 items-center justify-between gap-2">
+            <Link to="/homepage">
+              <img src={Logo} alt="Logo" className="pointer" />
+            </Link>
+            <img
+              src={removeCart}
+              alt="removeCart"
+              className="cursor-pointer"
+              onClick={() => setHideCart(false)}
+            />
+          </div>
+        </div>
 
         {isLoading && <CartLoading />}
         {!isLoading && cartData?.products?.length >= 1 ? (
           // Cart with items
 
           <section className="p-5">
-        
             <div className="item-center relative flex justify-between border-b-2 border-asisDark pb-10">
               <div>
                 <p className="text-4xl font-medium uppercase">
@@ -270,7 +278,7 @@ const Cart = ({ setHideCart }) => {
             {/* Link to checkout */}
             <Link to="/checkout">
               <button
-                className="mt-5 flex w-full cursor-pointer items-center justify-center bg-asisDark py-3 text-sm font-semibold uppercase text-[#FFFFFF] rounded-md"
+                className="mt-5 flex w-full cursor-pointer items-center justify-center rounded-md bg-asisDark py-3 text-sm font-semibold uppercase text-[#FFFFFF]"
                 onClick={() => {
                   setHideCart(false);
                 }}
@@ -293,7 +301,9 @@ const Cart = ({ setHideCart }) => {
             <div className="flex flex-col items-center">
               <div className="item-center relative flex w-full justify-between border-b border-asisDark pb-8">
                 <div>
-                  <p className="text-4xl font-medium uppercase max-md:text-2xl">your cart</p>
+                  <p className="text-4xl font-medium uppercase max-md:text-2xl">
+                    your cart
+                  </p>
                   <p className="absolute -top-1 left-52 text-base font-medium text-black">
                     {/* ({cartData?.products?.length}) */}
                   </p>

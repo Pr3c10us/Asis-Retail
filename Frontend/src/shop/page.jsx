@@ -13,7 +13,7 @@ const Page = () => {
   const [hideFilter, setHideFilter] = useState(true);
 
   // API URL
-  const apiUrl = `${import.meta.env.VITE_API_URL}${dynamicUrl}`;
+  const apiUrl = `${import.meta.env.VITE_BACKEND_URL}${dynamicUrl}`;
   const { data } = useFetch(apiUrl);
 
   // Scroll to top on component mount
@@ -54,7 +54,7 @@ const Page = () => {
               {/* Filter */}
               <div>
                 {hideFilter && (
-                  <div className="sticky lg:block hidden top-12 ">
+                  <div className="sticky top-12 hidden lg:block ">
                     <Filter setDynamicUrl={setDynamicUrl} />
                   </div>
                 )}
