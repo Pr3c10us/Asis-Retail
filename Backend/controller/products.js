@@ -421,6 +421,29 @@ const getCategories = async (req, res) => {
     res.json({ nbHits: categories.length, categories });
 };
 
+const getCategoryById = async (req, res) => {
+    // get product id from request params
+    const { id } = req.params;
+
+    // check if id is valid
+    if (!mongoose.isValidObjectId(id)) {
+        throw new BadRequestError("Invalid category id");
+    }
+
+    // get product by id
+    const category = await Category.findById(id).select(
+        "-admin -createdAt -updatedAt -__v"
+    );
+
+    // if product not found throw error
+    if (!category) {
+        throw new NotFoundError("category not found");
+    }
+
+    // send product
+    res.json(category);
+};
+
 const deleteCategory = async (req, res) => {
     // get category id from request params
     const { id } = req.params;
@@ -481,7 +504,7 @@ const updateCategory = async (req, res) => {
             name: req.body.name,
         });
 
-        if (nameExist) {
+        if (nameExist?._id?.toString() !== id && nameExist) {
             throw new BadRequestError("Name already exists");
         }
     }
@@ -614,6 +637,7 @@ module.exports = {
     addProductImage,
     createSpecialCategory,
     getCategories,
+    getCategoryById,
     deleteCategory,
     updateCategory,
     deleteCategoryImage,

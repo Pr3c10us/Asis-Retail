@@ -17,6 +17,7 @@ const {
     updateCategory,
     addCategoryImage,
     deleteCategoryImage,
+    getCategoryById,
 } = require("../controller/products");
 const convertToArray = require("../middleware/convertTOArray");
 
@@ -48,6 +49,7 @@ router
 
 router
     .route("/category/:id")
+    .get(getCategoryById)
     .put(adminAuthorization, updateCategory)
     .delete(adminAuthorization, deleteCategory);
 

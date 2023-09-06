@@ -11,6 +11,12 @@ const Nav = () => {
   const location = useLocation();
   const pages = [
     {
+      name: "Categories",
+      href: "/categories",
+      icon: ProductsPageIcon,
+      darkIcon: ProductsPageDarkIcon,
+    },
+    {
       name: "Products",
       href: "/products",
       icon: ProductsPageIcon,

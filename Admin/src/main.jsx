@@ -16,6 +16,10 @@ import EditProduct from "./editProductFashion/page";
 import Login from "./login/page";
 import Signup from "./signup/page";
 import { Toaster } from "react-hot-toast";
+import Categories from "./categories/page.jsx";
+import AddCategories from "./addCategories/page";
+import CategoriesDisplay from "./categories/components/productsDisplay";
+import EditCategories from "./editCategories/page";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +45,24 @@ const router = createBrowserRouter([
               {
                 path: "addProduct",
                 element: <AddProduct />,
+              },
+            ],
+          },
+          {
+            path: "categories",
+            element: <Categories />,
+            children: [
+              {
+                path: "",
+                element: <CategoriesDisplay />,
+              },
+              {
+                path: ":id",
+                element: <EditCategories />,
+              },
+              {
+                path: "addProduct",
+                element: <AddCategories />,
               },
             ],
           },
