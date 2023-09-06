@@ -24,7 +24,7 @@ const EditProduct = () => {
     "lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet tempus libero. Morbi a bibendum lacus. Mauris blandit, ipsum id elementum pellentesque, augue augue aliquam risus, non egestas quam dui vitae ipsum. Ut sodales tempus tortor, eget sagittis mauris molestie et. Aliquam placerat augue at ipsum ornare, id egestas elit pulvinar. Morbi a massa aliquet, pellentesque dolor vitae, dignissim felis.";
 
   const [selectedCategory, setSelectedCategory] = React.useState(
-    productDetails?.category?.toLowerCase(),
+   ""
   );
   const [countInStock, setCountInStock] = React.useState([]);
   const getCategories = async () => {
@@ -52,7 +52,7 @@ const EditProduct = () => {
       setProductDetails((prev) => ({ ...prev, ...res.data }));
       setCountInStock(res.data.countInStock);
       setImages(res.data.images);
-      setSelectedCategory(res.data.category);
+      setSelectedCategory(res.data.categories[0]._id);
       formik.setFieldValue("name", res.data.name);
       formik.setFieldValue("price", res.data.price);
       formik.setFieldValue("description", res.data.description);
@@ -80,8 +80,7 @@ const EditProduct = () => {
         name: values.name,
         price: values.price,
         description: values.description,
-        brief: values.brief,
-        category: selectedCategory,
+        categories: selectedCategory,
         countInStock: countInStock,
       };
 
@@ -99,7 +98,7 @@ const EditProduct = () => {
           setProductDetails((prev) => ({ ...prev, ...res.data.product }));
           setCountInStock(res.data.product.countInStock);
           setImages(res.data.product.images);
-          setSelectedCategory(res.data.product.category);
+          setSelectedCategory(res.data.product.categories[0]);
           formik.setFieldValue("name", res.data.product.name);
           formik.setFieldValue("price", res.data.product.price);
           formik.setFieldValue("description", res.data.product.description);
@@ -120,6 +119,10 @@ const EditProduct = () => {
   });
 
   const handleDeleteImage = async (imageName) => {
+    if(images.length == 1) {
+      toast.error("You can't delete the last image");
+      return;
+    }
     setImageDelete(imageName);
     try {
       const imageNames = [imageName];
@@ -185,27 +188,7 @@ const EditProduct = () => {
             </div>
           </div>
         </section>
-        <section className="flex flex-col gap-x-12 gap-y-2 md:flex-row ">
-          <label className="basis-[20%] capitalize" htmlFor="brief">
-            product Brief
-          </label>
-          <div className="flex w-full flex-col text-asisDark ">
-            <input
-              type="text"
-              id="brief"
-              name="brief"
-              {...formik.getFieldProps("brief")}
-              className=" w-full border-2 border-asisDark/30 bg-transparent px-3 py-3 text-sm text-asisDark md:w-2/3 lg:w-2/5"
-            />
-            <div className="h-2">
-              {formik.touched.brief && formik.errors.brief ? (
-                <p className="text-xs capitalize text-red-500">
-                  {formik.errors.brief}
-                </p>
-              ) : null}
-            </div>
-          </div>
-        </section>
+        
         <section className="flex flex-col gap-x-12 gap-y-2 md:flex-row">
           <label className="basis-[20%] capitalize" htmlFor="description">
             product details
@@ -259,13 +242,13 @@ const EditProduct = () => {
                 type="button"
                 key={index}
                 className={`${
-                  selectedCategory == item
+                  selectedCategory == item._id
                     ? "bg-asisDark text-white"
                     : "border border-asisDark bg-transparent text-asisDark"
                 } rounded px-4 py-2 font-normal capitalize`}
-                onClick={() => setSelectedCategory(item)}
+                onClick={() => setSelectedCategory(item._id)}
               >
-                {item}
+                {item.name}
               </button>
             ))}
           </div>

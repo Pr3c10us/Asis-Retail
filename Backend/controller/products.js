@@ -177,6 +177,7 @@ const deleteProductImage = async (req, res) => {
 
     // get image name from request body
     const { imageNames } = req.body;
+    console.log(req.body);
 
     // check if product id is valid
     if (!mongoose.isValidObjectId(productId)) {
@@ -304,10 +305,11 @@ const updateProduct = async (req, res) => {
             name: req.body.name,
         });
 
-        if (nameExist) {
+        if (nameExist?._id?.toString() !== id && nameExist) {
             throw new BadRequestError("Name already exists");
         }
     }
+    // if(req.)
 
     // if (req.body.categories.length > 0) {
     //     const validCategoryIds = req.body.categories.filter((id) =>
