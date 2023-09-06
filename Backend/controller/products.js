@@ -19,25 +19,25 @@ const createProduct = async (req, res) => {
         throw new BadRequestError("Product name already exist");
     }
 
-    if (req.body.categories.length > 0) {
-        const validCategoryIds = req.body.categories.filter((id) =>
-            mongoose.isValidObjectId(id)
-        );
+    // if (req.body.categories.length > 0) {
+    //     const validCategoryIds = req.body.categories.filter((id) =>
+    //         mongoose.isValidObjectId(id)
+    //     );
 
-        if (validCategoryIds.length !== req.body.categories.length) {
-            throw new BadRequestError("Invalid Special Category Ids");
-        }
+    //     if (validCategoryIds.length !== req.body.categories.length) {
+    //         throw new BadRequestError("Invalid Special Category Ids");
+    //     }
 
-        const categories = await Category.find({
-            _id: { $in: validCategoryIds },
-        });
+    //     const categories = await Category.find({
+    //         _id: { $in: validCategoryIds },
+    //     });
 
-        if (categories.length !== validCategoryIds.length) {
-            throw new BadRequestError("Special Category does not exist");
-        }
+    //     if (categories.length !== validCategoryIds.length) {
+    //         throw new BadRequestError("Special Category does not exist");
+    //     }
 
-        req.body.categories = categories.map((category) => category._id);
-    }
+    //     req.body.categories = categories.map((category) => category._id);
+    // }
 
     // Push Images to Azure Blob Storage
     const imagePromises = req.files.map(async (image) => {
@@ -309,25 +309,25 @@ const updateProduct = async (req, res) => {
         }
     }
 
-    if (req.body.categories.length > 0) {
-        const validCategoryIds = req.body.categories.filter((id) =>
-            mongoose.isValidObjectId(id)
-        );
+    // if (req.body.categories.length > 0) {
+    //     const validCategoryIds = req.body.categories.filter((id) =>
+    //         mongoose.isValidObjectId(id)
+    //     );
 
-        if (validCategoryIds.length !== req.body.categories.length) {
-            throw new BadRequestError("Invalid Special Category Ids");
-        }
+    //     if (validCategoryIds.length !== req.body.categories.length) {
+    //         throw new BadRequestError("Invalid Special Category Ids");
+    //     }
 
-        const categories = await Category.find({
-            _id: { $in: validCategoryIds },
-        });
+    //     const categories = await Category.find({
+    //         _id: { $in: validCategoryIds },
+    //     });
 
-        if (categories.length !== validCategoryIds.length) {
-            throw new BadRequestError("Special Category does not exist");
-        }
+    //     if (categories.length !== validCategoryIds.length) {
+    //         throw new BadRequestError("Special Category does not exist");
+    //     }
 
-        req.body.categories = categories.map((category) => category._id);
-    }
+    //     req.body.categories = categories.map((category) => category._id);
+    // }
 
     const newProductInfo = await Product.findByIdAndUpdate(id, req.body, {
         new: true,

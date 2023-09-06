@@ -47,7 +47,7 @@ const AddProduct = () => {
     onSubmit: (values, { setSubmitting }) => {
       setSubmitting(true);
       if (countInStock.length === 0) {
-        toast.error("Please add atleast one size");
+        toast.error("Please add atleast one option");
         setSubmitting(false);
         return;
       }
@@ -66,9 +66,9 @@ const AddProduct = () => {
       data.append("price", values.price);
       data.append("description", values.description);
       data.append("brief", values.brief);
-      data.append("category", selectedCategory);
+      data.append("categories", selectedCategory);
       countInStock.forEach((item, index) => {
-        data.append(`countInStock[${index}][size]`, item.size);
+        data.append(`countInStock[${index}][option]`, item.option);
         data.append(`countInStock[${index}][quantity]`, item.quantity);
       });
       fileList.forEach((file) => {
@@ -242,8 +242,8 @@ export default AddProduct;
 //   brief: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 //   category: 'Shirts',
 //   countInStock: [
-//     [Object: null prototype] { size: 'xl', quantity: '5' },
-//     [Object: null prototype] { size: 'lg', quantity: '5' },
-//     [Object: null prototype] { size: 'md', quantity: '5' },
-//     [Object: null prototype] { size: 'sm', quantity: '5' }
+//     [Object: null prototype] { option: 'xl', quantity: '5' },
+//     [Object: null prototype] { option: 'lg', quantity: '5' },
+//     [Object: null prototype] { option: 'md', quantity: '5' },
+//     [Object: null prototype] { option: 'sm', quantity: '5' }
 //   ],

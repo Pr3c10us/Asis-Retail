@@ -17,12 +17,7 @@ const EditProduct = () => {
   const [loading, setLoading] = React.useState(false);
   const [imageDelete, setImageDelete] = React.useState("");
   const [productDetails, setProductDetails] = React.useState({});
-  const [category, setCategory] = React.useState([
-    "clothes",
-    "footwear",
-    "accessories",
-    "others",
-  ]);
+  const [category, setCategory] = React.useState([]);
   const [fileList, setFileLIst] = React.useState([]);
   const [images, setImages] = React.useState(productDetails.images || []);
   const lorem =
@@ -32,8 +27,21 @@ const EditProduct = () => {
     productDetails?.category?.toLowerCase(),
   );
   const [countInStock, setCountInStock] = React.useState([]);
+  const getCategories = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}products/category`,
+      );
+      setCategory(res.data.categories);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   React.useEffect(() => {
     console.log(location.pathname.split("/")[2]);
+    getCategories();
     const getProductDetails = async () => {
       setLoading(true);
       const res = await axios.get(
@@ -48,7 +56,6 @@ const EditProduct = () => {
       formik.setFieldValue("name", res.data.name);
       formik.setFieldValue("price", res.data.price);
       formik.setFieldValue("description", res.data.description);
-      formik.setFieldValue("brief", res.data.brief);
       setLoading(false);
       console.log(res.data);
     };
@@ -60,7 +67,6 @@ const EditProduct = () => {
       name: productDetails.name,
       price: productDetails.price,
       description: productDetails.description,
-      brief: productDetails.brief,
     },
 
     onSubmit: (values, { setSubmitting }) => {
@@ -109,9 +115,7 @@ const EditProduct = () => {
     validationSchema: Yup.object({
       name: Yup.string().required("name is Required"),
       price: Yup.number().min(1).positive().required("price is Required"),
-
       description: Yup.string().required("description is Required"),
-      brief: Yup.string().required("brief is Required"),
     }),
   });
 
