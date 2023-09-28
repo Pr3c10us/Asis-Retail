@@ -78,7 +78,7 @@ const Page = () => {
             ref={asisCardRef}
             src={displayCart}
             alt="displayCart"
-            className={`absolute z-20 w-[239px] cursor-pointer pb-3 transition-all duration-200 ${
+            className={`absolute z-20 w-[15rem] cursor-pointer pb-3 transition-all duration-200 ${
               !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0"
             }`}
             onClick={() => {
