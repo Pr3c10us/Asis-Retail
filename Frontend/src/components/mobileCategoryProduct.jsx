@@ -5,12 +5,12 @@ import cartImg from "../assets/images/thankyou.png";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
+const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
   return (
     <motion.div
-      initial={{ x: index * -300, opacity: 0 }}
-      animate={{ x: index * 0, opacity: 1 }}
-      exit={{ x: index * -300, opacity: 0 }}
+      initial={{ y: index * -300, opacity: 0 }}
+      animate={{ y: index * 0, opacity: 1 }}
+      exit={{ y: index * -300, opacity: 0 }}
       transition={{ delay: index * 0.05, type: "tween" }}
       className="mainContainer"
     >
@@ -55,7 +55,7 @@ const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProdu
   );
 };
 
-export default CategoryProduct;
+export default MwobileCategoryProduct;
 
 
 
