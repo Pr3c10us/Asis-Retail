@@ -67,13 +67,13 @@ const Cart = ({ setHideCart }) => {
     console.log(cartData);
   }, []);
 
-  const removeItemFromCart = async (id, option) => {
+  const removeItemFromCart = async (id, size) => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
       const item = {
         productId: id,
-        option: option,
+        size: size,
       };
       await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}carts/removeItem`,
@@ -227,7 +227,7 @@ const Cart = ({ setHideCart }) => {
                           {/* remove item from cart */}
                           <button
                             onClick={() =>
-                              removeItemFromCart(data.product._id, data.option)
+                              removeItemFromCart(data.product._id, data.size)
                             }
                           >
                             <img
@@ -243,7 +243,7 @@ const Cart = ({ setHideCart }) => {
                             <p>
                               type:{" "}
                               <span className="text-sm font-bold">
-                                {data.option}
+                                {data.size}
                               </span>
                             </p>
                           </div>

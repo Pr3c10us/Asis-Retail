@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         element: <SuperSpecialCategory />,
       },
       {
-        path: "/shop",
+        path: "/shop/:id",
         element: <Shop />,
       },
       {

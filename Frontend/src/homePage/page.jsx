@@ -8,6 +8,7 @@ import useFetch from "../components/useFetch";
 import CategoryProduct from "../components/categoryProduct";
 import Products from "./components/products";
 import Loading from "../components/loading";
+import Mobile from "./components/mobile";
 
 const Page = () => {
   const [hideCategory, setHideCategory] = useState(false);
@@ -72,18 +73,19 @@ const Page = () => {
       <section className="mt-10 flex flex-col">
         {/* <StackingSection /> */}
         <section
-          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100`}
+          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100 max-sm:hidden`}
         >
           <img
             ref={asisCardRef}
             src={displayCart}
             alt="displayCart"
-            className={`absolute z-20 w-[239px] cursor-pointer pb-3 transition-all duration-200 ${
+            className={`absolute z-20 w-[15rem] cursor-pointer pb-3 transition-all duration-200 ${
               !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0"
             }`}
             onClick={() => {
               setHideCategory((prev) => !prev);
               setActiveItem(null);
+              setShowProducts(false);
             }}
           />
 
@@ -149,6 +151,12 @@ const Page = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        <Mobile
+          categoriesData={categoriesData}
+          setCategories={setCategories}
+          setShowProducts={setShowProducts}
+          showProducts={showProducts}
+        />
 
         <AnimatePresence>
           {showProducts && (
