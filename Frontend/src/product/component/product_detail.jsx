@@ -56,7 +56,7 @@ const Product_detail = ({ data }) => {
         axios.defaults.withCredentials = true;
         let item = {
           productId: data._id,
-          option: selectedSize,
+          size: selectedSize,
           quantity: 1,
         };
         const response = await axios.put(
@@ -198,14 +198,14 @@ const Product_detail = ({ data }) => {
               {data.countInStock?.map((optData, index) => (
                 <div
                   key={index}
-                  onClick={() => setSelectedSize(optData.option)}
+                  onClick={() => setSelectedSize(optData.size)}
                   className={`flex h-10 w-24 cursor-pointer items-center justify-center border text-xs font-medium uppercase rounded-md${
-                    selectedSize === optData.option
+                    selectedSize === optData.size
                       ? " border-asisDark text-asisDark"
                       : " border-[#C4C4C4] text-[#C4C4C4]"
                   }`}
                 >
-                  {optData.option}
+                  {optData.size}
                 </div>
               ))}
             </section>
@@ -272,7 +272,7 @@ const Product_detail = ({ data }) => {
                 </article>
 
                 {/* <article className="flex cursor-pointer items-center justify-between py-2">
-                  <p>option guild</p>
+                  <p>size guild</p>
                   <img src={down} alt="down" />
                 </article> */}
               </section>

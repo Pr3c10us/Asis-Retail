@@ -1,84 +1,60 @@
-import React, { useState, useEffect } from "react";
-import Banner from "../components/banner";
-import backToTop from "../assets/icons/back_to_top.svg";
-import ShopProducts from "./component/shop_products";
-import Filter from "./component/filter";
-import Search from "./component/search";
-import useFetch from "../components/useFetch";
-import Loading from "../components/loading";
+import React,{useState, useEffect} from 'react'
+import MwobileCategoryProduct from '../components/mobileCategoryProduct'
+import { useParams } from "react-router-dom";
+import useFetch from "../components/useFetch"
+import ShopCartegoryProduct from './component/shopCartegoryProduct';
+import Products from '../components/products';
+import { Link } from 'react-router-dom';
 
-const Page = () => {
-  // States
-  const [dynamicUrl, setDynamicUrl] = useState("products");
-  const [hideFilter, setHideFilter] = useState(true);
+const page = () => {
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const apiUrl = `${import.meta.env.VITE_BACKEND_URL}products/category/${id}`;
+  const asisCardRef = React.useRef(null);
 
-  // API URL
-  const apiUrl = `${import.meta.env.VITE_BACKEND_URL}${dynamicUrl}`;
-  const { data } = useFetch(apiUrl);
 
-  // Scroll to top on component mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const {data} = useFetch(apiUrl)
 
-  // Handle scroll to top
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const url = `${
+    import.meta.env.VITE_BACKEND_URL
+  }products/?categories=${id}`;
 
-  // Determine alignment based on product count
-  const align = data?.products?.length <= 3 ? "items-start" : "";
+  const {data: productsData} = useFetch(url)
+  console.log(productsData)
 
   return (
-    <div className="h-full ">
-      {data ? (
-        <section className="">
-          {/* Search */}
-          <Search
-            setDynamicUrl={setDynamicUrl}
-            setHideFilter={setHideFilter}
-            hideFilter={hideFilter}
-          />
+    <div className='h-full'>
+      {data && <section className='flex justify-center  items-start '>
+        <div className="">
 
-          {/* Main content */}
-          <section className="flex justify-start px-8">
-            <div
-              className={`flex flex-row-reverse ${align} justify-start gap-10`}
-            >
-              {/* Shop products */}
-              {data && <ShopProducts hideFilter={hideFilter} data={data} />}
+<ShopCartegoryProduct data={data} />
 
-              {/* Filter */}
-              <div>
-                {hideFilter && (
-                  <div className="sticky top-12 hidden lg:block ">
-                    <Filter setDynamicUrl={setDynamicUrl} />
+{productsData && (
+            <div>
+              <section className="mt-2 flex items-center gap-5">
+                {productsData.products?.map((product) => (
+                  <div key={product._id}>
+                    <Link to={`/product/${product._id}`}>
+                      <Products
+                        top={asisCardRef.current?.offsetTop}
+                        left={asisCardRef.current?.offsetLeft}
+                        name={product.name}
+                        price={product.price}
+                        collaborations={product.collaborations}
+                        images={product.images}
+                      />
+                    </Link>
                   </div>
-                )}
-              </div>
+                ))}
+              </section>
             </div>
-          </section>
+          )}
+                  </div>
 
-          {/* Back to top */}
-          <div className="relative mt-16 border-t border-asisDark">
-            <img
-              src={backToTop}
-              alt="back_to_top"
-              className="absolute -top-7 right-10 cursor-pointer"
-              onClick={() => {
-                handleScrollToTop();
-              }}
-            />
-          </div>
-        </section>
-      ) : (
-        <Loading />
-      )}
+
+      </section>}
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default page

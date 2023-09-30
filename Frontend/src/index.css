@@ -113,10 +113,10 @@ input[type="checkbox"]:checked::before {
   overflow: hidden;
 }
 @media (max-width: 640px) {
-  .mainContainer {
-    width: 165px;
-    height: 235px;
-  }
+.mainContainer {
+  width: 10rem;
+  height: 235px;
+}
 }
 @media (min-height: 1000px) {
   .filter_component {

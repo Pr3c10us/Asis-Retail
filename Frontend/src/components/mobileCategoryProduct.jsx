@@ -5,12 +5,12 @@ import cartImg from "../assets/images/thankyou.png";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
+const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
   return (
     <motion.div
-      initial={{ x: index * -300, opacity: 0 }}
-      animate={{ x: index * 0, opacity: 1 }}
-      exit={{ x: index * -300, opacity: 0 }}
+      initial={{ y: index * -300, opacity: 0 }}
+      animate={{ y: index * 0, opacity: 1 }}
+      exit={{ y: index * -300, opacity: 0 }}
       transition={{ delay: index * 0.05, type: "tween" }}
       className="mainContainer"
     >
@@ -35,7 +35,7 @@ const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProdu
           <img src={A} alt="A" className="absolute bottom-3 right-5 " />
 
           <p className="mb-3 text-sm font-semibold">{data.name}</p>
-          <p className="mb-4 px-4 text-xs">{data.description}</p>
+          <p className="mb-4 px-4 text-xs max-sm:px-1">{data.description}</p>
           <div
             className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
             onClick={() => {
@@ -49,13 +49,23 @@ const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProdu
             View Products
             <img src={down} alt="down" />
           </div>
+          <Link to={`/shop/${data._id}`}>
+          <div
+            className="mx-auto flex w-full cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs"
+            
+          >
+            show Products
+            <img src={down} alt="down" />
+          </div>
+          </Link>
+
         </div>
       </div>
     </motion.div>
   );
 };
 
-export default CategoryProduct;
+export default MwobileCategoryProduct;
 
 
 
