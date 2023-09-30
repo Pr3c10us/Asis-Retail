@@ -35,7 +35,7 @@ const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,sh
           <img src={A} alt="A" className="absolute bottom-3 right-5 " />
 
           <p className="mb-3 text-sm font-semibold">{data.name}</p>
-          <p className="mb-4 px-4 text-xs">{data.description}</p>
+          <p className="mb-4 px-4 text-xs max-sm:px-1">{data.description}</p>
           <div
             className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
             onClick={() => {
@@ -49,6 +49,16 @@ const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,sh
             View Products
             <img src={down} alt="down" />
           </div>
+          <Link to={`/shop/${data._id}`}>
+          <div
+            className="mx-auto flex w-full cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs"
+            
+          >
+            show Products
+            <img src={down} alt="down" />
+          </div>
+          </Link>
+
         </div>
       </div>
     </motion.div>

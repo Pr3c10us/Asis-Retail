@@ -39,7 +39,8 @@ const Mobile = ({
               }}
               className=""
             >
-      <div className="grid grid-cols-2 gap-4 justify-center">
+              <div className="flex justify-center">
+              <div className="grid grid-cols-2  gap-4 justify-center">
       {categoriesData?.map((data, index) => (
         <div key={data.name + index}>
           <MwobileCategoryProduct
@@ -52,6 +53,8 @@ const Mobile = ({
         </div>
       ))}
       </div>
+              </div>
+      
       </motion.div>}
       </AnimatePresence>
     </div>
