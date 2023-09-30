@@ -8,12 +8,6 @@ const specialCategorySchema = new mongoose.Schema(
         description: {
             type: String,
         },
-        superSpecialCategory: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "SuperSpecialCategory",
-            },
-        ],
     },
     {
         timestamps: true,

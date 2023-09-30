@@ -3,8 +3,8 @@ const { CustomError } = require("../errors");
 
 // Create error handler middleware
 const errorHandler = (err, req, res, next) => {
-    console.log(err);
     // if error is a custom error
+    console.log(err);
     if (err instanceof CustomError) {
         // return error message
         return res.status(err.status).json({ msg: err.message });

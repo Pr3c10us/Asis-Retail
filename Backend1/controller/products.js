@@ -1,11 +1,11 @@
 const fileUpload = require("express-fileupload");
 require("dotenv").config();
 const Product = require("../models/products");
+const Category = require("../models/category");
+const SpecialCategory = require("../models/specialCategory");
 const blobServiceClient = require("../azure/azureStorage");
 const { BadRequestError, NotFoundError } = require("../errors");
 const mongoose = require("mongoose");
-const Category = require("../models/category");
-const SpecialCategory = require("../models/specialCategory");
 
 const createProduct = async (req, res) => {
     // return res.json({a:req.body,b:req.files});
@@ -116,12 +116,6 @@ const getProducts = async (req, res) => {
     res.json({ nbHits: products.length, products });
 };
 
-
-const getRandomProducts = async (req, res) => {
-    const randomProducts = await Product.aggregate([{ $sample: { size: 10 } }]);
-    res.json(randomProducts);
-};
-
 const getProductById = async (req, res) => {
     // get product id from request params
     const { id } = req.params;
@@ -228,7 +222,7 @@ const deleteProductImage = async (req, res) => {
     });
 
     await Promise.all(imagePromises);
-    
+
     await product.save();
 
     // send success message
@@ -311,6 +305,27 @@ const updateProduct = async (req, res) => {
             throw new BadRequestError("Name already exists");
         }
     }
+    // if(req.)
+
+    // if (req.body.categories.length > 0) {
+    //     const validCategoryIds = req.body.categories.filter((id) =>
+    //         mongoose.isValidObjectId(id)
+    //     );
+
+    //     if (validCategoryIds.length !== req.body.categories.length) {
+    //         throw new BadRequestError("Invalid Special Category Ids");
+    //     }
+
+    //     const categories = await Category.find({
+    //         _id: { $in: validCategoryIds },
+    //     });
+
+    //     if (categories.length !== validCategoryIds.length) {
+    //         throw new BadRequestError("Special Category does not exist");
+    //     }
+
+    //     req.body.categories = categories.map((category) => category._id);
+    // }
 
     const newProductInfo = await Product.findByIdAndUpdate(id, req.body, {
         new: true,

@@ -15,7 +15,21 @@ const orderSchema = new mongoose.Schema(
             enum: ["Nigeria", "United States"],
         },
         clientSecret: String,
-
+        shipping: [
+            {
+                shipping: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Shipping",
+                    required: true,
+                },
+                name: {
+                    type: String,
+                },
+                fee: {
+                    type: Number,
+                },
+            },
+        ],
         status: {
             type: String,
             enum: [
@@ -42,28 +56,13 @@ const orderSchema = new mongoose.Schema(
                 name: {
                     type: String,
                 },
-                size: {
+                option: {
                     type: String,
                 },
                 quantity: {
                     type: Number,
                 },
                 price: {
-                    type: Number,
-                },
-            },
-        ],
-        shipping: [
-            {
-                shipping: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "Shipping",
-                    required: true,
-                },
-                name: {
-                    type: String,
-                },
-                fee: {
                     type: Number,
                 },
             },
@@ -75,10 +74,6 @@ const orderSchema = new mongoose.Schema(
         customer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Customer",
-        },
-        cart: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Cart",
         },
     },
     {

@@ -17,11 +17,12 @@ const createOrderStripe = async (req, res) => {
         "products.product",
         "name price images"
     );
+
     const products = cart.products.map((item) => {
         return {
             product: item.product,
             name: item.product.name,
-            size: item.size,
+            option: item.option,
             quantity: item.quantity,
             price: item.price,
         };
@@ -177,6 +178,7 @@ const getOrdersAdmin = async (req, res) => {
         .populate("products.product")
         .populate("shipping.shipping");
 
+
     // #################################################################
     // Set up Pagination
 
@@ -249,12 +251,13 @@ const deleteOrder = async (req, res) => {
     // send success message
     res.json({ message: "order deleted successfully" });
 };
+
 module.exports = {
     createOrderStripe,
     getOrders,
     getOrdersAdmin,
     getOrder,
-    getOrderByClientSecrete,
     updateOrder,
+    getOrderByClientSecrete,
     deleteOrder,
 };

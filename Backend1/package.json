@@ -4,10 +4,9 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start": "pm2 start app.js && pm2 save",
-        "restart": "pm2 restart app.js && pm2 save",
+        "start": "pm2 start app.js",
         "dev": "nodemon app.js",
-        "stop": "pm2 delete all && pm2 save" 
+        "stop": "pm2 stop app.js"
     },
     "author": "",
     "license": "ISC",

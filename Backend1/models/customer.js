@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const adminSchema = new mongoose.Schema(
+const customerSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -23,22 +23,18 @@ const adminSchema = new mongoose.Schema(
         state: {
             type: String,
         },
-        isApproved: {
-            type: Boolean,
-            default: false,
-        },
     },
     {
         timestamps: true,
     }
 );
 
-const Admin = mongoose.model("Admin", adminSchema);
+const Customer = mongoose.model("Customer", customerSchema);
 
-module.exports = Admin;
+module.exports = Customer;
 
-// Demo 2: Create a admin
-const adminDemo = {
+// Demo 2: Create a customer
+const CustomerDemo = {
     name: "John Doe",
     email: "johnDoe@gmail.com",
     password: "123456",
@@ -47,3 +43,4 @@ const adminDemo = {
     city: "Ikorodu",
     state: "Lagos",
 };
+        

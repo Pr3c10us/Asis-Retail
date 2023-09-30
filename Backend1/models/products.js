@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema(
         ],
         countInStock: [
             {
-                size: {
+                option: {
                     type: String,
                 },
                 quantity: {

@@ -68,7 +68,7 @@ const AddProduct = () => {
       data.append("brief", values.brief);
       data.append("categories", selectedCategory);
       countInStock.forEach((item, index) => {
-        data.append(`countInStock[${index}][option]`, item.option);
+        data.append(`countInStock[${index}][size]`, item.option);
         data.append(`countInStock[${index}][quantity]`, item.quantity);
       });
       fileList.forEach((file) => {

@@ -4,7 +4,7 @@ import { Outlet,useLocation } from "react-router-dom";
 const Products = () => {
   const location = useLocation();
   return (
-    <main className="space-y-6 pt-7">
+    <main className="pt-7">
       {location.pathname === "/products" && (
         <h1 className="font-semibold">Products</h1>
       )}
