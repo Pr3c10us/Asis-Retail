@@ -158,7 +158,7 @@ const Page = () => {
                 y: -50,
                 opacity: 0,
               }}
-              className="mx-14 mb-10 mt-14 flex backdrop-blur-md"
+              className="mx-14 mb-10 mt-14 flex backdrop-blur-md max-sm:hidden"
             >
               <input
                 type="text"

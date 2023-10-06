@@ -212,7 +212,7 @@ const Cart = ({ setHideCart }) => {
                         <div className="flex items-start justify-between border-b-2 border-b-asisDark/30 pb-2">
                           <div>
                             <Link to={`/product/${data.product._id}`}>
-                              <p className="w-[212px] text-sm font-bold text-asisGreen">
+                              <p className="text-sm font-bold text-asisGreen w-48 max-sm:w-full">
                                 {data.product.name}
                               </p>
                             </Link>

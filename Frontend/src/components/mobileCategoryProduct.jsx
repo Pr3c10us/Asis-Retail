@@ -8,17 +8,16 @@ import { motion } from "framer-motion";
 const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
   return (
     <motion.div
-      initial={{ y: index * -300, opacity: 0 }}
-      animate={{ y: index * 0, opacity: 1 }}
-      exit={{ y: index * -300, opacity: 0 }}
-      transition={{ delay: index * 0.05, type: "tween" }}
+      // initial={{ y: index * -300, opacity: 0 }}
+      // animate={{ y: index * 0, opacity: 1 }}
+      // exit={{ y: index * -300, opacity: 0 }}
+      // transition={{ delay: index * 0.05, type: "tween" }}
       className="mainContainer"
     >
-      
       <div className="theCard ">
         <div className="theFront">
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-50"></div>
-          <p className="absolute bottom-5 left-5 text-xs font-semibold text-[#ffff]">
+          <p className="absolute bottom-4 left-3 text-xs font-semibold text-[#ffff]">
             {data.name}
           </p>
 
@@ -27,22 +26,40 @@ const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,sh
             alt="products_img"
             className="h-full w-full rounded-3xl  object-cover object-top"
           />
-          <img src={A} alt="A" className="absolute left-5 top-5 rotate-180" />
-          <img src={A} alt="A" className="absolute bottom-5 right-5 " />
+          <img
+            src={A}
+            alt="A"
+            className="absolute left-5 top-4 rotate-180 max-sm:left-3 max-sm:w-3"
+          />
+          <img
+            src={A}
+            alt="A"
+            className="absolute bottom-4 right-5 max-sm:right-3 max-sm:w-3"
+          />
         </div>
-        <div className="theBack flex flex-col items-center justify-between rounded-3xl border-2 border-asisGreen px-3 py-10 text-center">
-          <img src={A} alt="A" className="absolute left-5 top-3 rotate-180" />
-          <img src={A} alt="A" className="absolute bottom-3 right-5 " />
+        <div className="theBack flex flex-col items-center justify-between rounded-3xl border-2  border-asisGreen px-3 py-12  text-center">
+          <img
+            src={A}
+            alt="A"
+            className="absolute left-5 top-3 rotate-180 max-sm:left-3 max-sm:w-3"
+          />
+          <img
+            src={A}
+            alt="A"
+            className="absolute bottom-3 right-5 max-sm:right-3 max-sm:w-3"
+          />
 
           <p className="mb-3 text-sm font-semibold">{data.name}</p>
-          <p className="mb-4 px-4 text-xs max-sm:px-1">{data.description}</p>
+          <p className="mb-4 overflow-y-hidden px-4 text-xs max-sm:h-12 max-sm:px-0">
+            {data.description}...
+          </p>
           <div
             className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
             onClick={() => {
               setCategories(data._id);
               setShowProducts(!showProducts);
-              setTimeout(() => {              
-              setShowProducts(true);
+              setTimeout(() => {
+                setShowProducts(true);
               }, 500);
             }}
           >
@@ -50,15 +67,11 @@ const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,sh
             <img src={down} alt="down" />
           </div>
           <Link to={`/shop/${data._id}`}>
-          <div
-            className="mx-auto flex w-full cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs"
-            
-          >
-            show Products
-            <img src={down} alt="down" />
-          </div>
+            <div className="mx-auto flex w-full cursor-pointer  items-center gap-2  border border-dashed border-asisDark p-1 text-xs">
+              Show Products
+              <img src={down} alt="down" className="max-sm:w-4" />
+            </div>
           </Link>
-
         </div>
       </div>
     </motion.div>
