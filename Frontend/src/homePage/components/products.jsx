@@ -2,7 +2,15 @@ import React from "react";
 import A from "../../assets/icons/A.svg";
 import { motion } from "framer-motion";
 
-const Products = ({ name, price, collaborations, images, top, left }) => {
+const Products = ({
+  name,
+  price,
+  index,
+  collaborations,
+  images,
+  top,
+  left,
+}) => {
   const renderCollaborations = () => {
     if (collaborations) {
       return collaborations.map((data, index) => (
@@ -17,16 +25,19 @@ const Products = ({ name, price, collaborations, images, top, left }) => {
   return (
     <motion.div
       initial={{
-        top: top,
-        left: left,
+        y:
+          // make y the height of the asisCardRef
+          -50,
         opacity: 0,
       }}
       animate={{ y: 0, x: 0, opacity: 1 }}
       exit={{
-        top: top,
-        left: left,
+        y:
+          // make y the
+          -50,
         opacity: 0,
       }}
+      transition={{ delay: 0.1 * index }}
       className="relative aspect-[9/16] h-[312px] w-[239px] cursor-pointer max-md:h-[235px] max-md:w-[172px]"
     >
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-50"></div>

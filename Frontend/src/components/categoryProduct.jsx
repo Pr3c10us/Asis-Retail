@@ -5,7 +5,14 @@ import cartImg from "../assets/images/thankyou.png";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
+const CategoryProduct = ({
+  data,
+  index,
+  setCategories,
+  setShowProducts,
+  setShowAllProducts,
+  showProducts,
+}) => {
   return (
     <motion.div
       initial={{ x: index * -300, opacity: 0 }}
@@ -14,7 +21,6 @@ const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProdu
       transition={{ delay: index * 0.05, type: "tween" }}
       className="mainContainer"
     >
-      
       <div className="theCard ">
         <div className="theFront">
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-50"></div>
@@ -41,8 +47,9 @@ const CategoryProduct = ({ data, index, setCategories, setShowProducts,showProdu
             onClick={() => {
               setCategories(data._id);
               setShowProducts(!showProducts);
-              setTimeout(() => {              
-              setShowProducts(true);
+              setShowAllProducts(false)
+              setTimeout(() => {
+                setShowProducts(true);
               }, 500);
             }}
           >

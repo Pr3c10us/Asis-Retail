@@ -13,8 +13,9 @@ import Mobile from "./components/mobile";
 const Page = () => {
   const [hideCategory, setHideCategory] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
-  const [activeItem, setActiveItem] = useState(null);
+  const [showAllProducts, setShowAllProducts] = useState(false);
   const [productData, setProductData] = useState([]);
+  const [allProductData, setAllProductData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const asisCardRef = React.useRef(null);
@@ -27,16 +28,37 @@ const Page = () => {
   // const categoryData = `${import.meta.env.VITE_BACKEND_URL}products/categories`;
   // const { data: categoryDataResponse } = useFetch(categoryData);
 
-  const url = `${
-    import.meta.env.VITE_BACKEND_URL
-  }products/?categories=${categories}`;
+  const url = `${import.meta.env.VITE_BACKEND_URL}products`;
 
+  useEffect(() => {
+    // async function fetchData() {
+    //   // setIsLoading(true);
+    //   try {
+    //     const response = await Axios.get(url);
+    //     setProductData(response.data.products);
+    //     // setIsLoading(false);
+    //   } catch (error) {
+    //     // setIsLoading(false);
+    //   }
+    // }
+
+    // fetchData();
+
+    const displayProduct = allProductData.filter(
+      (product) => product.categories.indexOf(categories) > -1,
+    );
+    console.log({ displayProduct, allProductData });
+    setProductData(displayProduct);
+  }, [categories]);
   useEffect(() => {
     async function fetchData() {
       // setIsLoading(true);
       try {
-        const response = await Axios.get(url);
-        setProductData(response.data.products);
+        const response = await Axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}products`,
+        );
+        console.log(response.data.products);
+        setAllProductData(response.data.products);
         // setIsLoading(false);
       } catch (error) {
         // setIsLoading(false);
@@ -44,7 +66,7 @@ const Page = () => {
     }
 
     fetchData();
-  }, [categories]);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -84,8 +106,9 @@ const Page = () => {
             }`}
             onClick={() => {
               setHideCategory((prev) => !prev);
-              setActiveItem(null);
+              setCategories("");
               setShowProducts(false);
+              setShowAllProducts(true);
             }}
           />
 
@@ -96,6 +119,7 @@ const Page = () => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{
                   x: 500,
+                  left: "50%",
                   opacity: 0,
                   transition: { type: "tween", duration: 0.5 },
                 }}
@@ -113,6 +137,7 @@ const Page = () => {
                       setCategories={setCategories}
                       setShowProducts={setShowProducts}
                       showProducts={showProducts}
+                      setShowAllProducts={setShowAllProducts}
                       index={index}
                     />
                   </div>
@@ -122,19 +147,15 @@ const Page = () => {
           </AnimatePresence>
         </section>
         <AnimatePresence>
-          {showProducts && (
+          {hideCategory && (
             <motion.div
               initial={{
-                y:
-                  // make y the height of the asisCardRef
-                  -50,
+                y: -50,
                 opacity: 0,
               }}
               animate={{ y: 0, x: 0, opacity: 1 }}
               exit={{
-                y:
-                  // make y the
-                  -50,
+                y: -50,
                 opacity: 0,
               }}
               className="mx-14 mb-10 mt-14 flex backdrop-blur-md"
@@ -157,29 +178,55 @@ const Page = () => {
           setShowProducts={setShowProducts}
           showProducts={showProducts}
         />
+        <div className="hidden md:block">
+          <AnimatePresence>
+            {showAllProducts && hideCategory && (
+              <div>
+                <section className="mt-2 flex flex-wrap items-center gap-10">
+                  {allProductData.map((product, index) => (
+                    <div key={product._id}>
+                      <Link to={`/product/${product._id}`}>
+                        <Products
+                          top={asisCardRef.current?.offsetTop}
+                          left={asisCardRef.current?.offsetLeft}
+                          name={product.name}
+                          price={product.price}
+                          collaborations={product.collaborations}
+                          images={product.images}
+                          index={index}
+                        />
+                      </Link>
+                    </div>
+                  ))}{" "}
+                  
+                </section>
+              </div>
+            )}
 
-        <AnimatePresence>
-          {showProducts && (
-            <div>
-              <section className="mt-2 flex items-center gap-5">
-                {productData.map((product) => (
-                  <div key={product._id}>
-                    <Link to={`/product/${product._id}`}>
-                      <Products
-                        top={asisCardRef.current?.offsetTop}
-                        left={asisCardRef.current?.offsetLeft}
-                        name={product.name}
-                        price={product.price}
-                        collaborations={product.collaborations}
-                        images={product.images}
-                      />
-                    </Link>
-                  </div>
-                ))}
-              </section>
-            </div>
-          )}
-        </AnimatePresence>
+            {showProducts && (
+              <div>
+                <section className="mt-2 flex flex-wrap items-center gap-10">
+                  {productData.map((product, index) => (
+                    <div key={product._id}>
+                      <Link to={`/product/${product._id}`}>
+                        <Products
+                          top={asisCardRef.current?.offsetTop}
+                          left={asisCardRef.current?.offsetLeft}
+                          name={product.name}
+                          price={product.price}
+                          collaborations={product.collaborations}
+                          images={product.images}
+                          index={index}
+                        />
+                      </Link>
+                    </div>
+                  ))}
+                  
+                </section>
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
       </section>
     </div>
   );

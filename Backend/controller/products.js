@@ -94,7 +94,7 @@ const getProducts = async (req, res) => {
 
     // get products for admin
     let result = Product.find(queryObject)
-        .populate("categories")
+        // .populate("categories")
         .select("-admin -createdAt -updatedAt -__v");
 
     // #################################################################
