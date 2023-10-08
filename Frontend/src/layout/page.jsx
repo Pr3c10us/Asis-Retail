@@ -24,7 +24,6 @@ const Page = () => {
       // console.log(response.data);
       // setCartData(response.data.products);
       dispatch(setCart(response.data));
-      console.log(cartData);
     } catch (error) {
       console.log(error);
     }

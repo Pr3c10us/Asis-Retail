@@ -1,4 +1,5 @@
 import React from "react";
+import CapitalizeSentence from "./CapitalizeSentence";
 import A from "../assets/icons/A.svg"
 const Products = ({ name, price, collaborations, images }) => {
   const renderCollaborations = () => {
@@ -13,25 +14,35 @@ const Products = ({ name, price, collaborations, images }) => {
   };
 
   return (
-      <div className="aspect-[9/16] h-[312px] w-[239px] max-md:w-[172px] max-md:h-[235px] relative cursor-pointer">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-asisDark opacity-50 rounded-3xl"></div>
-        <img
-          src={`${import.meta.env.VITE_BLOB_URL}${images[0]}`}
-          alt="products_img"
-          className="h-full w-full object-cover object-top rounded-3xl"
-        />
-        <img src={A} alt="A" className="absolute top-5 left-5 rotate-180"/>
-        <img src={A} alt="A" className="absolute bottom-5 right-5 "/>
-      <div className="mt-2 font-semibold uppercase absolute bottom-5 left-5">
-        
-        <p className="text-xs text-[#ffff] font-semibold">{name}</p>
+    <div className="relative aspect-[9/16] h-[312px] w-[239px] cursor-pointer max-md:h-[235px] max-md:w-[10.8rem]">
+      <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-80"></div>
+      <img
+        src={`${import.meta.env.VITE_BLOB_URL}${images[0]}`}
+        alt="products_img"
+        className="h-full w-full rounded-3xl object-cover object-top"
+      />
+
+      <img
+        src={A}
+        alt="A"
+        className="absolute left-5 top-4 rotate-180 max-sm:left-3 max-sm:w-3"
+      />
+      <img
+        src={A}
+        alt="A"
+        className="absolute bottom-4 right-5 max-sm:right-3 max-sm:w-3"
+      />
+      <div className="absolute bottom-5 left-5 mt-2 font-semibold  max-sm:bottom-4 max-sm:left-3">
+        <p className="text-xs font-semibold text-[#ffff]">
+          <CapitalizeSentence name={name}/>
+        </p>
         {/* <div className="flex gap-4">{renderCollaborations()}</div> */}
-        <p className="text-xs font-semibold text-asisGreen">
+        <p className="text-xs font-semibold text-asisGreen uppercase">
           {Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
           }).format(price)}{" "}
-          usd
+          USD
         </p>
       </div>
     </div>

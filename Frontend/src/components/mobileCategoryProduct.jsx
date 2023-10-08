@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from "react";
 import down from "../assets/icons/down_arrow.svg";
 import A from "../assets/icons/A.svg";
-import cartImg from "../assets/images/thankyou.png";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import CapitalizeSentence from "./CapitalizeSentence";
 
-const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,showProducts }) => {
+const MobileCategoryProduct = ({
+  data,
+  index,
+  setCategories,
+  setShowProducts,
+  showProducts,
+}) => {
   return (
     <motion.div
-      // initial={{ y: index * -300, opacity: 0 }}
-      // animate={{ y: index * 0, opacity: 1 }}
-      // exit={{ y: index * -300, opacity: 0 }}
-      // transition={{ delay: index * 0.05, type: "tween" }}
+      initial={{ x: index * -20, opacity: 0 }}
+      animate={{ x: index * 0, opacity: 1 }}
+      exit={{ x: index * -20, opacity: 0 }}
+      transition={{ duration: index * 0.2, type: "tween" }}
       className="mainContainer"
     >
       <div className="theCard ">
         <div className="theFront">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-50"></div>
-          <p className="absolute bottom-4 left-3 text-xs font-semibold text-[#ffff]">
-            {data.name}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-80"></div>
+          <p className="absolute bottom-4 left-3 text-xs font-semibold text-white">
+            <CapitalizeSentence name={data.name} />
           </p>
 
           <img
@@ -49,25 +55,13 @@ const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,sh
             className="absolute bottom-3 right-5 max-sm:right-3 max-sm:w-3"
           />
 
-          <p className="mb-3 text-sm font-semibold">{data.name}</p>
-          <p className="mb-4 overflow-y-hidden px-4 text-xs max-sm:h-12 max-sm:px-0">
-            {data.description}...
+          <p className="mb-3 text-sm font-semibold capitalize">{data.name}</p>
+          <p className="mb-4 overflow-y-hidden px-4 text-xs max-sm:h-12 max-sm:px-0 ">
+            {data.description?.slice(0, 75) + "..."}
           </p>
-          <div
-            className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
-            onClick={() => {
-              setCategories(data._id);
-              setShowProducts(!showProducts);
-              setTimeout(() => {
-                setShowProducts(true);
-              }, 500);
-            }}
-          >
-            View Products
-            <img src={down} alt="down" />
-          </div>
+
           <Link to={`/shop/${data._id}`}>
-            <div className="mx-auto flex w-full cursor-pointer  items-center gap-2  border border-dashed border-asisDark p-1 text-xs">
+            <div className="mx-auto flex w-full cursor-pointer  items-center gap-2  border border-dashed border-asisDark px-2 py-1 text-[10px]">
               Show Products
               <img src={down} alt="down" className="max-sm:w-4" />
             </div>
@@ -78,7 +72,4 @@ const MwobileCategoryProduct = ({ data, index, setCategories, setShowProducts,sh
   );
 };
 
-export default MwobileCategoryProduct;
-
-
-
+export default MobileCategoryProduct;

@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .mainContainer {
   position: relative;
-  width: 239px;
-  height: 312px;
+  aspect-ratio: 1/1.35;
+  width: 240px;
+  /* height: 312px; */
 }
 .theCard {
   position: absolute;
@@ -14,7 +14,6 @@
   height: 100%;
   transform-style: preserve-3d;
   transition: all 0.5s ease;
-
 }
 .mainContainer:hover > .theCard {
   transform: rotateY(180deg);
@@ -25,66 +24,33 @@
   height: 100%;
   backface-visibility: hidden;
   color: black;
-
 }
 .theBack {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-background-color: white;
-transform: rotateY(180deg);
-color: black;
-
+  background-color: white;
+  transform: rotateY(180deg);
+  color: black;
 }
 
-
 ::-webkit-scrollbar {
-width: 0px;
+  width: 0px;
   height: 0.3rem;
-  }
+}
 ::-webkit-scrollbar-thumb {
-    background-color: #878787;
-    border-radius: 2px; 
-
-  }
+  background-color: #878787;
+  border-radius: 2px;
+}
 ::-webkit-scrollbar-track {
-    background-color: #cec9c9;
-  }
- .filter_component {
-    height: 80vh;
+  background-color: #cec9c9;
+}
+.filter_component {
+  height: 80vh;
 }
 .product_img {
   height: 80vh;
-}
-
-/* Apply custom styling to the checkbox */
-input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: transparent; /* Desired background color */
-  border: 1px solid #0B0B0B; /* Matching border color */
-  width: 14px;
-  height: 14px;
-  outline: none;
-  position: relative; /* Required for pseudo-element */
-}
-
-/* Define the appearance of the checkbox when checked */
-input[type="checkbox"]:checked {
-  background-color: black; /* Keep the same background color */
-}
-
-/* Style the pseudo-element that represents the checkmark */
-input[type="checkbox"]::before {
-  content: "\2713"; /* Unicode character for checkmark */
-  font-size: 12px;
-  color: white; /* Color of the checkmark */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0; /* Initially hidden */
 }
 
 /* Show the checkmark when the checkbox is checked */
@@ -103,7 +69,7 @@ input[type="checkbox"]:checked::before {
 }
 
 .slow-spin {
-  animation-duration: 30s; 
+  animation-duration: 30s;
 }
 .slow-ping {
   animation-duration: 2s;
@@ -113,16 +79,18 @@ input[type="checkbox"]:checked::before {
   overflow: hidden;
 }
 @media (max-width: 640px) {
-.mainContainer {
-  width: 10rem;
-  height: 235px;
-}
+  .mainContainer {
+    width: 100%;
+    aspect-ratio: 1/1.3;
+
+    /* height: 230px; */
+  }
 }
 @media (min-height: 1000px) {
   .filter_component {
     height: 700px;
+  }
+  .product_img {
+    height: 500px;
+  }
 }
-.product_img {
-  height: 500px;
-}
-} 

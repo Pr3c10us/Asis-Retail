@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import Layout from "./Layout/page.jsx";
 import HomePage from "./homePage/page.jsx";
+import HomePage2 from "./homePage/page2.jsx";
 import BrandPage from "./brandPage/page.jsx";
 import SuperSpecialCategory from "./superSpecialCategory/page.jsx";
 import Shop from "./shop/page.jsx";
@@ -26,12 +27,16 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: "homepage2",
+        element: <HomePage2 />,
+      },
+      {
         path: "brandpage",
         element: <BrandPage />,
       },
       {
         path: "/category/:id",
-        element: <Category/>,
+        element: <Category />,
       },
       {
         path: "/superspecialcategory/:id",

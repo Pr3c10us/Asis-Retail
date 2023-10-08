@@ -1,6 +1,7 @@
 import React from "react";
 import A from "../../assets/icons/A.svg";
 import { motion } from "framer-motion";
+import CapitalizeSentence from "../../components/CapitalizeSentence";
 
 const Products = ({
   name,
@@ -48,8 +49,10 @@ const Products = ({
       />
       <img src={A} alt="A" className="absolute left-5 top-5 rotate-180" />
       <img src={A} alt="A" className="absolute bottom-5 right-5 " />
-      <div className="absolute bottom-5 left-5 mt-2 font-semibold uppercase">
-        <p className="text-xs font-semibold text-[#ffff]">{name}</p>
+      <div className="absolute bottom-5 left-5 mt-2 font-semibold lowercase">
+        <p className="text-xs font-semibold text-[#ffff] uppercase">
+          <CapitalizeSentence name={name} />
+          </p>
         {/* <div className="flex gap-4">{renderCollaborations()}</div> */}
         <p className="text-xs font-semibold text-asisGreen">
           {Intl.NumberFormat("en-US", {

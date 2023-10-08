@@ -19,6 +19,7 @@ const Page = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const asisCardRef = React.useRef(null);
+  const bodyRef = React.useRef(null);
   const [categories, setCategories] = useState("");
 
   useEffect(() => {
@@ -91,18 +92,18 @@ const Page = () => {
   }
 
   return (
-    <div className="h-full px-5">
+    <div className="h-full px-5 max-sm:px-2">
       <section className="mt-10 flex flex-col">
         {/* <StackingSection /> */}
         <section
-          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16rem] transition-all duration-100 max-sm:hidden`}
+          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16.4rem] transition-all duration-100 max-sm:hidden`}
         >
           <img
             ref={asisCardRef}
             src={displayCart}
             alt="displayCart"
-            className={`absolute z-20 w-[15rem] cursor-pointer pb-3 transition-all duration-200 ${
-              !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0"
+            className={`absolute z-20 aspect-[1/1.35] w-[15rem] cursor-pointer transition-all duration-200 ${
+              !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0 "
             }`}
             onClick={() => {
               setHideCategory((prev) => !prev);
@@ -112,39 +113,41 @@ const Page = () => {
             }}
           />
 
-          <AnimatePresence>
-            {hideCategory && (
-              <motion.section
-                initial={{ x: -300, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{
-                  x: 500,
-                  left: "50%",
-                  opacity: 0,
-                  transition: { type: "tween", duration: 0.5 },
-                }}
-                transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
-                className={`gap-5 pb-2 ${
-                  !hideCategory
-                    ? "hidden overflow-hidden"
-                    : "flex overflow-auto"
-                }`}
-              >
-                {categoriesData?.map((data, index) => (
-                  <div key={data.name + index}>
-                    <CategoryProduct
-                      data={data}
-                      setCategories={setCategories}
-                      setShowProducts={setShowProducts}
-                      showProducts={showProducts}
-                      setShowAllProducts={setShowAllProducts}
-                      index={index}
-                    />
-                  </div>
-                ))}
-              </motion.section>
-            )}
-          </AnimatePresence>
+          <div ref={bodyRef} className="w-full flex-1 overflow-hidden">
+            <AnimatePresence>
+              {hideCategory && (
+                <motion.section
+                  initial={{ x: -300, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{
+                    x: 500,
+                    left: "50%",
+                    opacity: 0,
+                    transition: { type: "tween", duration: 0.5 },
+                  }}
+                  transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
+                  drag="x"
+                  dragConstraints={bodyRef}
+                  className={`gap-10 pb-2 ${
+                    !hideCategory ? "hidden " : "ml-6 min-w-full flex w-max flex-nowrap cursor-grab"
+                  }`}
+                >
+                  {categoriesData?.map((data, index) => (
+                    <div key={data.name + index} className="cursor-pointer">
+                      <CategoryProduct
+                        data={data}
+                        setCategories={setCategories}
+                        setShowProducts={setShowProducts}
+                        showProducts={showProducts}
+                        setShowAllProducts={setShowAllProducts}
+                        index={index}
+                      />
+                    </div>
+                  ))}
+                </motion.section>
+              )}
+            </AnimatePresence>
+          </div>
         </section>
         <AnimatePresence>
           {hideCategory && (
@@ -178,11 +181,11 @@ const Page = () => {
           setShowProducts={setShowProducts}
           showProducts={showProducts}
         />
-        <div className="hidden md:block">
+        <div className="hidden sm:block">
           <AnimatePresence>
             {showAllProducts && hideCategory && (
               <div>
-                <section className="mt-2 flex flex-wrap items-center gap-10">
+                <section className="mt-2 flex flex-wrap items-center max-md:justify-center gap-10">
                   {allProductData.map((product, index) => (
                     <div key={product._id}>
                       <Link to={`/product/${product._id}`}>
@@ -198,7 +201,6 @@ const Page = () => {
                       </Link>
                     </div>
                   ))}{" "}
-                  
                 </section>
               </div>
             )}
@@ -221,7 +223,6 @@ const Page = () => {
                       </Link>
                     </div>
                   ))}
-                  
                 </section>
               </div>
             )}

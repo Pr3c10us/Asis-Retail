@@ -20,18 +20,32 @@ const page = () => {
   }products/?categories=${id}`;
 
   const {data: productsData} = useFetch(url)
-  console.log(productsData)
 
   return (
-    <div className='h-full'>
-      {data && <section className='flex justify-center  items-start '>
-        <div className="">
+    <div className="h-full">
+      {data && (
+        <section className="px-2 flex justify-center flex-col items-center mt-10">
+          <div className="flex justify-center w-[176px]">
+            <ShopCartegoryProduct data={data} />
+          </div>
 
-<ShopCartegoryProduct data={data} />
-
-{productsData && (
+          {productsData && (
             <div>
-              <section className="mt-2 flex items-center gap-5">
+              <section className="mt-20 grid grid-cols-2 gap-3">
+                {productsData.products?.map((product) => (
+                  <div key={product._id}>
+                    <Link to={`/product/${product._id}`}>
+                      <Products
+                        top={asisCardRef.current?.offsetTop}
+                        left={asisCardRef.current?.offsetLeft}
+                        name={product.name}
+                        price={product.price}
+                        collaborations={product.collaborations}
+                        images={product.images}
+                      />
+                    </Link>
+                  </div>
+                ))}
                 {productsData.products?.map((product) => (
                   <div key={product._id}>
                     <Link to={`/product/${product._id}`}>
@@ -49,12 +63,10 @@ const page = () => {
               </section>
             </div>
           )}
-                  </div>
-
-
-      </section>}
+        </section>
+      )}
     </div>
-  )
+  );
 }
 
 export default page

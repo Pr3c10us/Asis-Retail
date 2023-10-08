@@ -171,17 +171,12 @@ const Cart = ({ setHideCart }) => {
 
           <section className="p-5">
             <div className="item-center relative flex justify-between border-b-2 border-asisDark pb-10">
-              <div>
+              <div className="flex items-start gap-1">
                 <p className="text-4xl font-medium uppercase">
-                  {/* <span className="mr-1 font-normal">/</span>y
-                    <SpecialChar char={`o`} />
-                    ur c
-                    <SpecialChar char={`a`} />
-                    rt */}
-                  {/* / <VowelItalicizer text="" /> */}
+                  
                   your cart
                 </p>
-                <p className="absolute -top-2 left-[12.5rem] text-base font-medium text-black">
+                <p className=" left-[12.5rem] text-base font-medium text-black">
                   ({cartData?.products?.length})
                 </p>
               </div>
