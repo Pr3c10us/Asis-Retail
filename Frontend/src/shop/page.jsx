@@ -25,7 +25,7 @@ const page = () => {
     <div className="h-full">
       {data && (
         <section className="px-2 flex justify-center flex-col items-center mt-10">
-          <div className="flex justify-center w-[176px]">
+          <div className="flex justify-center">
             <ShopCartegoryProduct data={data} />
           </div>
 
