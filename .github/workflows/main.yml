@@ -38,22 +38,37 @@ jobs:
                         git init
                       fi
 
-                      # Perform other Git-related actions (e.g., git pull, git clone) as needed
+                      # Perform Git pull with the specified branch
                       cd /var/www/AsisRetail
+                      git pull origin main
 
-                      if [ -d .git ]; then
-                        git pull
+                      # Check if directories exist before changing into them
+                      if [ -d Frontend ]; then
+                        cd Frontend
+                        sudo npm install
+                        sudo npm run build
                       else
-                        git clone https://github.com/Pr3c10us/Asis.git .
+                        echo "Frontend directory does not exist."
                       fi
 
-                      # Perform other actions with sudo
-                      cd Frontend && sudo npm install && sudo npm run build
-                      cd ../Admin && sudo npm install && sudo npm run build
-                      cd ../Backend && sudo npm install && if sudo npm stop; then
-                        echo "Command 1 succeeded"
-                        sudo npm start
+                      if [ -d Admin ]; then
+                        cd ../Admin
+                        sudo npm install
+                        sudo npm run build
                       else
-                        echo "Command 1 failed"
-                        sudo npm start
+                        echo "Admin directory does not exist."
+                      fi
+
+                      if [ -d Backend ]; then
+                        cd ../Backend
+                        sudo npm install
+                        if sudo npm stop; then
+                          echo "Command 1 succeeded"
+                          sudo npm start
+                        else
+                          echo "Command 1 failed"
+                          sudo npm start
+                        fi
+                      else
+                        echo "Backend directory does not exist."
                       fi
