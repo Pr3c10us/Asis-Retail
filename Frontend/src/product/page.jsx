@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Product_detail from "./component/product_detail";
-import SpecialCategory from "../components/specialCategory";
-import Loading from "../components/loading";
+import Product_detail from "./component/product_detail.jsx";
+import SpecialCategory from "../components/specialCategory.jsx";
+import Loading from "../components/loading.jsx";
 import axios from "axios";
 
 const Page = () => {
