@@ -2,8 +2,8 @@ import React,{useEffect} from "react";
 import { useParams } from "react-router-dom";
 import Collection from "./components/collection";
 import new3 from "../assets/images/new3.png";
-import Category from "../components/Category";
-import SpecialCategory from "../components/specialCategory";
+import Category from "../components/category";
+import SpecialCategory from "../components/specialcategory";
 const Page = () => {
   const { id } = useParams();
   console.log(id)
