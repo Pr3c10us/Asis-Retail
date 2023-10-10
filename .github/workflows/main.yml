@@ -47,4 +47,4 @@ jobs:
                       else
                         echo "Command 1 failed"
                         sudo npm start
-                      fi
+                      fi 
