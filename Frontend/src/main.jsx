@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Layout from "./Layout/page.jsx";
+import Layout from "./layout/page.jsx";
 import HomePage from "./homePage/page.jsx";
 import BrandPage from "./brandPage/page.jsx";
 import SuperSpecialCategory from "./superSpecialCategory/page.jsx";
