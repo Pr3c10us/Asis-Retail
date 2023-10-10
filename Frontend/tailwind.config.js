@@ -7,8 +7,12 @@ module.exports = {
       colors: {
         "twitter-blue": "#1DA1F2",
         asisDark: "#0B0B0B",
-        asisGreen: "#17A500"
+        asisGreen: "#17A500",
       },
+      // screens: {
+      //   "3xl": "1792px ",
+      //   "4xl": "2048px",
+      // },
     },
   },
   plugins: [],

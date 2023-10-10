@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import cancel_cart from "../../assets/icons/cancel_cart.svg";
 import cartIcon from "../../assets/icons/cart-icon.svg";
 import down from "../../assets/icons/down.svg";
@@ -11,31 +11,12 @@ import { setCart } from "../../../redux/asis";
 import SpecialChar from "../../components/specialChar";
 import { useNavigate } from "react-router-dom";
 import VowelItalicizer from "../../components/vowelItalicizer";
-import CartItem from "../../components/cartItem";
 
 const CheckoutCart = () => {
   const ref = React.useRef(null);
   const cartData = useSelector((state) => state.asis.cart);
-  const orderDetails = useSelector((state) => state.asis.order);
-  const [shippingFee, setShippingFee] = useState(0);
-
-  const handleFetchShippingDetails = async () => {
-    try {
-      const apiUrl = `${import.meta.env.VITE_BACKEND_URL}shippings/${
-        orderDetails.shipping
-      }`;
-      let { data } = await axios.get(apiUrl);
-      setShippingFee(data.fee);
-    } catch (error) {
-      setShippingFee(0);
-      console.log(error);
-    }
-  };
-  React.useEffect(() => {
-    handleFetchShippingDetails();
-  }, [orderDetails]);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const navigate = useNavigate();
 
@@ -49,7 +30,7 @@ const CheckoutCart = () => {
       // console.log(response.data);
       // setCartData(response.data);
       if (response.data.products.length === 0) {
-        navigate("/", { replace: true });
+        navigate("/homepage", { replace: true });
       }
       dispatch(setCart(response.data));
       setIsLoading(false);
@@ -68,18 +49,19 @@ const CheckoutCart = () => {
     }
   };
   React.useEffect(() => {
-    cartData?.products?.length === 0 && navigate("/", { replace: true });
+    cartData?.products?.length === 0 &&
+      navigate("/homepage", { replace: true });
     handleGetCartContent();
-    handleFetchShippingDetails();
+    console.log(cartData);
   }, []);
 
-  const removeItemFromCart = async (id, size) => {
+  const removeItemFromCart = async (id, option) => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
       const item = {
         productId: id,
-        size: size,
+        option: option,
       };
       await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}carts/removeItem`,
@@ -150,11 +132,12 @@ const CheckoutCart = () => {
   };
 
   return (
-    <div className="relative hidden min-w-[29rem] overflow-hidden uppercase lg:block w-full">
+    <div className="relative min-w-[29rem] overflow-hidden uppercase max-lg:hidden ">
       {isLoading && <CartLoading />}
+
       {!isLoading && (
         // Cart with items
-        <section className="h-full p-5">
+        <section className="h-full p-5 backdrop-blur-md">
           <div className="item-center relative flex justify-between border-b-2 border-asisDark pb-10">
             <div>
               <p className="text-4xl font-medium uppercase">
@@ -163,9 +146,10 @@ const CheckoutCart = () => {
                     ur c
                     <SpecialChar char={`a`} />
                     rt */}
-                / <VowelItalicizer text="your cart" />
+                {/* / <VowelItalicizer text="your cart" /> */}
+                your cart
               </p>
-              <p className="absolute -top-2 left-[13.5rem] text-base font-medium text-black">
+              <p className="absolute -top-2 left-[12.3rem] text-base font-medium text-black">
                 ({cartData?.products?.length})
               </p>
             </div>
@@ -174,20 +158,72 @@ const CheckoutCart = () => {
           <div className="max-h-[50vh] overflow-y-scroll">
             {cartData.products.map((data, index) => {
               return (
-                <CartItem
-                  key={data._id}
-                  data={data}
-                  index={index}
-                  removeItemFromCart={removeItemFromCart}
-                  handleGetCart={handleGetCartContent}
-                />
+                <section key={index}>
+                  <div className="my-5 flex items-start justify-between gap-5 border-b-2 border-asisDark pb-4">
+                    {/* cart image */}
+                    <img
+                      src={`${import.meta.env.VITE_BLOB_URL}${
+                        data.product.images[0]
+                      }`}
+                      alt="collection_img_2"
+                      className="h-36 w-[116px] object-contain object-top"
+                    />
+                    {/* right hand of the product detail of the cart */}
+                    <section className="w-4/5">
+                      {/* Product details */}
+                      <div className="flex items-start justify-between border-b-2 border-b-asisDark/30 pb-2">
+                        <div>
+                          <Link to={`/product/${data.product._id}`}>
+                            <p className="w-[212px] text-sm font-bold text-asisGreen">
+                              {data.product.name}
+                            </p>
+                          </Link>
+                          <p className="mt-2 text-xs font-semibold text-black">
+                            {Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }).format(data.totalPrice)}{" "}
+                            USD
+                          </p>
+                        </div>
+                        {/* remove item from cart */}
+                        <button
+                          onClick={() =>
+                            removeItemFromCart(data.product._id, data.option)
+                          }
+                        >
+                          <img
+                            src={cancel_cart}
+                            alt="cancel_cart"
+                            className="w-5 cursor-pointer"
+                          />
+                        </button>
+                      </div>
+                      <div className="mt-3 flex w-full items-start justify-between text-xs font-semibold text-black">
+                        <div>
+                          {/* <p>{data.color}</p> */}
+                          <p>
+                            type:{" "}
+                            <span className="text-sm font-bold">
+                              {data.option}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1 ">
+                          <p> q.ty:{data?.qty}</p>
+                          <img src={down} alt="down" />
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </section>
               );
             })}
           </div>
           {/* total calculation  */}
           <div className="flex flex-col gap-4 border-b-2 border-b-asisDark ">
-            <div className="mt-4 flex items-center justify-between  text-sm font-semibold">
-              <p>SubTotal</p>
+            <div className="mt-4 flex items-center justify-between  text-sm font-bold">
+              <p>Total</p>
               <p>
                 {Intl.NumberFormat("en-US", {
                   style: "currency",
@@ -196,26 +232,9 @@ const CheckoutCart = () => {
                 NGN
               </p>
             </div>
-            <div className="mt-3 flex items-center justify-between  text-[13px]/[20px] font-medium">
+            <div className="mt-3 flex items-center justify-between  pb-4 text-[13px]/[20px] font-medium">
               <p>shipping</p>
-              <p>
-                {!orderDetails.shipping
-                  ? "Calculated at Shipping"
-                  : `${Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(shippingFee)}`}{" "}
-              </p>
-            </div>
-            <div className="py-4 border-t-2 border-t-asisDark flex items-center justify-between  text-sm font-bold">
-              <p>SubTotal</p>
-              <p>
-                {Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format(cartData.totalPrice + (shippingFee || 0))}{" "}
-                NGN
-              </p>
+              <p>calculated at checkout</p>
             </div>
           </div>
 

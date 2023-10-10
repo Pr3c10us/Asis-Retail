@@ -17,7 +17,7 @@ const MobileCategoryProduct = ({
       initial={{ x: index * -20, opacity: 0 }}
       animate={{ x: index * 0, opacity: 1 }}
       exit={{ x: index * -20, opacity: 0 }}
-      transition={{ duration: index * 0.2, type: "tween" }}
+      transition={{ delay: 0.1 * index }}
       className="mainContainer"
     >
       <div className="theCard ">

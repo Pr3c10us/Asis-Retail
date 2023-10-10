@@ -12,6 +12,7 @@ import { setCart } from "../../redux/asis";
 import removeCart from "../assets/icons/cartIcon.svg";
 import SpecialChar from "./specialChar";
 import VowelItalicizer from "./vowelItalicizer";
+import CartItem from "./cartItem";
 
 const Cart = ({ setHideCart }) => {
   const ref = React.useRef(null);
@@ -145,12 +146,7 @@ const Cart = ({ setHideCart }) => {
 
   return (
     <div ref={ref} className="sticky right-7 top-12 z-40 ml-auto ">
-      <div
-        className="absolute right-7  
-      overflow-y-auto bg-[url('./assets/images/bg_img.png')] 
-      uppercase shadow-[-7px_8px_30px_0px_#00000033] max-md:fixed max-md:right-0 max-md:top-0
-       max-md:h-screen max-md:w-screen max-md:px-5  max-md:shadow-transparent max-sm:px-1"
-      >
+      <div className="absolute right-7 overflow-y-auto bg-[url('./assets/images/bg_img.png')] uppercase shadow-lg max-md:fixed max-md:right-0 max-md:top-0 max-md:h-screen max-md:w-screen max-md:px-5 max-md:shadow-transparent  max-sm:px-1 md:min-w-[28rem]">
         <div className="mb-4 hidden w-full items-end justify-end p-5  max-md:flex">
           <div className="flex w-1/2 items-center justify-between gap-2">
             <Link to="/homepage">
@@ -172,10 +168,7 @@ const Cart = ({ setHideCart }) => {
           <section className="p-5">
             <div className="item-center relative flex justify-between border-b-2 border-asisDark pb-10">
               <div className="flex items-start gap-1">
-                <p className="text-4xl font-medium uppercase">
-                  
-                  your cart
-                </p>
+                <p className="text-4xl font-medium uppercase">your cart</p>
                 <p className=" left-[12.5rem] text-base font-medium text-black">
                   ({cartData?.products?.length})
                 </p>
@@ -188,70 +181,16 @@ const Cart = ({ setHideCart }) => {
                 onClick={() => setHideCart(false)}
               />
             </div>
-            <div className="max-h-[40vh] overflow-y-scroll ">
-              {cartData.products.map((data, index) => {
-                return (
-                  <section key={index}>
-                    <div className="my-5 flex items-start justify-between gap-5 border-b-2 border-asisDark pb-4">
-                      {/* cart image */}
-                      <img
-                        src={`${import.meta.env.VITE_BLOB_URL}${
-                          data.product.images[0]
-                        }`}
-                        alt="collection_img_2"
-                        className="h-36 w-[116px] object-contain object-top"
-                      />
-                      {/* right hand of the product detail of the cart */}
-                      <section className="w-4/5">
-                        {/* Product details */}
-                        <div className="flex items-start justify-between border-b-2 border-b-asisDark/30 pb-2">
-                          <div>
-                            <Link to={`/product/${data.product._id}`}>
-                              <p className="text-sm font-bold text-asisGreen w-48 max-sm:w-full">
-                                {data.product.name}
-                              </p>
-                            </Link>
-                            <p className="mt-2 text-xs font-semibold text-black">
-                              {Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                              }).format(data.totalPrice)}{" "}
-                              USD{" "}
-                            </p>
-                          </div>
-                          {/* remove item from cart */}
-                          <button
-                            onClick={() =>
-                              removeItemFromCart(data.product._id, data.size)
-                            }
-                          >
-                            <img
-                              src={cancel_cart}
-                              alt="cancel_cart"
-                              className="w-5 cursor-pointer"
-                            />
-                          </button>
-                        </div>
-                        <div className="mt-3 flex w-full items-start justify-between text-xs font-semibold text-black">
-                          <div>
-                            {/* <p>{data.color}</p> */}
-                            <p>
-                              type:{" "}
-                              <span className="text-sm font-bold">
-                                {data.size}
-                              </span>
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-1 ">
-                            <p> q.ty:{data?.qty}</p>
-                            <img src={down} alt="down" />
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                  </section>
-                );
-              })}
+            <div className="max-h-[40vh] overflow-y-scroll">
+              {cartData.products.map((data, index) => (
+                <CartItem
+                  key={data._id}
+                  data={data}
+                  index={index}
+                  removeItemFromCart={removeItemFromCart}
+                  handleGetCart={handleGetCartContent}
+                />
+              ))}
             </div>
             {/* total calculation  */}
             <div className="gap- flex flex-col border-b-2 border-b-asisDark ">

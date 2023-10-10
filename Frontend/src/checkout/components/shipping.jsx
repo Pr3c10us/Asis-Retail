@@ -82,7 +82,7 @@ const Shipping = ({ setActiveStep }) => {
   }
 
   return (
-    <div className="flex w-full  flex-col gap-y-12 py-8">
+    <div className="flex w-full flex-col gap-y-12 py-8">
       <h2 className="text-2xl font-semibold uppercase">
         {/* / <VowelItalicizer text={"Shipping method"} /> */}
         Shipping method
@@ -92,7 +92,11 @@ const Shipping = ({ setActiveStep }) => {
           <div
             key={shippingDetail._id}
             className="flex cursor-pointer items-center gap-x-6 px-2 py-2 text-sm font-semibold text-asisDark/40 backdrop-blur-md sm:text-base"
-            onClick={() => setSelectedShipping(shippingDetail._id)}
+            onClick={() => {
+              setSelectedShipping(shippingDetail._id);
+              dispatch(setOrder({ shipping: shippingDetail._id }));
+              setSelectedShippingPrice(shippingDetail.fee);
+            }}
           >
             <div className=" flex h-5 w-5 items-center justify-center rounded-full border-2 border-asisDark">
               <div

@@ -129,7 +129,7 @@ const OrderComplete = () => {
                       </div>
                     </div>
                     <div className="ml-auto w-56 max-sm:hidden">
-                      <Link to={`/shop`}>
+                      <Link to={`/`}>
                         <div className=" ml-auto flex h-8 w-32 cursor-pointer items-center justify-center gap-2 border border-black px-5 uppercase">
                           <p className="text-xs font-medium">view all</p>
                           <img src={up_arrow} alt="up_arrow" />

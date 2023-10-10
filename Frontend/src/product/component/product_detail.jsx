@@ -3,21 +3,20 @@ import down from "../../assets/icons/down.svg";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { setCart } from "../../../redux/asis";
-import CartLoading from "../../components/cartLoader";
 import AddToCartLoading from "./addToCartLoading";
-import VowelItalicizer from "../../components/vowelItalicizer";
 import DisplayImage from "../../components/displayImage";
+
 const Product_detail = ({ data }) => {
   // States
   const [selectedImage, setSelectedImage] = useState(null);
   const [showDescription, setShowDescription] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [displayImage, setDisplayImage] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -57,7 +56,7 @@ const Product_detail = ({ data }) => {
         let item = {
           productId: data._id,
           size: selectedSize,
-          quantity: 1,
+          quantity,
         };
         const response = await axios.put(
           `${import.meta.env.VITE_BACKEND_URL}carts`,
@@ -130,25 +129,23 @@ const Product_detail = ({ data }) => {
   };
 
   return (
-    <section className="product_container mb-20 mt-5 h-full px-20 max-xl:px-0 max-md:mt-2">
+    <section className="product_container mb-20 mt-5 h-full max-md:mt-2">
       {/* Product details */}
       {data ? (
         <section className="flex items-start justify-center gap-10 max-lg:flex-col max-md:gap-0">
-          {/* Thumbnail images */}
-
           {/* Selected image */}
           <AnimatePresence>
             <div className="flex w-full flex-col items-center">
               <div className="max-md:w-screen ">
                 {selectedImage && (
-                  <div className=" z-20 h-[500px] w-[32rem] cursor-pointer border-2 border-asisDark  max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]">
+                  <div className=" z-20 h-[500px] w-[32rem] cursor-pointer border-2 border-asisDark backdrop-blur  max-lg:place-self-center max-md:mx-auto max-sm:h-[341px] max-sm:w-[303px]">
                     <motion.img
                       key={selectedImage}
                       src={`${import.meta.env.VITE_BLOB_URL}${selectedImage}`}
                       initial={{ x: 100, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: -100, opacity: 0 }}
-                      className="z-10 h-full w-full  object-cover object-top"
+                      className="object-fit z-10 h-full  w-full object-contain"
                       onClick={() => {
                         setDisplayImage(true);
                       }}
@@ -188,18 +185,46 @@ const Product_detail = ({ data }) => {
 
           {/* Product information */}
 
-          <section className="w-full py-5 max-lg:px-5 max-sm:px-3">
+          <section className="w-full space-y-6 py-5 max-lg:px-5 max-sm:px-3">
             <p className="mb-9 text-3xl font-medium uppercase text-asisGreen max-sm:text-2xl">
               {/* <VowelItalicizer text={data.name} /> */}
               {data.name}
             </p>
+            {/* Quantity */}
+            <section className="flex flex-col gap-2">
+              {" "}
+              <h2 className="font-semibold">Quantity</h2>
+              <div className="flex items-center">
+                <div
+                  onClick={() => {
+                    if (quantity > 1) {
+                      setQuantity((prev) => prev - 1);
+                    }
+                  }}
+                  className="peer flex h-10 w-10 cursor-pointer items-center justify-center border border-asisDark bg-transparent py-2 text-center text-xs"
+                >
+                  <AiOutlineMinus />
+                </div>
+                <div className="peer flex h-10 w-10 cursor-pointer items-center justify-center border-y border-y-asisDark bg-transparent py-2 text-center text-xs">
+                  {quantity}
+                </div>
+                <div
+                  onClick={() => {
+                    setQuantity((prev) => prev + 1);
+                  }}
+                  className="peer flex h-10 w-10 cursor-pointer items-center justify-center border border-asisDark bg-transparent py-2 text-center text-xs"
+                >
+                  <AiOutlinePlus />
+                </div>
+              </div>
+            </section>
             {/* Sizes */}
-            <section className="flex  flex-wrap gap-x-5 gap-y-3 p-4 backdrop-blur-sm ">
+            <section className="flex flex-wrap gap-x-5 gap-y-3 backdrop-blur-sm ">
               {data.countInStock?.map((optData, index) => (
                 <div
                   key={index}
                   onClick={() => setSelectedSize(optData.size)}
-                  className={`flex h-10 w-24 cursor-pointer items-center justify-center border text-xs font-medium uppercase rounded-md${
+                  className={`flex h-10  cursor-pointer items-center justify-center border px-4 text-xs font-medium uppercase rounded-md${
                     selectedSize === optData.size
                       ? " border-asisDark text-asisDark"
                       : " border-[#C4C4C4] text-[#C4C4C4]"
@@ -212,12 +237,6 @@ const Product_detail = ({ data }) => {
 
             {/* Additional details */}
             <section className="">
-              {/* Time */}
-              {/* <article className="flex items-center justify-between text-base font-semibold">
-                <p className="uppercase text-asisDark">time</p>
-                <p className="text-asisGreen">{currentTime}</p>
-              </article> */}
-
               {/* Description */}
               <p className="my-9 text-sm font-medium text-asisDark">
                 {data.brief}
@@ -250,11 +269,6 @@ const Product_detail = ({ data }) => {
                 )}
               </button>
 
-              {/* Add to wishlist */}
-              {/* <button className="relative mb-3 w-full cursor-pointer border border-asisDark py-4 text-center text-xs font-semibold uppercase text-asisDark">
-                add to wishlist
-              </button> */}
-
               {/* Accordion */}
               <section
                 onClick={() => setShowDescription((prev) => !prev)}
@@ -270,11 +284,6 @@ const Product_detail = ({ data }) => {
                     alt="down"
                   />
                 </article>
-
-                {/* <article className="flex cursor-pointer items-center justify-between py-2">
-                  <p>size guild</p>
-                  <img src={down} alt="down" />
-                </article> */}
               </section>
               <div
                 className={`grid   text-sm text-asisDark/80 transition-all duration-300 ${

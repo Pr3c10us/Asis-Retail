@@ -176,7 +176,7 @@ export default function CheckoutForm({
           secondary: "#FFFAEE",
         },
       });
-      navigate("/shop", { replace: true });
+      navigate("/", { replace: true });
     } catch (error) {
       console.log(error);
       toast.error("Failed to cancel order", {

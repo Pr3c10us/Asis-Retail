@@ -12,13 +12,18 @@ const CategoryProduct = ({
   setShowProducts,
   setShowAllProducts,
   showProducts,
+  screenWidth,
 }) => {
   return (
     <motion.div
       initial={{ x: index * -300, opacity: 0 }}
       animate={{ x: index * 0, opacity: 1 }}
-      exit={{ x: index * -300, opacity: 0 }}
-      transition={{ delay: index * 0.05, type: "tween" }}
+      exit={{
+        x: index * -300,
+        opacity: 0,
+        transition: { delay: index * 0.05, type: "tween" },
+      }}
+      transition={{ delay: index * 0.2, type: "tween" }}
       className="mainContainer"
     >
       <div className="theCard ">
@@ -43,14 +48,14 @@ const CategoryProduct = ({
           <p className="mb-3 text-sm font-semibold">{data.name}</p>
           <p className="mb-4 px-4 text-xs">{data.description}</p>
           <div
-            className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 border border-dashed border-asisDark text-xs max-sm:hidden"
+            className="mx-auto flex w-[60%] cursor-pointer  items-center justify-center gap-2 rounded border border-dashed border-asisDark text-xs max-sm:hidden"
             onClick={() => {
-              setCategories(data._id);
-              setShowProducts(!showProducts);
-              setShowAllProducts(false)
-              setTimeout(() => {
-                setShowProducts(true);
-              }, 500);
+              setCategories({ name: data.name, id: data._id });
+              setShowProducts(true);
+              setShowAllProducts(false);
+              // setTimeout(() => {
+              //   setShowProducts(true);
+              // }, 500);
             }}
           >
             View Products
@@ -63,6 +68,3 @@ const CategoryProduct = ({
 };
 
 export default CategoryProduct;
-
-
-

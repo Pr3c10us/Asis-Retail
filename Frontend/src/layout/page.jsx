@@ -37,38 +37,23 @@ const Page = () => {
   useEffect(() => {}, []);
 
   return (
-    <main className="h-full">
-      {/* <section className="flex w-full flex-col items-start justify-center"> */}
-      <div className=" pb-8 max-xl:px-0">
+    <main className="h-full flex justify-center">
+      <div className="pb-8 max-xl:px-0 max-w-7xl w-full">
         <Toaster position="top-center" />
-        {/* Render the header component and pass cart and wishlist data */}
         <Header
           setHideCart={setHideCart}
           cartLength={cartData?.products?.length}
-          // wishlistData={wishData}
         />
 
-        {/* Render the Cart component if hideCart is true */}
         {hideCart && (
           <Cart setHideCart={setHideCart} cartData={cartData.products} />
         )}
-        {/* Render banner component */}
-        {/* <Banner /> */}
 
-        {/* Render the Wishlist component if hideWish is true */}
-        {/* {hideWish && (
-            <Wishlist setHideWish={setHideWish} wishlistData={wishData} />
-          )} */}
         <Rotational />
-        {/* Render the nested route components */}
         <div className="relative">
           <Outlet />
         </div>
-
-        {/* Render the footer component */}
-        {/* <Footer /> */}
       </div>
-      {/* </section> */}
     </main>
   );
 };

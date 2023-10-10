@@ -6,7 +6,7 @@ const Page = () => {
     <main className="flex justify-center sm:px-5">
       <Order />
 
-      {/* <CheckoutCart /> */}
+      <CheckoutCart />
 
 
     </main>

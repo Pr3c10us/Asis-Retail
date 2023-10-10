@@ -11,17 +11,9 @@ const Mobile = ({
   showProducts,
 }) => {
   const [hideCategory, setHideCategory] = useState(false);
-  // const [dimension, setDimension] = useState({ w: 0, h: 0 });
-  // const ref = useRef();
-
-  // useEffect(() => {
-  //   const { width, height, top, left } = ref.current.getBoundingClientRect();
-
-  //   setDimension({ w: width, h: height });
-  // }, []);
 
   return (
-    <div className="hidden flex-col items-center justify-center max-sm:flex">
+    <div className="flex flex-col items-center justify-center sm:hidden">
       <div className="relative flex items-center justify-center">
         <img
           src={displayCart}
@@ -34,28 +26,27 @@ const Mobile = ({
         <img
           src={spinning}
           alt="spinning"
-          className="slow-spin absolute -bottom-16 left-1 -z-10 flex animate-spin"
+          className="slow-spin absolute -bottom-16 -z-10 flex aspect-square w-5/6 animate-spin"
         />
-        <p className="slow-ping absolute -bottom-5 left-1/2 -translate-x-1/2 w-max animate-pulse text-[8px] font-bold uppercase text-black">
-          tap to view all category
+        <p className="slow-ping absolute -bottom-5 left-1/2 w-max -translate-x-1/2 animate-pulse text-[0.45rem] font-bold uppercase text-black">
+          {!hideCategory ? "Tap to view Categories" : "Tap on categories to view Items"}
         </p>
       </div>
       <AnimatePresence>
         {hideCategory && (
-          
-            <div className=" mt-24 grid grid-cols-2 gap-3 w-full">
-              {categoriesData?.map((data, index) => (
-                <div key={data.name + index}>
-                  <MobileCategoryProduct
-                    data={data}
-                    setCategories={setCategories}
-                    setShowProducts={setShowProducts}
-                    showProducts={showProducts}
-                    index={index}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className=" mt-24 grid w-full grid-cols-2 place-items-center items-center gap-3">
+            {categoriesData?.map((data, index) => (
+              <div key={data.name + index}>
+                <MobileCategoryProduct
+                  data={data}
+                  setCategories={setCategories}
+                  setShowProducts={setShowProducts}
+                  showProducts={showProducts}
+                  index={index}
+                />
+              </div>
+            ))}
+          </div>
         )}
       </AnimatePresence>
     </div>

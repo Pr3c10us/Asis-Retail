@@ -51,7 +51,7 @@ const Contact = ({ setActiveStep }) => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="flex flex-col gap-8 py-8">
+    <form onSubmit={formik.handleSubmit} className="flex flex-col gap-8 py-8 w-full">
       <h2 className="text-2xl font-semibold uppercase">
         {/* / <VowelItalicizer text={"Contact Information"} /> */}
         Contact Information

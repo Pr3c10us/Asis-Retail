@@ -22,7 +22,11 @@ const connectToMongodb = require("./mongoDb");
 // CORS MIDDLEWARE
 // Set up cors options and middleware
 const corsOptions = {
-    origin: [process.env.CLIENT_ORIGIN_1, process.env.CLIENT_ORIGIN_2],
+    origin: [
+        process.env.CLIENT_ORIGIN_1,
+        process.env.CLIENT_ORIGIN_2,
+        process.env.CLIENT_ORIGIN_3,
+    ],
     credentials: true,
 };
 app.use(cors(corsOptions));

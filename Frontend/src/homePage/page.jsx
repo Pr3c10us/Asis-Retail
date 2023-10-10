@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import down from "../assets/icons/down.svg";
 import displayCart from "../assets/icons/displayCart.svg";
-import useFetch from "../components/useFetch";
+import spinning from "../assets/icons/spining_text.svg";
 import CategoryProduct from "../components/categoryProduct";
 import Products from "./components/products";
 import Loading from "../components/loading";
@@ -18,64 +18,50 @@ const Page = () => {
   const [allProductData, setAllProductData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [screenWidth, setScreenWidth] = useState(0);
   const asisCardRef = React.useRef(null);
   const bodyRef = React.useRef(null);
-  const [categories, setCategories] = useState("");
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  // const categoryData = `${import.meta.env.VITE_BACKEND_URL}products/categories`;
-  // const { data: categoryDataResponse } = useFetch(categoryData);
+  const [categories, setCategories] = useState({ name: "", id: "" });
+  const [searchWord, setSearchWord] = useState("");
 
   const url = `${import.meta.env.VITE_BACKEND_URL}products`;
 
-  useEffect(() => {
-    // async function fetchData() {
-    //   // setIsLoading(true);
-    //   try {
-    //     const response = await Axios.get(url);
-    //     setProductData(response.data.products);
-    //     // setIsLoading(false);
-    //   } catch (error) {
-    //     // setIsLoading(false);
-    //   }
-    // }
-
+  useLayoutEffect(() => {
     // fetchData();
 
     const displayProduct = allProductData.filter(
-      (product) => product.categories.indexOf(categories) > -1,
+      (product) => product.categories.indexOf(categories.id) > -1,
+    );
+    // console.log({ displayProduct, allProductData });
+    setProductData(displayProduct);
+  }, [categories]);
+
+  useLayoutEffect(() => {
+    // fetchData();
+
+    const displayProduct = allProductData.filter(
+      (product) =>
+        product.name.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 &&
+        product.categories.indexOf(categories.id) > -1,
     );
     console.log({ displayProduct, allProductData });
     setProductData(displayProduct);
-  }, [categories]);
-  useEffect(() => {
-    async function fetchData() {
-      // setIsLoading(true);
-      try {
-        const response = await Axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}products`,
-        );
-        console.log(response.data.products);
-        setAllProductData(response.data.products);
-        // setIsLoading(false);
-      } catch (error) {
-        // setIsLoading(false);
-      }
-    }
+  }, [searchWord]);
 
-    fetchData();
-  }, []);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setIsLoading(true);
+    window.scrollTo(0, 0);
+    const screenWidth = window.innerWidth;
+    setScreenWidth(screenWidth);
     async function fetchData() {
-      setIsLoading(true);
       try {
         const response = await Axios.get(
           `${import.meta.env.VITE_BACKEND_URL}products/category`,
         );
+        const responseProduct = await Axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}products`,
+        );
+        setAllProductData(responseProduct.data.products);
         setCategoriesData(response.data.categories);
         setIsLoading(false);
       } catch (error) {
@@ -92,48 +78,67 @@ const Page = () => {
   }
 
   return (
-    <div className="h-full px-5 max-sm:px-2">
+    <main className="h-full scroll-smooth px-5 max-sm:px-2">
       <section className="mt-10 flex flex-col">
-        {/* <StackingSection /> */}
         <section
-          className={`relative flex min-h-[20rem] w-full overflow-hidden pl-[16.4rem] transition-all duration-100 max-sm:hidden`}
+          className={`relative hidden min-h-[20rem] w-full pl-[16.4rem] transition-all duration-100 sm:flex`}
         >
-          <img
-            ref={asisCardRef}
-            src={displayCart}
-            alt="displayCart"
-            className={`absolute z-20 aspect-[1/1.35] w-[15rem] cursor-pointer transition-all duration-200 ${
-              !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0 "
-            }`}
-            onClick={() => {
-              setHideCategory((prev) => !prev);
-              setCategories("");
-              setShowProducts(false);
-              setShowAllProducts(true);
-            }}
-          />
+          <div className="">
+            <img
+              ref={asisCardRef}
+              src={displayCart}
+              alt="displayCart"
+              className={`absolute z-20 aspect-[1/1.35] w-[15rem] cursor-pointer transition-all duration-200 ${
+                !hideCategory ? "left-1/2 -translate-x-1/2" : "left-0 "
+              }`}
+              onClick={() => {
+                setHideCategory((prev) => !prev);
+                setCategories("");
+                setShowProducts(false);
+                // setShowAllProducts(true);
+              }}
+            />
 
-          <div ref={bodyRef} className="w-full flex-1 overflow-hidden">
+            <div className="absolute -bottom-16 left-1/2 flex aspect-square w-40 -translate-x-1/2  text-[0.6rem]">
+              <p className="absolute bottom-12 left-1/2 w-max -translate-x-1/2">
+                {!hideCategory ? "Tap to view Categories" : "Tap to view Items"}
+              </p>
+              <img
+                src={spinning}
+                alt="spinning"
+                className="slow-spin animate-spin"
+              />
+            </div>
+          </div>
+          <div
+            ref={bodyRef}
+            className="min-h-[324px] w-full flex-1 overflow-hidden"
+          >
             <AnimatePresence>
               {hideCategory && (
                 <motion.section
-                  initial={{ x: -300, opacity: 0 }}
+                  initial={{ x: -screenWidth, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{
-                    x: 500,
-                    left: "50%",
+                    x: screenWidth / 2,
                     opacity: 0,
-                    transition: { type: "tween", duration: 0.5 },
                   }}
-                  transition={{ type: "tween", duration: 0.5, delay: 0.2 }}
+                  transition={{
+                    type: "tween",
+                    duration: 0.5,
+                    ease: "backOut",
+                    delay: 0.1,
+                  }}
                   drag="x"
                   dragConstraints={bodyRef}
-                  className={`gap-10 pb-2 ${
-                    !hideCategory ? "hidden " : "ml-6 min-w-full flex w-max flex-nowrap cursor-grab"
+                  className={`gap-10 ${
+                    !hideCategory
+                      ? "hidden "
+                      : "ml-6 flex w-max min-w-full cursor-grab flex-nowrap active:cursor-grabbing"
                   }`}
                 >
                   {categoriesData?.map((data, index) => (
-                    <div key={data.name + index} className="cursor-pointer">
+                    <div key={data.name + index} className="">
                       <CategoryProduct
                         data={data}
                         setCategories={setCategories}
@@ -141,6 +146,7 @@ const Page = () => {
                         showProducts={showProducts}
                         setShowAllProducts={setShowAllProducts}
                         index={index}
+                        screenWidth={screenWidth}
                       />
                     </div>
                   ))}
@@ -150,7 +156,7 @@ const Page = () => {
           </div>
         </section>
         <AnimatePresence>
-          {hideCategory && (
+          {showProducts && (
             <motion.div
               initial={{
                 y: -50,
@@ -161,76 +167,87 @@ const Page = () => {
                 y: -50,
                 opacity: 0,
               }}
-              className="mx-14 mb-10 mt-14 flex backdrop-blur-md max-sm:hidden"
+              className="my-14 hidden gap-x-4 backdrop-blur-md sm:flex lg:mx-14"
             >
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full bg-transparent p-2 outline-0"
-              />
-              <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3 border border-asisDark text-xs uppercase">
+              {/* <div className="flex w-40 cursor-pointer items-center justify-center gap-x-3 rounded border border-asisDark text-xs uppercase">
                 sort by
                 <img src={down} alt="down" />
-              </div>
+              </div> */}
+              <input
+                type="text"
+                placeholder={`Search for ${categories.name} product . . .`}
+                value={searchWord}
+                onChange={(e) => setSearchWord(e.target.value)}
+                className="w-full rounded border border-asisDark bg-transparent p-2 outline-0"
+              />
+              {/* <div className="flex w-28 cursor-pointer items-center justify-center gap-x-3 rounded bg-asisDark text-xs uppercase text-white">
+                Search
+              </div> */}
             </motion.div>
           )}
         </AnimatePresence>
+        <div className="hidden sm:flex">
+          <AnimatePresence>
+            {showProducts && (
+              <>
+                {productData.length > 0 ? (
+                  <section className=" 4xl:grid-cols-7 3xl:grid-cols-6 mt-2 grid w-min min-w-full grid-cols-2 place-items-center items-center gap-10 max-lg:justify-around md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+                    {productData.map((product, index) => (
+                      <div key={product._id}>
+                        <Link to={`/product/${product._id}`}>
+                          <Products
+                            top={asisCardRef.current?.offsetTop}
+                            left={asisCardRef.current?.offsetLeft}
+                            name={product.name}
+                            price={product.price}
+                            collaborations={product.collaborations}
+                            images={product.images}
+                            index={index}
+                          />
+                        </Link>
+                      </div>
+                    ))}
+                  </section>
+                ) : (
+                  <div className="flex w-full flex-col items-center justify-center">
+                    <p className="text-2xl font-semibold">No Products Found</p>
+                    <p className="text-sm">Please try another search</p>
+                  </div>
+                )}
+              </>
+            )}
+          </AnimatePresence>
+        </div>
         <Mobile
           categoriesData={categoriesData}
           setCategories={setCategories}
           setShowProducts={setShowProducts}
           showProducts={showProducts}
         />
-        <div className="hidden sm:block">
-          <AnimatePresence>
-            {showAllProducts && hideCategory && (
-              <div>
-                <section className="mt-2 flex flex-wrap items-center max-md:justify-center gap-10">
-                  {allProductData.map((product, index) => (
-                    <div key={product._id}>
-                      <Link to={`/product/${product._id}`}>
-                        <Products
-                          top={asisCardRef.current?.offsetTop}
-                          left={asisCardRef.current?.offsetLeft}
-                          name={product.name}
-                          price={product.price}
-                          collaborations={product.collaborations}
-                          images={product.images}
-                          index={index}
-                        />
-                      </Link>
-                    </div>
-                  ))}{" "}
-                </section>
-              </div>
-            )}
-
-            {showProducts && (
-              <div>
-                <section className="mt-2 flex flex-wrap items-center gap-10">
-                  {productData.map((product, index) => (
-                    <div key={product._id}>
-                      <Link to={`/product/${product._id}`}>
-                        <Products
-                          top={asisCardRef.current?.offsetTop}
-                          left={asisCardRef.current?.offsetLeft}
-                          name={product.name}
-                          price={product.price}
-                          collaborations={product.collaborations}
-                          images={product.images}
-                          index={index}
-                        />
-                      </Link>
-                    </div>
-                  ))}
-                </section>
-              </div>
-            )}
-          </AnimatePresence>
-        </div>
       </section>
-    </div>
+    </main>
   );
 };
 
 export default Page;
+// {
+//   showAllProducts && hideCategory && (
+//     <section className=" 4xl:grid-cols-7 3xl:grid-cols-6 mt-2 grid w-min min-w-full grid-cols-2 place-items-center items-center gap-10 max-lg:justify-around md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+//       {allProductData.map((product, index) => (
+//         <div key={product._id}>
+//           <Link to={`/product/${product._id}`}>
+//             <Products
+//               top={asisCardRef.current?.offsetTop}
+//               left={asisCardRef.current?.offsetLeft}
+//               name={product.name}
+//               price={product.price}
+//               collaborations={product.collaborations}
+//               images={product.images}
+//               index={index}
+//             />
+//           </Link>
+//         </div>
+//       ))}
+//     </section>
+//   );
+// }

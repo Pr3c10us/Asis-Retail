@@ -128,7 +128,7 @@ const AddProduct = () => {
               formik.isSubmitting && "cursor-not-allowed opacity-50"
             }`}
           >
-            Add Product
+            Add Category
           </button>
         </section>
       </form>

@@ -14,7 +14,7 @@ const Products = ({ name, price, collaborations, images }) => {
   };
 
   return (
-    <div className="relative aspect-[9/16] h-[312px] w-[239px] cursor-pointer max-md:h-[235px] max-md:w-[10.8rem]">
+    <div className="relative aspect-[1/1.35] w-[11rem] sm:w-[14rem] cursor-pointer">
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-asisDark opacity-80"></div>
       <img
         src={`${import.meta.env.VITE_BLOB_URL}${images[0]}`}
@@ -34,10 +34,10 @@ const Products = ({ name, price, collaborations, images }) => {
       />
       <div className="absolute bottom-5 left-5 mt-2 font-semibold  max-sm:bottom-4 max-sm:left-3">
         <p className="text-xs font-semibold text-[#ffff]">
-          <CapitalizeSentence name={name}/>
+          <CapitalizeSentence name={name} />
         </p>
         {/* <div className="flex gap-4">{renderCollaborations()}</div> */}
-        <p className="text-xs font-semibold text-asisGreen uppercase">
+        <p className="text-xs font-semibold uppercase text-asisGreen">
           {Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
