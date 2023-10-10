@@ -19,7 +19,7 @@ const {
     deleteCategoryImage,
     getCategoryById,
 } = require("../controller/products");
-const convertToArray = require("../middleware/convertTOArray");
+const convertToArray = require("../middleware/convertToArray");
 
 router
     .route("/")

@@ -7,7 +7,7 @@ env:
 on:
     push:
         branches:
-            - main
+            - master
 
 jobs:
     deploy:
@@ -26,49 +26,21 @@ jobs:
                   passphrase: ""
                   port: 22
                   script: |
-                      # Create the directory with sudo
-                      sudo mkdir -p /var/www/AsisRetail
-
-                      # Change ownership of the directory to your user
-                      sudo chown -R $USER:$USER /var/www/AsisRetail
-
-                      # Initialize the directory as a Git repository if it's not already
-                      if [ ! -d /var/www/AsisRetail/.git ]; then
-                        cd /var/www/AsisRetail
-                        git init
-                      fi
-
-                      # Perform Git pull with the specified branch
-                      cd /var/www/AsisRetail
-                      git pull origin main
-
-                      # Check if directories exist before changing into them
-                      if [ -d Frontend ]; then
-                        cd Frontend
-                        sudo npm install
-                        sudo npm run build
+                      if [ -d /var/www/AsisRetail ]; then
+                        cd /var/www/AsisRetail && git pull
                       else
-                        echo "Frontend directory does not exist."
+                        git clone https://github.com/Pr3c10us/Asis.git /var/www/AsisRetail
                       fi
-
-                      if [ -d Admin ]; then
-                        cd ../Admin
-                        sudo npm install
-                        sudo npm run build
+                      cd /var/www/AsisRetail/Frontend && sudo npm install && sudo npm run build
+                      cd /var/www/AsisRetail/Admin && sudo npm install && sudo npm run build
+                      cd /var/www/AsisRetail/Backend && sudo npm install && if sudo npm stop; then
+                        # If command1 succeeds
+                        echo "Command 1 succeeded"
+                        # Run another command
+                        sudo npm start
                       else
-                        echo "Admin directory does not exist."
-                      fi
-
-                      if [ -d Backend ]; then
-                        cd ../Backend
-                        sudo npm install
-                        if sudo npm stop; then
-                          echo "Command 1 succeeded"
-                          sudo npm start
-                        else
+                          # If command1 fails
                           echo "Command 1 failed"
+                          # Run a different command
                           sudo npm start
-                        fi
-                      else
-                        echo "Backend directory does not exist."
                       fi
