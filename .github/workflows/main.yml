@@ -26,9 +26,6 @@ jobs:
                   cd ../Admin
                   npm install
                   npm run build
-                  cd ../Backend
-                  npm install
-                  npm run build
                   ls -la
 
             # - name: Connect to AWS Lightsail, extract file and delete the file
