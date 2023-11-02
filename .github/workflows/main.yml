@@ -17,30 +17,44 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Connect to AWS Lightsail, extract file and delete the file
-              uses: appleboy/ssh-action@v0.1.7
-              with:
-                  host: ${{ secrets.HOST_IP }}
-                  username: ${{ secrets.USERNAME }}
-                  password: ${{ secrets.SSH_PASSWORD }}
-                  passphrase: ""
-                  port: 22
-                  script: |
-                      if [ -d /var/www/AsisRetail ]; then
-                        cd /var/www/AsisRetail && git pull
-                      else
-                        git clone https://github.com/Pr3c10us/Asis.git /var/www/AsisRetail
-                      fi
-                      cd /var/www/AsisRetail/Frontend && sudo npm install && sudo npm run build
-                      cd /var/www/AsisRetail/Admin && sudo npm install && sudo npm run build
-                      cd /var/www/AsisRetail/Backend && sudo npm install && if sudo npm stop; then
-                        # If command1 succeeds
-                        echo "Command 1 succeeded"
-                        # Run another command
-                        sudo npm start
-                      else
-                          # If command1 fails
-                          echo "Command 1 failed"
-                          # Run a different command
-                          sudo npm start
-                      fi
+            - name: Build and package the code
+              run: |
+                  ls -la
+                  cd Frontend
+                  npm install
+                  npm run build
+                  cd ../Admin
+                  npm install
+                  npm run build
+                  cd ../Backend
+                  npm install
+                  npm run build
+                  ls -la
+
+            # - name: Connect to AWS Lightsail, extract file and delete the file
+            #   uses: appleboy/ssh-action@v0.1.7
+            #   with:
+            #       host: ${{ secrets.HOST_IP }}
+            #       username: ${{ secrets.USERNAME }}
+            #       password: ${{ secrets.SSH_PASSWORD }}
+            #       passphrase: ""
+            #       port: 22
+            #       script: |
+            #           if [ -d /var/www/AsisRetail ]; then
+            #             cd /var/www/AsisRetail && git pull
+            #           else
+            #             git clone https://github.com/Pr3c10us/Asis.git /var/www/AsisRetail
+            #           fi
+            #           cd /var/www/AsisRetail/Frontend && sudo npm install && sudo npm run build
+            #           cd /var/www/AsisRetail/Admin && sudo npm install && sudo npm run build
+            #           cd /var/www/AsisRetail/Backend && sudo npm install && if sudo npm stop; then
+            #             # If command1 succeeds
+            #             echo "Command 1 succeeded"
+            #             # Run another command
+            #             sudo npm start
+            #           else
+            #               # If command1 fails
+            #               echo "Command 1 failed"
+            #               # Run a different command
+            #               sudo npm start
+            #           fi

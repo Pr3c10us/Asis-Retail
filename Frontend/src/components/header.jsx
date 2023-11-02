@@ -12,7 +12,7 @@ const Header = ({ setHideCart, setHideWish, cartLength, wishlistData }) => {
   //   console.log(location.pathname);
   // }, [location.pathname]);
   return (
-    <div className=" sticky top-[0px]  z-30 flex w-full justify-end px-8 py-2 uppercase backdrop-blur-md max-sm:px-4">
+    <div className=" sticky top-[0px] z-30 flex w-full justify-end px-8 py-2 uppercase backdrop-blur-md max-sm:px-4">
       <div className=" flex max-sm:w-[54%] w-1/2 items-center justify-between ">
         <Link to="/">
         <img src={Logo} alt="logo" className="cursor-pointer" />
